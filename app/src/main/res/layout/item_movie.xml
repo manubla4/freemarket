@@ -3,8 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools">
     <data>
         <variable
-            name="movie"
-            type="com.manubla.cinemapp.data.model.Movie" />
+            name="restaurant"
+            type="com.manubla.restoya.data.model.Restaurant" />
     </data>
 
     <androidx.cardview.widget.CardView
@@ -27,7 +27,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="120dp"
                 android:scaleType="centerCrop"
-                app:bindMoviePoster="@{movie.posterLocalPath}"
+                app:bindMoviePoster="@{restaurant.posterLocalPath}"
                 tools:src="@drawable/test_poster"/>
 
             <TextView
@@ -42,7 +42,7 @@
                 android:textStyle="bold"
                 android:maxLines="2"
                 android:textColor="@color/colorTextPrimary"
-                android:text="@{movie.title}"
+                android:text="@{restaurant.title}"
                 tools:text="Malefica"/>
 
             <LinearLayout
@@ -59,7 +59,7 @@
                     android:layout_weight="1"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    app:bindMovieDate="@{movie.releaseDate}"
+                    app:bindMovieDate="@{restaurant.releaseDate}"
                     tools:text="2015"/>
 
                 <LinearLayout
@@ -79,7 +79,7 @@
                         android:id="@+id/txtRate"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        app:bindMovieRate="@{movie.voteAverage}"
+                        app:bindMovieRate="@{restaurant.voteAverage}"
                         tools:text="8.5"/>
 
                 </LinearLayout>

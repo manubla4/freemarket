@@ -4,7 +4,7 @@
     <data>
         <variable
             name="review"
-            type="com.manubla.cinemapp.data.model.Review" />
+            type="com.manubla.restoya.data.model.Review" />
     </data>
 
     <androidx.cardview.widget.CardView

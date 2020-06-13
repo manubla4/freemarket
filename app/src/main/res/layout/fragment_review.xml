@@ -3,8 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools">
     <data>
         <variable
-            name="movie"
-            type="com.manubla.cinemapp.data.model.Movie" />
+            name="restaurant"
+            type="com.manubla.restoya.data.model.Restaurant" />
     </data>
 
     <LinearLayout
@@ -20,7 +20,7 @@
             android:textColor="@color/colorTextSecondary"
             android:textStyle="bold"
             android:layout_marginBottom="@dimen/input_margin"
-            android:text="@{movie.title}"
+            android:text="@{restaurant.title}"
             tools:text="Malefica"/>
 
         <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
