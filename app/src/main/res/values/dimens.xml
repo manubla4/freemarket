@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="text_margin">20dp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
+    <dimen name="small_margin">8dp</dimen>
+    <dimen name="input_margin">16dp</dimen>
+    <dimen name="block_margin">32dp</dimen>
+    <dimen name="double_block_margin">64dp</dimen>
+    <dimen name="fragment_padding">15dp</dimen>
+    <dimen name="adapter_row_size">80dp</dimen>
+    <dimen name="fragment_padding_double">30dp</dimen>
+    <dimen name="fading_edge">15dp</dimen>
+</resources>
