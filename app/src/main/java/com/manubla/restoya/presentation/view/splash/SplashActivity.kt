@@ -1,6 +1,7 @@
 package com.manubla.restoya.presentation.view.splash
 
 import android.content.Intent
+import android.location.Location
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
@@ -14,18 +15,16 @@ class SplashActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
-
-        splashViewModel.success.observe(this, Observer(this::successChanged))
-        splashViewModel.loadData()
+        splashViewModel.location.observe(this, Observer(this::locationChanged))
+        splashViewModel.fetchTokenAndLocation()
     }
 
 
-    private fun successChanged(success: Boolean) {
-        if (success) {
-            val intent = Intent(this, HomeActivity::class.java)
-            startActivity(intent)
-        }
+    private fun locationChanged(location: Location?) {
+        val intent = Intent(this, HomeActivity::class.java)
+        intent.putExtra(HomeActivity.KeyLatitude, location?.latitude)
+        intent.putExtra(HomeActivity.KeyLongitude, location?.longitude)
+        startActivity(intent)
         finish()
     }
-
 }

@@ -6,6 +6,7 @@ import android.preference.PreferenceManager
 import androidx.room.Room
 import com.google.gson.FieldNamingPolicy
 import com.google.gson.GsonBuilder
+import com.manubla.restoya.App
 import com.manubla.restoya.BuildConfig
 import com.manubla.restoya.data.helper.adapter.ZonedDateTimeAdapter
 import com.manubla.restoya.data.helper.networking.NetworkingManager
@@ -28,9 +29,10 @@ import org.threeten.bp.ZonedDateTime
 import retrofit2.Converter
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.net.HttpURLConnection
 
 
-var storageModule = module {
+val storageModule = module {
     single { PreferenceManager.getDefaultSharedPreferences(get()) }
     single {
         Room.databaseBuilder<AppDatabase>(
@@ -46,7 +48,7 @@ var storageModule = module {
 }
 
 
-var networkModule = module {
+val networkModule = module {
     single { NetworkingManager(get()) }
     single<Converter.Factory> {
         GsonConverterFactory.create(
@@ -69,6 +71,13 @@ var networkModule = module {
                         get<TokenDataStoreStorage>().getToken().access_token)
                     .build()
                 chain.proceed(request)
+            }.addInterceptor { chain ->
+                val response = chain.proceed(chain.request())
+
+                if (response.code() == HttpURLConnection.HTTP_FORBIDDEN)
+                    App.reloadSplash()
+
+                response
             }
             .build()
     }
@@ -93,19 +102,20 @@ var networkModule = module {
 }
 
 
-var locationModule = module {
-    single { LocationService(get<Context>().getSystemService(Context.LOCATION_SERVICE) as LocationManager) }
+val locationModule = module {
+    single { LocationService(get<Context>().getSystemService(Context.LOCATION_SERVICE) as LocationManager,
+                             get() ) }
 }
 
 
-var restaurantsModule = module {
+val restaurantsModule = module {
     single { RestaurantsDataStoreFactory(get(), get(), get()) }
     single<RestaurantsSourceRepository> {
         RestaurantsSourceRepositoryImpl(get())
     }
 }
 
-var viewModelsModule = module {
-    viewModel { SplashViewModel(get(), get()) }
+val viewModelsModule = module {
+    viewModel { SplashViewModel(get(), get(), get()) }
     viewModel { HomeViewModel(get(), get()) }
 }

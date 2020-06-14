@@ -49,7 +49,9 @@ class HomeActivity : AppCompatActivity() {
     }
 
     companion object {
-        private const val HomeFragmentTag = "HomeFragmentTag"
-        private const val FavoritesFragmentTag = "FavoritesFragmentTag"
+        private const val HomeFragmentTag       = "HomeFragmentTag"
+        private const val FavoritesFragmentTag  = "FavoritesFragmentTag"
+        const val KeyLatitude                   = "KeyLatitude"
+        const val KeyLongitude                  = "KeyLongitude"
     }
 }

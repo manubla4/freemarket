@@ -6,9 +6,9 @@ import com.manubla.restoya.data.service.RestaurantService
 
 @Suppress("UNUSED_PARAMETER")
 open class RestaurantsDataStoreFactory(
-    private var service: RestaurantService,
-    private var dao: RestaurantDao,
-    private var networkingManager: NetworkingManager
+    private val service: RestaurantService,
+    private val dao: RestaurantDao,
+    private val networkingManager: NetworkingManager
 ) {
 
     val restaurantsDataStoreFactory: RestaurantsDataStore

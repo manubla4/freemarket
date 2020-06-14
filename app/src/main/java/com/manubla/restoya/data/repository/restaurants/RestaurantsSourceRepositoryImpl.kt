@@ -7,7 +7,8 @@ class RestaurantsSourceRepositoryImpl(var factory: RestaurantsDataStoreFactory) 
     override suspend fun getRestaurantsPage(latitude: Double,
                                             longitude: Double,
                                             offset: Int
-                                            ): RestaurantsPageResponse = try {
+                                            ): RestaurantsPageResponse =
+        try {
             factory.restaurantsDataStoreFactory
                                 .getRestaurantsPage(latitude, longitude, offset)
         } catch (error: Exception) {

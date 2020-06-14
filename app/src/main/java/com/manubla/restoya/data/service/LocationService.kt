@@ -9,9 +9,10 @@ import android.provider.Settings
 import android.util.Log
 import java.util.*
 
-class LocationService (private var mLocationManager: LocationManager) {
+class LocationService (private val mLocationManager: LocationManager,
+                       private val context: Context) {
 
-    fun getLocation(context: Context, result: LocationResult): Boolean {
+    fun getLocation(result: LocationResult): Boolean {
 
         mLocationResult = result
 

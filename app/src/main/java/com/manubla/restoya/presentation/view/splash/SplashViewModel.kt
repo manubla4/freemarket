@@ -1,64 +1,49 @@
 package com.manubla.restoya.presentation.view.splash
 
+import android.location.Location
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.manubla.restoya.data.repository.token.TokenDataStoreCloud
+import com.manubla.restoya.data.repository.token.TokenDataStoreStorage
+import com.manubla.restoya.data.service.LocationService
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlin.coroutines.CoroutineContext
 
-class SplashViewModel(private val genresRepository: GenresSourceRepository,
-                      private val configRepository: ConfigurationSourceRepository) : ViewModel(), CoroutineScope {
+class SplashViewModel(private val tokenDataStoreCloud: TokenDataStoreCloud,
+                      private val tokenDataStoreStorage: TokenDataStoreStorage,
+                      private val locationService: LocationService) : ViewModel(), CoroutineScope {
 
     override val coroutineContext: CoroutineContext
         get() = Dispatchers.Main
 
-    val success: LiveData<Boolean>
-        get() = localSuccess
+    val location: LiveData<Location?>
+        get() = localLocation
 
-    private val localSuccess = MutableLiveData<Boolean>()
+    private val localLocation = MutableLiveData<Location?>()
 
-    fun loadData() {
+    fun fetchTokenAndLocation() {
         launch(Dispatchers.IO) {
-            val genreResponse = getRemoteGenres()
-            val configResponse = getRemoteConfiguration()
+            val tokenResponse = tokenDataStoreCloud.getToken()
+            tokenDataStoreStorage.storeToken(tokenResponse.access_token)
 
-            genreResponse?.let {
-                storeGenres(it.genres)
+            val locationResult = object : LocationService.LocationResult {
+
+                override fun gotLocation(location: Location?) {
+                    localLocation.postValue(location)
+                }
             }
 
-            if (configResponse != null)
-                storeConfiguration(configResponse)
+            if (!locationService.getLocation(locationResult)) {
 
-            localSuccess.postValue(true)
+            }
+
+
         }
     }
 
-    private suspend fun storeGenres(genres: List<Genre>) {
-        try {
-            genresRepository.storeGenres(genres)
-        } catch (ignored: Exception) {
-        }
-    }
 
-    private suspend fun getRemoteGenres(): GenreResponse? = try {
-            genresRepository.getRemoteGenres()
-        } catch (ignored: Exception) {
-            null
-        }
-
-    private suspend fun storeConfiguration(config: ConfigurationResponse) {
-        try {
-            configRepository.storeConfiguration(config)
-        } catch (ignored: Exception) {
-        }
-    }
-
-    private suspend fun getRemoteConfiguration(): ConfigurationResponse? = try {
-        configRepository.getRemoteConfiguration()
-    } catch (ignored: Exception) {
-        null
-    }
 
 }

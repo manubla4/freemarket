@@ -7,12 +7,15 @@ class TokenDataStoreStorage(private var sharedPreferences: SharedPreferences) {
 
     private val keyToken = "keyToken"
 
-    fun getToken(): TokenResponse {
-        return TokenResponse(sharedPreferences.getString(keyToken, "") ?: "")
-    }
+    fun getToken(): TokenResponse = TokenResponse(sharedPreferences.getString(keyToken, "") ?: "")
 
     fun storeToken(token: String) {
-        sharedPreferences.edit().putString(keyToken, token).commit()
+        try {
+            sharedPreferences.edit().putString(keyToken, token).commit()
+        }
+        catch (error: Exception) {
+            //do nothing
+        }
     }
 
 }
