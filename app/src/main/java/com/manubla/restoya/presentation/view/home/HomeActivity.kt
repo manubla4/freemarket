@@ -14,11 +14,9 @@ class HomeActivity : AppCompatActivity() {
         setContentView(R.layout.activity_home)
 
         if (savedInstanceState == null) {
-            val latitude = intent?.extras?.getDouble(KEY_LATITUDE)
-            val longitude = intent?.extras?.getDouble(KEY_LONGITUDE)
 
-            val homeFragment = HomeFragment.newInstance(latitude, longitude)
-            val favoritesFragment = MapFragment.newInstance()
+            val homeFragment = HomeFragment()
+            val favoritesFragment = MapFragment()
 
             showFragment(HomeFragment(), HomeFragmentTag)
             bottomNavigation.setOnNavigationItemSelectedListener { menuItem ->
@@ -54,7 +52,5 @@ class HomeActivity : AppCompatActivity() {
     companion object {
         private const val HomeFragmentTag       = "HomeFragmentTag"
         private const val MapFragmentTag        = "MapFragmentTag"
-        const val KEY_LATITUDE                  = "KEY_LATITUDE"
-        const val KEY_LONGITUDE                 = "KEY_LONGITUDE"
     }
 }

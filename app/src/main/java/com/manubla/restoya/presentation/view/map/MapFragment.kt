@@ -51,9 +51,4 @@ class MapFragment : Fragment() {
 //        startActivity(intent)
 //    }
 
-    companion object {
-
-        @JvmStatic
-        fun newInstance() = MapFragment()
-    }
 }

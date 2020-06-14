@@ -35,7 +35,7 @@ class HomeAdapter(private val listener: OnAdapterInteraction):
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val inflater = LayoutInflater.from(parent.context)
         return if (viewType == RESTAURANT_TYPE) {
-            RestaurantViewHolder(ItemRestaurantBinding.inflate(inflater))
+            RestaurantViewHolder(ItemRestaurantBinding.inflate(inflater, parent, false))
         } else {
             ProgressViewHolder(
                 LayoutInflater.from(parent.context)

@@ -4,7 +4,6 @@ import android.Manifest
 import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.location.Location
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -57,42 +56,51 @@ class SplashActivity : AppCompatActivity() {
     }
 
     private fun checkLocationEnabled() {
-        val locationRequest = LocationRequest.create()
-        locationRequest.interval = 10000
-        locationRequest.fastestInterval = 5000
-        locationRequest.expirationTime = 20000
-        locationRequest.priority = LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY
+        val locationRequest = LocationRequest.create().apply {
+            interval = 10000
+            fastestInterval = 5000
+            expirationTime = 20000
+            priority = LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY
+        }
         val builder = LocationSettingsRequest.Builder().addLocationRequest(locationRequest)
-        val result =
-            LocationServices.getSettingsClient(this).checkLocationSettings(builder.build())
+        LocationServices.getSettingsClient(this).checkLocationSettings(builder.build()).apply {
 
-        result.addOnCompleteListener { task ->
-            try {
-                task.getResult(ApiException::class.java)
-                fetchData()
+            addOnCompleteListener { task ->
+                try {
+                    task.getResult(ApiException::class.java)
+                    fetchData()  //Location is correctly enabled
 
-            } catch (exception: ApiException) {
-                when (exception.statusCode) {
-                    LocationSettingsStatusCodes.RESOLUTION_REQUIRED -> try {
-                        val resolvable = exception as ResolvableApiException
-                        startIntentSenderForResult(
-                            resolvable.resolution.intentSender,
-                            REQUEST_LOCATION_SETTINGS,
-                            null,
-                            0,
-                            0,
-                            0,
-                            null
-                        )
-                    } catch (e: Exception) {
-                        Toast.makeText(this, getString(R.string.txt_location_enable), Toast.LENGTH_LONG).show()
-                        finish()
-                    }
+                } catch (exception: ApiException) {
+                    when (exception.statusCode) {
+                        LocationSettingsStatusCodes.RESOLUTION_REQUIRED -> try {
+                            val resolvable = exception as ResolvableApiException
+                            startIntentSenderForResult(
+                                resolvable.resolution.intentSender,
+                                REQUEST_LOCATION_SETTINGS,
+                                null,
+                                0,
+                                0,
+                                0,
+                                null
+                            )
+                        } catch (e: Exception) {
+                            Toast.makeText(
+                                this@SplashActivity,
+                                getString(R.string.txt_location_enable),
+                                Toast.LENGTH_LONG
+                            ).show()
+                            finish()
+                        }
 
-                    LocationSettingsStatusCodes.SETTINGS_CHANGE_UNAVAILABLE -> {
-                        // Location setting is not available, should not happen
-                        Toast.makeText(this, getString(R.string.txt_location_unavailable), Toast.LENGTH_LONG).show()
-                        finish()
+                        LocationSettingsStatusCodes.SETTINGS_CHANGE_UNAVAILABLE -> {
+                            // Location setting is not available, should not happen
+                            Toast.makeText(
+                                this@SplashActivity,
+                                getString(R.string.txt_location_unavailable),
+                                Toast.LENGTH_LONG
+                            ).show()
+                            finish()
+                        }
                     }
                 }
             }
@@ -105,10 +113,10 @@ class SplashActivity : AppCompatActivity() {
         if (requestCode == REQUEST_LOCATION_SETTINGS) {
             when (resultCode) {
                 Activity.RESULT_OK ->
-                    //User activated location
+                    //User enabled token
                     fetchData()
                 Activity.RESULT_CANCELED -> {
-                    //User cancelled location activation
+                    //User cancelled token activation
                     Toast.makeText(this, getString(R.string.txt_location_enable), Toast.LENGTH_LONG).show()
                     finish()
                 }
@@ -118,15 +126,13 @@ class SplashActivity : AppCompatActivity() {
 
 
     private fun fetchData() {
-        mViewModel.location.observe(this, Observer(this::locationChanged))
-        mViewModel.fetchTokenAndLocation()
+        mViewModel.token.observe(this, Observer(this::tokenChanged))
+        mViewModel.fetchToken()
     }
 
 
-    private fun locationChanged(location: Location?) {
+    private fun tokenChanged(token: String) {
         val intent = Intent(this, HomeActivity::class.java)
-        intent.putExtra(HomeActivity.KEY_LATITUDE, location?.latitude)
-        intent.putExtra(HomeActivity.KEY_LONGITUDE, location?.longitude)
         startActivity(intent)
         finish()
     }

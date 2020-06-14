@@ -34,7 +34,7 @@ class LocationService (private val mLocationManager: LocationManager,
 
         try {
             mLocationManager.requestLocationUpdates(
-                LocationManager.NETWORK_PROVIDER,
+                LocationManager.GPS_PROVIDER,   //FIXME!!
                 0,
                 0f,
                 mLocationListener

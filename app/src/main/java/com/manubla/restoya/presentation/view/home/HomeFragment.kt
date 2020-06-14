@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.manubla.restoya.R
 import com.manubla.restoya.data.model.Restaurant
@@ -21,18 +21,7 @@ class HomeFragment: Fragment(), HomeAdapter.OnAdapterInteraction {
     private var mCurrentOffset = 0
     private var mCurrentTotal = 0
     private var mLoading = true
-    private var mLatitude: Double? = null
-    private var mLongitude: Double? = null
 
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            mLatitude = it.getDouble(KEY_LATITUDE)
-            mLongitude = it.getDouble(KEY_LONGITUDE)
-        }
-
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -48,7 +37,7 @@ class HomeFragment: Fragment(), HomeAdapter.OnAdapterInteraction {
         mainLayout.requestFocus()
         mAdapter = HomeAdapter(this)
         mViewModel.data.observe(viewLifecycleOwner, Observer(this::dataChanged))
-        val layoutManager = GridLayoutManager(activity, 2)
+        val layoutManager = LinearLayoutManager(activity)
         recyclerView.let {
             it.layoutManager = layoutManager
             it.adapter = mAdapter
@@ -62,7 +51,7 @@ class HomeFragment: Fragment(), HomeAdapter.OnAdapterInteraction {
                             if (visibleItemCount + pastVisiblesItems >= totalItemCount) {
                                 mLoading = true
                                 mAdapter.addItem(Any())  //Progress item
-                                mViewModel.loadData(mLatitude, mLongitude, mCurrentOffset)
+                                mViewModel.loadData(mCurrentOffset)
                             }
                         }
                     }
@@ -71,7 +60,7 @@ class HomeFragment: Fragment(), HomeAdapter.OnAdapterInteraction {
         }
 
         swipeLayout.isRefreshing = true
-        mViewModel.loadData(mLatitude, mLongitude, mCurrentOffset)
+        mViewModel.loadData(mCurrentOffset)
         swipeLayout.setOnRefreshListener {
             doRefresh()
         }
@@ -81,7 +70,7 @@ class HomeFragment: Fragment(), HomeAdapter.OnAdapterInteraction {
         swipeLayout.isRefreshing = true
         mAdapter.restaurants = arrayListOf()
         mCurrentOffset = 0
-        mViewModel.loadData(mLatitude, mLongitude, mCurrentOffset)
+        mViewModel.loadData(mCurrentOffset)
     }
 
 
@@ -107,21 +96,4 @@ class HomeFragment: Fragment(), HomeAdapter.OnAdapterInteraction {
         //TODO show in map
     }
 
-
-
-    companion object {
-        private const val KEY_LATITUDE   = "KEY_LATITUDE"
-        private const val KEY_LONGITUDE  = "KEY_LONGITUDE"
-
-        @JvmStatic
-        fun newInstance(latitude: Double?, longitude: Double?) =
-            HomeFragment().apply {
-                if (latitude != null && longitude != null) {
-                    arguments = Bundle().apply {
-                        putDouble(KEY_LATITUDE, latitude)
-                        putDouble(KEY_LONGITUDE, longitude)
-                    }
-                }
-            }
-    }
 }
