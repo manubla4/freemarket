@@ -44,7 +44,7 @@ class LocationService (private val mLocationManager: LocationManager,
                     mLocationManager.removeUpdates(mLocationListener)
                     mLocationResult?.gotLocation(null)
                 }
-            }, 30000)
+            }, 25000)
 
             return true
 

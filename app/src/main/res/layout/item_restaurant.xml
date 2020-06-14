@@ -1,0 +1,156 @@
+<layout  xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <variable
+            name="restaurant"
+            type="com.manubla.restoya.data.model.Restaurant" />
+    </data>
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="15dp"
+        android:clipToPadding="true"
+        app:cardCornerRadius="15dp"
+        app:cardUseCompatPadding="true">
+
+        <LinearLayout
+            android:id="@+id/cardRestaurant"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clickable="true"
+            android:focusable="true"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:scaleType="centerCrop"
+                app:bindRestaurantLogo="@{restaurant.logo}"
+                tools:src="@drawable/logo_test"/>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    style="@style/TextAppearance.AppCompat.Medium"
+                    android:id="@+id/txtName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="3dp"
+                    android:gravity="center"
+                    android:textStyle="bold"
+                    android:maxLines="2"
+                    android:textColor="@color/colorTextPrimary"
+                    android:text="@{restaurant.name}"
+                    tools:text="Paladar Arepas"
+                    app:layout_constraintTop_toTopOf="parent"/>
+
+
+                <TextView
+                    style="@style/TextAppearance.AppCompat.Caption"
+                    android:id="@+id/txtDiscount"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:visibility="invisible"
+                    android:textStyle="bold"
+                    android:textColor="@color/colorSuccess"
+                    app:bindRestaurantDiscount="@{restaurant.discount}"
+                    app:layout_constraintTop_toBottomOf="@id/txtName"
+                    tools:visibility="visible"
+                    tools:text="15% descuento hoy"/>
+
+                <LinearLayout
+                    android:id="@+id/layoutTimeScore"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center"
+                    android:weightSum="2"
+                    app:layout_constraintTop_toBottomOf="@id/txtDiscount">
+
+                    <TextView
+                        style="@style/TextAppearance.AppCompat.Small"
+                        android:id="@+id/txtTime"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        app:bindRestaurantTime="@{restaurant}"
+                        tools:text="15 - 30 min."/>
+
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:layout_width="22dp"
+                            android:layout_height="22dp"
+                            android:layout_marginEnd="5dp"
+                            android:src="@drawable/ic_star_yellow"/>
+
+                        <TextView
+                            style="@style/TextAppearance.AppCompat.Small"
+                            android:id="@+id/txtScore"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:textStyle="bold"
+                            android:textColor="@color/colorSuccess"
+                            app:bindRestaurantScore="@{restaurant.generalScore}"
+                            tools:text="4.5"/>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center"
+                    android:weightSum="2"
+                    app:layout_constraintTop_toBottomOf="@id/layoutTimeScore"
+                    app:layout_constraintBottom_toBottomOf="parent">
+
+                    <TextView
+                        style="@style/TextAppearance.AppCompat.Small"
+                        android:id="@+id/txtDistance"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        app:bindRestaurantDistance="@{restaurant.distance}"
+                        tools:text="1.6 km."/>
+
+
+                    <TextView
+                        style="@style/TextAppearance.AppCompat.Small"
+                        android:id="@+id/txtOnlinePayments"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:visibility="invisible"
+                        android:text="@string/txt_online_payment"
+                        app:bindRestaurantOnlinePayment="@{restaurant.hasOnlinePaymentMethods}"
+                        tools:visibility="visible" />
+
+                </LinearLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+
+
+</layout>

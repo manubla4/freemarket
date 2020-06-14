@@ -4,8 +4,8 @@ import com.manubla.restoya.data.service.response.RestaurantsPageResponse
 
 class RestaurantsSourceRepositoryImpl(var factory: RestaurantsDataStoreFactory) : RestaurantsSourceRepository {
 
-    override suspend fun getRestaurantsPage(latitude: Double,
-                                            longitude: Double,
+    override suspend fun getRestaurantsPage(latitude: Double?,
+                                            longitude: Double?,
                                             offset: Int
                                             ): RestaurantsPageResponse =
         try {

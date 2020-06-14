@@ -4,13 +4,11 @@
     <item
         android:id="@+id/home"
         android:icon="@drawable/ic_home_black_24dp"
-        android:title="@string/home"
-        />
+        android:title="@string/home" />
 
     <item
-        android:id="@+id/favorites"
-        android:icon="@drawable/ic_star_black_24dp"
-        android:title="@string/favorites"
-        />
+        android:id="@+id/map"
+        android:icon="@drawable/ic_location_black_24dp"
+        android:title="@string/map" />
 
 </menu>

@@ -7,36 +7,6 @@
     android:focusableInTouchMode="true"
     android:padding="@dimen/fragment_padding">
 
-    <EditText
-        android:id="@+id/editSearch"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@android:color/white"
-        android:layout_marginTop="@dimen/small_margin"
-        android:padding="@dimen/small_margin"
-        android:imeOptions="actionSearch"
-        android:inputType="text"
-        android:maxLines="1"
-        android:hint="@string/search_hint"/>
-
-    <TextView
-        style="@style/TextAppearance.AppCompat.Medium"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:textColor="@android:color/white"
-        android:layout_marginTop="@dimen/small_margin"
-        android:text="@string/filter_by_rate"/>
-
-    <RatingBar
-        style="?android:attr/ratingBarStyle"
-        android:id="@+id/ratingBar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:stepSize="1"
-        android:numStars="5" />
-
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/swipeLayout"
         android:layout_width="match_parent"

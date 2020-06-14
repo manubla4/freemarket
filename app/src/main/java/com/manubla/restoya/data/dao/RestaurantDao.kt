@@ -1,6 +1,9 @@
 package com.manubla.restoya.data.dao
 
-import androidx.room.*
+import androidx.room.Dao
+import androidx.room.Insert
+import androidx.room.OnConflictStrategy
+import androidx.room.Query
 import com.manubla.restoya.data.model.Restaurant
 
 @Dao
@@ -15,7 +18,7 @@ interface RestaurantDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertAll(restaurants: List<Restaurant>)
 
-    @Delete
+    @Query("DELETE FROM ${Restaurant.TABLE_NAME}")
     suspend fun deleteAll()
 
 }

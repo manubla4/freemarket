@@ -4,7 +4,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.manubla.restoya.R
-import com.manubla.restoya.presentation.view.favorites.FavoritesFragment
+import com.manubla.restoya.presentation.view.map.MapFragment
 import kotlinx.android.synthetic.main.activity_home.*
 
 class HomeActivity : AppCompatActivity() {
@@ -14,15 +14,18 @@ class HomeActivity : AppCompatActivity() {
         setContentView(R.layout.activity_home)
 
         if (savedInstanceState == null) {
-            val homeFragment = HomeFragment()
-            val favoritesFragment = FavoritesFragment()
+            val latitude = intent?.extras?.getDouble(KEY_LATITUDE)
+            val longitude = intent?.extras?.getDouble(KEY_LONGITUDE)
+
+            val homeFragment = HomeFragment.newInstance(latitude, longitude)
+            val favoritesFragment = MapFragment.newInstance()
 
             showFragment(HomeFragment(), HomeFragmentTag)
             bottomNavigation.setOnNavigationItemSelectedListener { menuItem ->
                 removeActiveFragment()
                 when (menuItem.itemId) {
                     R.id.home -> showFragment(homeFragment, HomeFragmentTag)
-                    R.id.favorites -> showFragment(favoritesFragment, FavoritesFragmentTag)
+                    R.id.map -> showFragment(favoritesFragment, MapFragmentTag)
                 }
                 true
             }
@@ -30,7 +33,7 @@ class HomeActivity : AppCompatActivity() {
     }
 
     private fun removeActiveFragment() {
-        listOf(HomeFragmentTag, FavoritesFragmentTag).forEach { tag ->
+        listOf(HomeFragmentTag, MapFragmentTag).forEach { tag ->
             val fragment = supportFragmentManager.findFragmentByTag(tag)
             fragment?.let {
                 supportFragmentManager
@@ -50,8 +53,8 @@ class HomeActivity : AppCompatActivity() {
 
     companion object {
         private const val HomeFragmentTag       = "HomeFragmentTag"
-        private const val FavoritesFragmentTag  = "FavoritesFragmentTag"
-        const val KeyLatitude                   = "KeyLatitude"
-        const val KeyLongitude                  = "KeyLongitude"
+        private const val MapFragmentTag        = "MapFragmentTag"
+        const val KEY_LATITUDE                  = "KEY_LATITUDE"
+        const val KEY_LONGITUDE                 = "KEY_LONGITUDE"
     }
 }

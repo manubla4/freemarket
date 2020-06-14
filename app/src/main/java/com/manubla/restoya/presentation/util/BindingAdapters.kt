@@ -1,45 +1,47 @@
 package com.manubla.restoya.presentation.util
 
+import android.widget.ImageView
+import android.widget.TextView
+import androidx.databinding.BindingAdapter
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.bumptech.glide.request.RequestOptions
+import com.manubla.restoya.BuildConfig
+import com.manubla.restoya.data.model.Restaurant
+import com.manubla.restoya.presentation.helper.visibleIf
 
 
-//@BindingAdapter("bindMovieDate")
-//fun bindMovieDate(textView: TextView, date: ZonedDateTime) {
-//     textView.text = DateTimeFormatter.ofPattern("yyyy").format(date)
-//}
-//
-//@BindingAdapter("bindMovieRate")
-//fun bindMovieRate(textView: TextView, rate: Double) {
-//     textView.text = rate.toString()
-//}
-//
-//@BindingAdapter("bindMoviePoster")
-//fun bindMoviePoster(imageView: ImageView, path: String?) {
-//    path?.let {
-//        Glide.with(imageView.context)
-//            .load(it)
-//            .into(imageView)
-//    }
-//}
-//
-//@BindingAdapter("bindMovieGenres")
-//fun bindMovieGenres(textView: TextView, genreResponse: GenreResponse?) {
-//    var result = ""
-//    genreResponse?.apply {
-//        for (genre in genres) {
-//            result = result.plus(genre.name)
-//            if (genres.indexOf(genre)
-//                != (genres.size - 1)) { //No comma for last item
-//                result = result.plus(", ")
-//            }
-//        }
-//    }
-//    textView.text = result
-//}
-//
-//@BindingAdapter("bindMovieFavorite")
-//fun bindMovieFavorite(imageView: ImageView, date: ZonedDateTime?) {
-//    if (date == null)
-//        imageView.setImageDrawable(imageView.context.getDrawable(R.drawable.ic_favorite_border_40dp))
-//    else
-//        imageView.setImageDrawable(imageView.context.getDrawable(R.drawable.ic_favorite_filled_40dp))
-//}
+@BindingAdapter("bindRestaurantDiscount")
+fun bindRestaurantDiscount(textView: TextView, discount: Int) {
+    val text = "%$discount descuento hoy"
+    textView.text = text
+    textView.visibleIf(discount > 0)
+}
+
+@BindingAdapter("bindRestaurantDistance")
+fun bindRestaurantDistance(textView: TextView, distance: Double) {
+    textView.text = distance.toString()
+}
+
+@BindingAdapter("bindRestaurantOnlinePayment")
+fun bindRestaurantOnlinePayment(textView: TextView, onlinePayment: Boolean) {
+    textView.visibleIf(onlinePayment)
+}
+
+@BindingAdapter("bindRestaurantTime")
+fun bindRestaurantTime(textView: TextView, restaurant: Restaurant) {
+    val text = "${restaurant.deliveryTimeMinMinutes} - ${restaurant.deliveryTimeMaxMinutes} min."
+    textView.text = text
+}
+
+@BindingAdapter("bindRestaurantScore")
+fun bindRestaurantScore(textView: TextView, score: Double) {
+     textView.text = score.toString()
+}
+
+@BindingAdapter("bindRestaurantLogo")
+fun bindRestaurantLogo(imageView: ImageView, path: String) {
+    val url = BuildConfig.IMAGES_URL + path
+    val requestOptions = RequestOptions().diskCacheStrategy(DiskCacheStrategy.ALL)
+    Glide.with(imageView.context).load(url).apply(requestOptions).into(imageView)
+}

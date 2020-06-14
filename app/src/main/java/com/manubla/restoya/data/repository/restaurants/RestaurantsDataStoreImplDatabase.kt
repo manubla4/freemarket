@@ -8,8 +8,8 @@ class RestaurantsDataStoreImplDatabase(private val restaurantDao: RestaurantDao)
 
     private val defaultPageSize = 20
 
-    override suspend fun getRestaurantsPage(latitude: Double,
-                                            longitude: Double,
+    override suspend fun getRestaurantsPage(latitude: Double?,
+                                            longitude: Double?,
                                             offset: Int): RestaurantsPageResponse {
         val results = restaurantDao.getAllWithOffset(offset, defaultPageSize)
         val total = restaurantDao.getRowsCount()

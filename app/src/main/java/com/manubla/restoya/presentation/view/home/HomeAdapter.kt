@@ -6,36 +6,36 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.manubla.restoya.R
 import com.manubla.restoya.data.model.Restaurant
-import com.manubla.restoya.databinding.ItemMovieBinding
+import com.manubla.restoya.databinding.ItemRestaurantBinding
 
 class HomeAdapter(private val listener: OnAdapterInteraction):
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    var movies = arrayListOf<Any>()
+    var restaurants = arrayListOf<Any>()
         set(value) {
             field = value
             notifyDataSetChanged()
         }
 
-    fun addMovieItems(items: List<Restaurant>) {
-        movies.addAll(items)
+    fun addRestaurantItems(items: List<Restaurant>) {
+        restaurants.addAll(items)
         notifyDataSetChanged()
     }
 
     fun addItem(item: Any) {
-        movies.add(item)
+        restaurants.add(item)
         notifyDataSetChanged()
     }
 
     fun removeProgressItem() {
-        if (movies.isNotEmpty() && movies[movies.size-1] !is Restaurant)
-            movies.removeAt(movies.size - 1)
+        if (restaurants.isNotEmpty() && restaurants[restaurants.size-1] !is Restaurant)
+            restaurants.removeAt(restaurants.size - 1)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val inflater = LayoutInflater.from(parent.context)
-        return if (viewType == MOVIE_TYPE) {
-            MovieViewHolder(ItemMovieBinding.inflate(inflater))
+        return if (viewType == RESTAURANT_TYPE) {
+            RestaurantViewHolder(ItemRestaurantBinding.inflate(inflater))
         } else {
             ProgressViewHolder(
                 LayoutInflater.from(parent.context)
@@ -45,23 +45,23 @@ class HomeAdapter(private val listener: OnAdapterInteraction):
     }
 
     override fun getItemViewType(position: Int): Int {
-        if (movies[position] is Restaurant)
-            return MOVIE_TYPE
+        if (restaurants[position] is Restaurant)
+            return RESTAURANT_TYPE
         return PROGRESS_TYPE
     }
 
-    override fun getItemCount(): Int = movies.size
+    override fun getItemCount(): Int = restaurants.size
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        if (holder is MovieViewHolder && movies[position] is Restaurant)
-            holder.bind(movies[position] as Restaurant)
+        if (holder is RestaurantViewHolder && restaurants[position] is Restaurant)
+            holder.bind(restaurants[position] as Restaurant)
     }
 
-    inner class MovieViewHolder(val binding: ItemMovieBinding): RecyclerView.ViewHolder(binding.root) {
-        fun bind(item: Restaurant?) {
-            binding.movie = item
-            binding.cardMovie.setOnClickListener {
-                listener.onSelectMovie(item)
+    inner class RestaurantViewHolder(private val binding: ItemRestaurantBinding): RecyclerView.ViewHolder(binding.root) {
+        fun bind(item: Restaurant) {
+            binding.restaurant = item
+            binding.cardRestaurant.setOnClickListener {
+                listener.onSelectRestaurant(item)
             }
             binding.executePendingBindings()
         }
@@ -71,10 +71,10 @@ class HomeAdapter(private val listener: OnAdapterInteraction):
 
     companion object {
         private const val PROGRESS_TYPE = 1
-        private const val MOVIE_TYPE = 2
+        private const val RESTAURANT_TYPE = 2
     }
 
     interface OnAdapterInteraction {
-        fun onSelectMovie(restaurant: Restaurant?)
+        fun onSelectRestaurant(restaurant: Restaurant?)
     }
 }

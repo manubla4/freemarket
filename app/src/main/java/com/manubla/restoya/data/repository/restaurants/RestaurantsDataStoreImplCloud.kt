@@ -8,13 +8,12 @@ class RestaurantsDataStoreImplCloud(private var restaurantService: RestaurantSer
 
     private val defaultCountryId    = 1  //Uruguay
     private val defaultPageSize     = 20
-    private val defaultFields       = "id,name,logo,coordinates,distance,discount," +
-                                      "payment_methods,general_score,all_categories," +
-                                      "business_type,has_online_payment_methods," +
-                                      "delivery_time_min_minutes,delivery_time_max_minutes"
+    private val defaultFields       = "id,name,logo,coordinates,distance,discount,paymentMethods," +
+                                      "generalScore,allCategories,businessType,hasOnlinePaymentMethods," +
+                                      "deliveryTimeMinMinutes,deliveryTimeMaxMinutes"
 
-    override suspend fun getRestaurantsPage(latitude: Double,
-                   longitude: Double, offset: Int): RestaurantsPageResponse {
+    override suspend fun getRestaurantsPage(latitude: Double?,
+                   longitude: Double?, offset: Int): RestaurantsPageResponse {
 
         lateinit var result: RestaurantsPageResponse
         try {

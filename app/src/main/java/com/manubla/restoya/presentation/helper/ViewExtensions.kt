@@ -16,7 +16,7 @@ fun View.invisible() {
 }
 
 fun View.visibleIf(condition: Boolean) {
-    if (condition) visible() else gone()
+    if (condition) visible() else invisible()
 }
 
 fun EditText.editTextString() = editableText.toString()

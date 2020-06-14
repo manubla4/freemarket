@@ -30,20 +30,16 @@ class SplashViewModel(private val tokenDataStoreCloud: TokenDataStoreCloud,
             tokenDataStoreStorage.storeToken(tokenResponse.access_token)
 
             val locationResult = object : LocationService.LocationResult {
-
                 override fun gotLocation(location: Location?) {
                     localLocation.postValue(location)
                 }
             }
 
-            if (!locationService.getLocation(locationResult)) {
-
-            }
-
+            if (!locationService.getLocation(locationResult))
+                localLocation.postValue(null)
 
         }
     }
-
 
 
 }

@@ -117,5 +117,5 @@ val restaurantsModule = module {
 
 val viewModelsModule = module {
     viewModel { SplashViewModel(get(), get(), get()) }
-    viewModel { HomeViewModel(get(), get()) }
+    viewModel { HomeViewModel(get()) }
 }
