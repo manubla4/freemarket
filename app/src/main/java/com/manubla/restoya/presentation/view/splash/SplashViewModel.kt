@@ -3,11 +3,6 @@ package com.manubla.restoya.presentation.view.splash
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.manubla.restoya.data.model.Genre
-import com.manubla.restoya.data.repository.configuration.ConfigurationSourceRepository
-import com.manubla.restoya.data.repository.genre.GenresSourceRepository
-import com.manubla.restoya.data.service.response.ConfigurationResponse
-import com.manubla.restoya.data.service.response.GenreResponse
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

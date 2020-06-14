@@ -6,7 +6,10 @@ import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 data class RestaurantsPageResponse (
-    val page: Int,
-    val results: List<Restaurant>,
-    var fromCloud: Boolean = true
+    val total: Int?,
+    val max: Int,
+    val sort: String,
+    val count: Int,
+    val data: List<Restaurant>,
+    val offset: Int
 ): Parcelable

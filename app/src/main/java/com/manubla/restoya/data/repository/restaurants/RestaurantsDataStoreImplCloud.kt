@@ -1,68 +1,37 @@
 package com.manubla.restoya.data.repository.restaurants
 
-import android.content.Context
-import com.bumptech.glide.Glide
-import com.manubla.restoya.data.model.Restaurant
 import com.manubla.restoya.data.service.RestaurantService
-import com.manubla.restoya.data.service.response.ImagesConfigurationResponse
 import com.manubla.restoya.data.service.response.RestaurantsPageResponse
-import java.io.File
 
 class RestaurantsDataStoreImplCloud(private var restaurantService: RestaurantService,
-                                    private val context: Context) : RestaurantsDataStore {
+                                    private var restaurantsDataStoreDatabase: RestaurantsDataStoreImplDatabase): RestaurantsDataStore {
 
+    private val defaultCountryId    = 1  //Uruguay
+    private val defaultPageSize     = 20
+    private val defaultFields        = "id,name,logo,coordinates,distance,discount," +
+                                        "payment_methods,general_score,all_categories," +
+                                        "business_type,has_online_payment_methods," +
+                                        "delivery_time_min_minutes,delivery_time_max_minutes"
 
-    private val defaultPopularitySort = "popularity.desc"
-    private val defaultPosterSize = "w185"
-    private val defaultLanguage = "en-US"
+    override suspend fun getRestaurantsPage(latitude: Double,
+                   longitude: Double, offset: Int): RestaurantsPageResponse {
 
-    override suspend fun getMoviesPage(page: Int): RestaurantsPageResponse {
-        return restaurantService.getMoviesPage(
-            defaultLanguage,
-            defaultPopularitySort,
-            includeAdult = false,
-            includeVideo = false,
-            page = page
-        ).apply { fromCloud = true }
-    }
-
-    override suspend fun getMoviesPage(page: Int, ratingMin: Double,
-                                       ratingMax: Double): RestaurantsPageResponse {
-
-        return restaurantService.getMoviesPage(
-            defaultLanguage,
-            defaultPopularitySort,
-            includeAdult = false,
-            includeVideo = false,
-            page = page,
-            ratingMin = ratingMin,
-            ratingMax = ratingMax
-        ).apply { fromCloud = true }
-    }
-
-
-    override suspend fun getMovie(movieId: Int): Restaurant? {
-        TODO("not implemented")
-    }
-
-    suspend fun getRemoteImage(posterPath: String?, imageConfig: ImagesConfigurationResponse): String {
-        var avgPosterSize: String = try {
-            imageConfig.posterSizes[imageConfig.posterSizes.size / 2]
-        } catch (e: Exception) {
-            defaultPosterSize
+        lateinit var result: RestaurantsPageResponse
+        try {
+            val coordinates = "$latitude,$longitude"
+            result = restaurantService.getRestaurantsPage(
+                point = coordinates,
+                country = defaultCountryId,
+                offset = offset,
+                max = defaultPageSize,
+                fields = defaultFields
+            )
+        } catch (error: Exception) {
+            return restaurantsDataStoreDatabase.getRestaurantsPage(latitude, longitude, offset)
         }
-        val url = imageConfig.secureBaseUrl.plus(avgPosterSize).plus(posterPath)
-        val file: File = Glide.with(context).asFile().load(url).submit().get()
-        return file.absolutePath
-    }
-
-    suspend fun searchMoviesPage(query: String, page: Int): RestaurantsPageResponse {
-        return restaurantService.searchMoviesPage(
-            defaultLanguage,
-            query,
-            page = page,
-            includeAdult = false
-        ).apply { fromCloud = true }
+        if (offset == 0) restaurantsDataStoreDatabase.deleteRestaurants()
+        restaurantsDataStoreDatabase.storeRestaurants(result.data)
+        return result
     }
 
 }

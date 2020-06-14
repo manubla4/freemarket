@@ -6,25 +6,11 @@ import retrofit2.http.Query
 
 interface RestaurantService {
 
-    @GET("discover/movie")
-    suspend fun getMoviesPage(@Query("language") language: String,
-                              @Query("sort_by") sortBy: String,
-                              @Query("include_adult") includeAdult: Boolean,
-                              @Query("include_video") includeVideo: Boolean,
-                              @Query("page") page: Int): RestaurantsPageResponse
+    @GET("search/restaurants")
+    suspend fun getRestaurantsPage(@Query("point") point: String,
+                                   @Query("country") country: Int,
+                                   @Query("offset") offset: Int,
+                                   @Query("max") max: Int ,
+                                   @Query("fields") fields: String): RestaurantsPageResponse
 
-    @GET("discover/movie")
-    suspend fun getMoviesPage(@Query("language") language: String,
-                              @Query("sort_by") sortBy: String,
-                              @Query("include_adult") includeAdult: Boolean,
-                              @Query("include_video") includeVideo: Boolean,
-                              @Query("page") page: Int,
-                              @Query("vote_average.gte") ratingMin: Double,
-                              @Query("vote_average.lte") ratingMax: Double): RestaurantsPageResponse
-
-    @GET("search/movie")
-    suspend fun searchMoviesPage(@Query("language") language: String,
-                              @Query("query") query: String,
-                              @Query("page") page: Int,
-                              @Query("include_adult") includeAdult: Boolean): RestaurantsPageResponse
 }
