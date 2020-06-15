@@ -9,11 +9,10 @@ import java.util.*
 
 class LocationService (private val mLocationManager: LocationManager) {
 
-    private var mLocationLoaded = false
-
     fun getLocation(result: LocationResult): Boolean {
 
         mLocationResult = result
+        mTimeoutTimer = Timer()
 
         val statusOfGPS = mLocationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)
         val statusOfNetwork = mLocationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)
@@ -37,7 +36,6 @@ class LocationService (private val mLocationManager: LocationManager) {
                     mLocationListener
                 )
             }
-
             mTimeoutTimer.schedule(object : TimerTask() {
                 override fun run() {
                     mLocationManager.removeUpdates(mLocationListener)
@@ -59,18 +57,13 @@ class LocationService (private val mLocationManager: LocationManager) {
         fun gotLocation(location: Location?)
     }
 
-    private var mTimeoutTimer = Timer()
+    private lateinit var mTimeoutTimer: Timer
     private var mLocationResult: LocationResult? = null
     private val mLocationListener = object : LocationListener {
         override fun onLocationChanged(location: Location) {
-            try {
-                mTimeoutTimer.cancel()
-                mLocationManager.removeUpdates(this)
-                mLocationResult?.gotLocation(location)
-            }
-            catch (e: Exception) {
-                //ignore}
-            }
+            mTimeoutTimer.cancel()
+            mLocationManager.removeUpdates(this)
+            mLocationResult?.gotLocation(location)
         }
 
         override fun onProviderDisabled(provider: String) {}

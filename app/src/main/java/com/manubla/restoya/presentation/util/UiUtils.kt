@@ -25,7 +25,7 @@ private fun showMessage(message: String, view: View?, context: Context?, length:
 
     if (view != null && context != null) {
         val snackbar = Snackbar.make(view, message,
-            (if (length == LENGTH_SHORT) Snackbar.LENGTH_SHORT else Snackbar.LENGTH_LONG))
+            (if (length == LENGTH_SHORT) Snackbar.LENGTH_SHORT else 8000))
         snackbar.apply {
             setAction("OK") { dismiss() }
             if (state == STATE_SUCCESS) {

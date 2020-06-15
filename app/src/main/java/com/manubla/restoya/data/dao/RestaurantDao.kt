@@ -9,6 +9,9 @@ import com.manubla.restoya.data.model.Restaurant
 @Dao
 interface RestaurantDao {
 
+    @Query("SELECT * FROM ${Restaurant.TABLE_NAME}")
+    suspend fun getAll(): List<Restaurant>
+
     @Query("SELECT * FROM ${Restaurant.TABLE_NAME} LIMIT :offset, :rows")
     suspend fun getAllWithOffset(offset: Int, rows: Int): List<Restaurant>
 

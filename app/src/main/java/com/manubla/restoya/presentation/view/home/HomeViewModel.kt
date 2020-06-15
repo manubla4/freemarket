@@ -36,6 +36,17 @@ class HomeViewModel(private val restaurantsRepository: RestaurantsSourceReposito
         localNetworkOnline.postValue(networkingManager.isNetworkOnline())
     }
 
+    fun loadData(offset: Int, lat: Double?, long: Double?) {
+        mOffset = offset
+        if (lat == null || long == null)
+            loadData(mOffset)
+        else {
+            mLatitude = lat
+            mLongitude = long
+            fetchRestaurants(mOffset)
+        }
+    }
+
     fun loadData(offset: Int) {
         mOffset = offset
         if (mLatitude != null && mLongitude != null)

@@ -13,6 +13,8 @@ open class RestaurantsDataStoreFactory(
 
     val restaurantsDataStoreFactory: RestaurantsDataStore
         get() = createDataStoreFactory()
+    val restaurantsDataStoreDatabase: RestaurantsDataStoreImplDatabase
+        get() = createDataStoreDatabase()
 
     private fun createDataStoreFactory() =
         if (networkingManager.isNetworkOnline())

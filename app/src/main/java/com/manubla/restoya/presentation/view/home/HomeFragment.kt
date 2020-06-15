@@ -15,7 +15,7 @@ import com.manubla.restoya.presentation.util.showLongErrorMessage
 import kotlinx.android.synthetic.main.fragment_home.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class HomeFragment: Fragment(), HomeAdapter.OnAdapterInteraction {
+class HomeFragment: Fragment(), HomeAdapter.OnAdapterInteraction, ActivityCallback {
 
     private lateinit var mAdapter: HomeAdapter
     private val mViewModel: HomeViewModel by viewModel()
@@ -66,16 +66,25 @@ class HomeFragment: Fragment(), HomeAdapter.OnAdapterInteraction {
         mViewModel.loadData(mCurrentOffset)
 
         swipeLayout.setOnRefreshListener {
-            doRefresh()
+            doRefresh(null, null)
         }
     }
 
-    private fun doRefresh() {
+    override fun onChangeLocation(lat: Double?, long: Double?) {
+        doRefresh(lat, long)
+    }
+
+    override fun onRefresh() {
+        doRefresh(null, null)
+    }
+
+
+    private fun doRefresh(lat: Double?, long: Double?) {
         swipeLayout.isRefreshing = true
         mLoading = true
         mAdapter.restaurants = arrayListOf()
         mCurrentOffset = 0
-        mViewModel.loadData(mCurrentOffset)
+        mViewModel.loadData(mCurrentOffset, lat, long)
     }
 
 

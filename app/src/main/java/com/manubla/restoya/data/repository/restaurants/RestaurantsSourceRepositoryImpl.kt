@@ -1,5 +1,6 @@
 package com.manubla.restoya.data.repository.restaurants
 
+import com.manubla.restoya.data.model.Restaurant
 import com.manubla.restoya.data.service.response.RestaurantsPageResponse
 
 class RestaurantsSourceRepositoryImpl(var factory: RestaurantsDataStoreFactory) : RestaurantsSourceRepository {
@@ -18,6 +19,14 @@ class RestaurantsSourceRepositoryImpl(var factory: RestaurantsDataStoreFactory) 
                                     count = 0,
                                     data = listOf(),
                                     offset = offset)
+        }
+
+
+    override suspend fun getAllStoredRestaurants(): List<Restaurant> =
+        try {
+            factory.restaurantsDataStoreDatabase.getAllRestaurants()
+        } catch (error: Exception) {
+            listOf()
         }
 
 }

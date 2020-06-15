@@ -20,6 +20,7 @@ import com.manubla.restoya.data.service.RestaurantService
 import com.manubla.restoya.data.service.TokenService
 import com.manubla.restoya.data.source.AppDatabase
 import com.manubla.restoya.presentation.view.home.HomeViewModel
+import com.manubla.restoya.presentation.view.map.MapViewModel
 import com.manubla.restoya.presentation.view.splash.SplashViewModel
 import com.readystatesoftware.chuck.ChuckInterceptor
 import okhttp3.OkHttpClient
@@ -117,4 +118,5 @@ val restaurantsModule = module {
 val viewModelsModule = module {
     viewModel { SplashViewModel(get(), get()) }
     viewModel { HomeViewModel(get(), get(), get()) }
+    viewModel { MapViewModel(get(), get()) }
 }

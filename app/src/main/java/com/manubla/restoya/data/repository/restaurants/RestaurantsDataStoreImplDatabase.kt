@@ -21,6 +21,11 @@ class RestaurantsDataStoreImplDatabase(private val restaurantDao: RestaurantDao)
                                        offset = offset)
     }
 
+
+    suspend fun getAllRestaurants(): List<Restaurant> =
+        restaurantDao.getAll()
+
+    
     suspend fun storeRestaurants(restaurants: List<Restaurant>) {
         restaurantDao.insertAll(restaurants)
     }
