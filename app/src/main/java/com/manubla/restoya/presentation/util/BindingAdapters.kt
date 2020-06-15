@@ -13,7 +13,7 @@ import com.manubla.restoya.presentation.helper.visibleIf
 
 @BindingAdapter("bindRestaurantDiscount")
 fun bindRestaurantDiscount(textView: TextView, discount: Int) {
-    val text = "%$discount descuento hoy"
+    val text = "$discount% descuento hoy"
     textView.text = text
     textView.visibleIf(discount > 0)
 }

@@ -69,6 +69,11 @@ class MapFragment : Fragment(), ActivityCallback, OnMapReadyCallback {
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+        onRefresh()
+    }
+
     override fun onMapReady(map: GoogleMap?) {
         mMap = map
         try {
