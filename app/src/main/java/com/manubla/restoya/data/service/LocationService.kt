@@ -1,44 +1,43 @@
 package com.manubla.restoya.data.service
 
-import android.content.Context
 import android.location.Location
 import android.location.LocationListener
 import android.location.LocationManager
 import android.os.Bundle
-import android.provider.Settings
 import android.util.Log
 import java.util.*
 
-class LocationService (private val mLocationManager: LocationManager,
-                       private val context: Context) {
+class LocationService (private val mLocationManager: LocationManager) {
+
+    private var mLocationLoaded = false
 
     fun getLocation(result: LocationResult): Boolean {
 
         mLocationResult = result
 
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.P) {
-            val networkEnabled = mLocationManager.isLocationEnabled
-            if (!networkEnabled)
-                return false
-        } else {
-            val providers = Settings.Secure.getString(
-                context.contentResolver,
-                Settings.Secure.LOCATION_PROVIDERS_ALLOWED
-            )
-            val networkEnabled =
-                mLocationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)
-                                || providers.contains("network")
-            if (!networkEnabled)
-                return false
-        }
+        val statusOfGPS = mLocationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)
+        val statusOfNetwork = mLocationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)
+
+        if (!statusOfGPS || !statusOfNetwork) return false
 
         try {
-            mLocationManager.requestLocationUpdates(
-                LocationManager.GPS_PROVIDER,   //FIXME!!
-                0,
-                0f,
-                mLocationListener
-            )
+            if (statusOfGPS) {
+                mLocationManager.requestLocationUpdates(
+                    LocationManager.GPS_PROVIDER,
+                    0,
+                    0f,
+                    mLocationListener
+                )
+            }
+            else {
+                mLocationManager.requestLocationUpdates(
+                    LocationManager.NETWORK_PROVIDER,
+                    0,
+                    0f,
+                    mLocationListener
+                )
+            }
+
             mTimeoutTimer.schedule(object : TimerTask() {
                 override fun run() {
                     mLocationManager.removeUpdates(mLocationListener)
@@ -64,9 +63,14 @@ class LocationService (private val mLocationManager: LocationManager,
     private var mLocationResult: LocationResult? = null
     private val mLocationListener = object : LocationListener {
         override fun onLocationChanged(location: Location) {
-            mTimeoutTimer.cancel()
-            mLocationManager.removeUpdates(this)
-            mLocationResult?.gotLocation(location)
+            try {
+                mTimeoutTimer.cancel()
+                mLocationManager.removeUpdates(this)
+                mLocationResult?.gotLocation(location)
+            }
+            catch (e: Exception) {
+                //ignore}
+            }
         }
 
         override fun onProviderDisabled(provider: String) {}

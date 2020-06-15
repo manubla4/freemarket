@@ -4,6 +4,7 @@ import android.location.Location
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.manubla.restoya.data.helper.networking.NetworkingManager
 import com.manubla.restoya.data.repository.restaurants.RestaurantsSourceRepository
 import com.manubla.restoya.data.service.LocationService
 import com.manubla.restoya.data.service.response.RestaurantsPageResponse
@@ -13,22 +14,32 @@ import kotlinx.coroutines.launch
 import kotlin.coroutines.CoroutineContext
 
 class HomeViewModel(private val restaurantsRepository: RestaurantsSourceRepository,
-                    private val locationService: LocationService) : ViewModel(), CoroutineScope {
+                    private val locationService: LocationService,
+                    private val networkingManager: NetworkingManager) : ViewModel(), CoroutineScope {
 
     private var mLatitude: Double? = null
     private var mLongitude: Double? = null
+    private var mOffset: Int = 0
 
     override val coroutineContext: CoroutineContext
         get() = Dispatchers.Main
-
     val data: LiveData<RestaurantsPageResponse>
         get() = localData
+    val networkOnline: LiveData<Boolean>
+        get() = localNetworkOnline
 
     private val localData = MutableLiveData<RestaurantsPageResponse>()
+    private val localNetworkOnline = MutableLiveData<Boolean>()
+
+
+    fun isNetworkOnline() {
+        localNetworkOnline.postValue(networkingManager.isNetworkOnline())
+    }
 
     fun loadData(offset: Int) {
+        mOffset = offset
         if (mLatitude != null && mLongitude != null)
-            fetchRestaurants(offset)
+            fetchRestaurants(mOffset)
         else {
             //Get location first and then fetch restaurants
             val locationResult = object : LocationService.LocationResult {
@@ -37,21 +48,21 @@ class HomeViewModel(private val restaurantsRepository: RestaurantsSourceReposito
                         mLatitude = it.latitude
                         mLongitude = it .longitude
                     }
-                    fetchRestaurants(offset)
+                    fetchRestaurants(mOffset)
                 }
             }
 
             if (!locationService.getLocation(locationResult))
-                fetchRestaurants(offset) //Network disabled or something went wrong
+                fetchRestaurants(mOffset) //Network disabled or something went wrong
         }
     }
 
 
-    fun fetchRestaurants(offset: Int) {
+    private fun fetchRestaurants(offset: Int) {
         launch(Dispatchers.IO) {
-            localData.postValue(
-                restaurantsRepository.getRestaurantsPage(mLatitude, mLongitude, offset)
-            )
+            val data = restaurantsRepository.getRestaurantsPage(mLatitude, mLongitude, offset)
+            if (mOffset == offset)  //FIXME fix this properly, weird coroutines bug
+                localData.postValue(data)
         }
     }
 

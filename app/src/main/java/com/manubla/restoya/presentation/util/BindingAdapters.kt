@@ -20,7 +20,8 @@ fun bindRestaurantDiscount(textView: TextView, discount: Int) {
 
 @BindingAdapter("bindRestaurantDistance")
 fun bindRestaurantDistance(textView: TextView, distance: Double) {
-    textView.text = distance.toString()
+    val text = "$distance km."
+    textView.text = text
 }
 
 @BindingAdapter("bindRestaurantOnlinePayment")

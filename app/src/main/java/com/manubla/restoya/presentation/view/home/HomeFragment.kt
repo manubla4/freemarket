@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.manubla.restoya.R
 import com.manubla.restoya.data.model.Restaurant
 import com.manubla.restoya.data.service.response.RestaurantsPageResponse
+import com.manubla.restoya.presentation.util.showLongErrorMessage
 import kotlinx.android.synthetic.main.fragment_home.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -36,7 +37,7 @@ class HomeFragment: Fragment(), HomeAdapter.OnAdapterInteraction {
 
         mainLayout.requestFocus()
         mAdapter = HomeAdapter(this)
-        mViewModel.data.observe(viewLifecycleOwner, Observer(this::dataChanged))
+
         val layoutManager = LinearLayoutManager(activity)
         recyclerView.let {
             it.layoutManager = layoutManager
@@ -58,9 +59,12 @@ class HomeFragment: Fragment(), HomeAdapter.OnAdapterInteraction {
                 }
             })
         }
-
         swipeLayout.isRefreshing = true
+
+        mViewModel.data.observe(viewLifecycleOwner, Observer(this::dataChanged))
+        mViewModel.networkOnline.observe(viewLifecycleOwner, Observer(this::isNetworkOnline))
         mViewModel.loadData(mCurrentOffset)
+
         swipeLayout.setOnRefreshListener {
             doRefresh()
         }
@@ -68,27 +72,45 @@ class HomeFragment: Fragment(), HomeAdapter.OnAdapterInteraction {
 
     private fun doRefresh() {
         swipeLayout.isRefreshing = true
+        mLoading = true
         mAdapter.restaurants = arrayListOf()
         mCurrentOffset = 0
         mViewModel.loadData(mCurrentOffset)
     }
 
 
+    private fun isNetworkOnline(network: Boolean) {
+        if (!network)
+            showLongErrorMessage(getString(R.string.txt_network_connection), view, context)
+    }
+
+
     private fun dataChanged(page: RestaurantsPageResponse) {
+
+        var changedNetworkStatus = false
         mAdapter.removeProgressItem()
         page.total?.let {
-            if (it != mCurrentTotal) {
-                mCurrentTotal = it
+            if (mCurrentTotal > 0 && it != mCurrentTotal) {
+                //User activated or deactivated network while scrolling
+                mCurrentOffset = 0
                 mAdapter.restaurants = arrayListOf()
+                changedNetworkStatus = true
             }
+            mCurrentTotal = it
         }
 
         swipeLayout.isRefreshing = false
-        mAdapter.addRestaurantItems(page.data)
-        if (mCurrentOffset == 0)
+        if (mCurrentOffset == 0) {
             recyclerView.scheduleLayoutAnimation()
+            mViewModel.isNetworkOnline()
+        }
 
-        mCurrentOffset += page.count
+        if (changedNetworkStatus)
+            mViewModel.loadData(mCurrentOffset)
+        else {
+            mCurrentOffset += page.count
+            mAdapter.addRestaurantItems(page.data)
+        }
         mLoading = false
     }
 

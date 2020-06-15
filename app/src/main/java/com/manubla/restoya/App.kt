@@ -13,7 +13,6 @@ import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
 import java.lang.ref.WeakReference
 
-
 class App : Application() {
 //    private val sharedPreferences: SharedPreferences by inject()
 

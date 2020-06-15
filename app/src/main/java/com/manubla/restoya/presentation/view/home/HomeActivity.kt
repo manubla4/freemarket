@@ -2,6 +2,7 @@ package com.manubla.restoya.presentation.view.home
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import com.manubla.restoya.R
 import com.manubla.restoya.presentation.view.map.MapFragment
@@ -14,6 +15,9 @@ class HomeActivity : AppCompatActivity() {
         setContentView(R.layout.activity_home)
 
         if (savedInstanceState == null) {
+
+            setSupportActionBar(toolbar as Toolbar?)
+            supportActionBar?.setDisplayShowTitleEnabled(false)
 
             val homeFragment = HomeFragment()
             val favoritesFragment = MapFragment()

@@ -98,13 +98,12 @@ val networkModule = module {
         get<Retrofit>().create(TokenService::class.java)
     }
 
-    single { TokenDataStoreCloud(get()) }
+    single { TokenDataStoreCloud(get(), get()) }
 }
 
 
 val locationModule = module {
-    single { LocationService(get<Context>().getSystemService(Context.LOCATION_SERVICE) as LocationManager,
-                             get() ) }
+    single { LocationService(get<Context>().getSystemService(Context.LOCATION_SERVICE) as LocationManager) }
 }
 
 
@@ -117,5 +116,5 @@ val restaurantsModule = module {
 
 val viewModelsModule = module {
     viewModel { SplashViewModel(get(), get()) }
-    viewModel { HomeViewModel(get(), get()) }
+    viewModel { HomeViewModel(get(), get(), get()) }
 }
