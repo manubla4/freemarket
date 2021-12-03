@@ -4,7 +4,7 @@
     <data>
         <variable
             name="restaurant"
-            type="com.manubla.restoya.data.model.Restaurant" />
+            type="com.manubla.freemarket.data.model.Restaurant" />
     </data>
 
     <androidx.cardview.widget.CardView

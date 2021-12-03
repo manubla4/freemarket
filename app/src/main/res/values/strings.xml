@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">RestoYa</string>
+    <string name="app_name">Free Market</string>
     <string name="home">Home</string>
     <string name="map">Mapa</string>
     <string name="txt_online_payment">Pago Online</string>
@@ -7,7 +7,6 @@
     <string name="txt_location_unavailable">Localización no disponible</string>
     <string name="txt_location_enable">Habilita Localización para continuar</string>
     <string name="txt_network_connection">Sin conexión a internet</string>
-    <string name="txt_no_results">No se obtuvieron resultados</string>
     <string name="txt_change_location">Editar ubicación</string>
     <string name="txt_change_location_help">Toque cualquier lugar del mapa para elegir la nueva ubicación del cliente, para finalizar presione confirmar</string>
     <string name="txt_change_location_success">Ubicación modificada con éxito</string>
@@ -15,5 +14,4 @@
     <string name="txt_confirmar">Confirmar</string>
 
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
