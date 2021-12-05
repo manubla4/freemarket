@@ -1,6 +1,6 @@
 package com.manubla.freemarket.data.repository.restaurants
 
-import com.manubla.freemarket.data.model.Restaurant
+import com.manubla.freemarket.data.model.Product
 import com.manubla.freemarket.data.service.response.RestaurantsPageResponse
 
 class RestaurantsSourceRepositoryImpl(var factory: RestaurantsDataStoreFactory) : RestaurantsSourceRepository {
@@ -22,7 +22,7 @@ class RestaurantsSourceRepositoryImpl(var factory: RestaurantsDataStoreFactory) 
         }
 
 
-    override suspend fun getAllStoredRestaurants(): List<Restaurant> =
+    override suspend fun getAllStoredRestaurants(): List<Product> =
         try {
             factory.restaurantsDataStoreDatabase.getAllRestaurants()
         } catch (error: Exception) {

@@ -1,6 +1,6 @@
 package com.manubla.freemarket.data.repository.restaurants
 
-import com.manubla.freemarket.data.model.Restaurant
+import com.manubla.freemarket.data.model.Product
 import com.manubla.freemarket.data.service.response.RestaurantsPageResponse
 
 interface RestaurantsSourceRepository {
@@ -8,5 +8,5 @@ interface RestaurantsSourceRepository {
                                    longitude: Double?,
                                    offset: Int): RestaurantsPageResponse
 
-    suspend fun getAllStoredRestaurants(): List<Restaurant>
+    suspend fun getAllStoredRestaurants(): List<Product>
 }

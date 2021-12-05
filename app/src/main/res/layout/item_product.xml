@@ -4,7 +4,7 @@
     <data>
         <variable
             name="restaurant"
-            type="com.manubla.freemarket.data.model.Restaurant" />
+            type="com.manubla.freemarket.data.model.Product" />
     </data>
 
     <androidx.cardview.widget.CardView
@@ -35,7 +35,7 @@
                 android:layout_height="match_parent">
 
                 <TextView
-                    style="@style/TextAppearance.AppCompat.Small"
+                    style="@style/SmallTextBlack"
                     android:id="@+id/txtName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -43,14 +43,13 @@
                     android:gravity="center"
                     android:textStyle="bold"
                     android:maxLines="2"
-                    android:textColor="@color/colorTextPrimary"
                     android:text="@{restaurant.name}"
                     tools:text="Paladar Arepas"
                     app:layout_constraintTop_toTopOf="parent"/>
 
 
                 <TextView
-                    style="@style/TextAppearance.AppCompat.Caption"
+                    style="@style/CaptionTextBlack"
                     android:id="@+id/txtDiscount"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -73,7 +72,7 @@
                     app:layout_constraintTop_toBottomOf="@id/txtDiscount">
 
                     <TextView
-                        style="@style/TextAppearance.AppCompat.Caption"
+                        style="@style/CaptionText"
                         android:id="@+id/txtTime"
                         android:layout_width="0dp"
                         android:layout_weight="1"
@@ -97,7 +96,7 @@
                             android:src="@drawable/ic_star_yellow"/>
 
                         <TextView
-                            style="@style/TextAppearance.AppCompat.Caption"
+                            style="@style/CaptionText"
                             android:id="@+id/txtScore"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -122,7 +121,7 @@
                     app:layout_constraintBottom_toBottomOf="parent">
 
                     <TextView
-                        style="@style/TextAppearance.AppCompat.Caption"
+                        style="@style/CaptionText"
                         android:id="@+id/txtDistance"
                         android:layout_width="0dp"
                         android:layout_weight="1"
@@ -133,7 +132,7 @@
 
 
                     <TextView
-                        style="@style/TextAppearance.AppCompat.Caption"
+                        style="@style/CaptionText"
                         android:id="@+id/txtOnlinePayments"
                         android:layout_width="0dp"
                         android:layout_weight="1"

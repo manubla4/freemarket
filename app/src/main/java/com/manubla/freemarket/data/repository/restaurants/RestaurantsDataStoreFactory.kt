@@ -1,13 +1,13 @@
 package com.manubla.freemarket.data.repository.restaurants
 
-import com.manubla.freemarket.data.dao.RestaurantDao
+import com.manubla.freemarket.data.dao.ProductsDao
 import com.manubla.freemarket.data.helper.networking.NetworkingManager
 import com.manubla.freemarket.data.service.RestaurantService
 
 @Suppress("UNUSED_PARAMETER")
 open class RestaurantsDataStoreFactory(
     private val service: RestaurantService,
-    private val dao: RestaurantDao,
+    private val dao: ProductsDao,
     private val networkingManager: NetworkingManager
 ) {
 

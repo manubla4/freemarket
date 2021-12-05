@@ -1,4 +1,4 @@
-package com.manubla.freemarket.presentation.util
+package com.manubla.freemarket.utils
 
 import android.content.Context
 import android.graphics.Color

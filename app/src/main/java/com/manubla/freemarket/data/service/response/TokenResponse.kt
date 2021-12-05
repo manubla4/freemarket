@@ -1,7 +1,7 @@
 package com.manubla.freemarket.data.service.response
 
 import android.os.Parcelable
-import kotlinx.android.parcel.Parcelize
+import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class TokenResponse (

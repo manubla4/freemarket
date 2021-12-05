@@ -1,18 +1,18 @@
 package com.manubla.freemarket.data.repository.restaurants
 
-import com.manubla.freemarket.data.dao.RestaurantDao
-import com.manubla.freemarket.data.model.Restaurant
+import com.manubla.freemarket.data.dao.ProductsDao
+import com.manubla.freemarket.data.model.Product
 import com.manubla.freemarket.data.service.response.RestaurantsPageResponse
 
-class RestaurantsDataStoreImplDatabase(private val restaurantDao: RestaurantDao) : RestaurantsDataStore {
+class RestaurantsDataStoreImplDatabase(private val productsDao: ProductsDao) : RestaurantsDataStore {
 
     private val defaultPageSize = 20
 
     override suspend fun getRestaurantsPage(latitude: Double?,
                                             longitude: Double?,
                                             offset: Int): RestaurantsPageResponse {
-        val results = restaurantDao.getAllWithOffset(offset, defaultPageSize)
-        val total = restaurantDao.getRowsCount()
+        val results = productsDao.getAllWithOffset(offset, defaultPageSize)
+        val total = productsDao.getRowsCount()
         return RestaurantsPageResponse(total = total,
                                        max = defaultPageSize,
                                        sort = "",
@@ -22,16 +22,16 @@ class RestaurantsDataStoreImplDatabase(private val restaurantDao: RestaurantDao)
     }
 
 
-    suspend fun getAllRestaurants(): List<Restaurant> =
-        restaurantDao.getAll()
+    suspend fun getAllRestaurants(): List<Product> =
+        productsDao.getAll()
 
     
-    suspend fun storeRestaurants(restaurants: List<Restaurant>) {
-        restaurantDao.insertAll(restaurants)
+    suspend fun storeRestaurants(products: List<Product>) {
+        productsDao.insertAll(products)
     }
 
     suspend fun deleteRestaurants() {
-        restaurantDao.deleteAll()
+        productsDao.deleteAll()
     }
 
 }

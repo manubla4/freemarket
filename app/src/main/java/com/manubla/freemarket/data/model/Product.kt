@@ -5,11 +5,11 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
-import kotlinx.android.parcel.Parcelize
+import kotlinx.parcelize.Parcelize
 
 @Parcelize
-@Entity(tableName = Restaurant.TABLE_NAME)
-data class Restaurant (
+@Entity(tableName = Product.TABLE_NAME)
+data class Product (
     @PrimaryKey val id: Int,
     val name: String,
     val logo: String,
@@ -23,6 +23,6 @@ data class Restaurant (
 ): Parcelable {
 
     companion object {
-        const val TABLE_NAME = "restaurants"
+        internal const val TABLE_NAME = "products"
     }
 }

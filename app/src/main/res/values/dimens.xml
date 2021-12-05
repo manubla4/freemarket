@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="input_margin">16dp</dimen>
-    <dimen name="double_block_margin">64dp</dimen>
-    <dimen name="fragment_padding">15dp</dimen>
+    <dimen name="padding_fragment">15dp</dimen>
     <dimen name="fading_edge">15dp</dimen>
+    <dimen name="size_splash_icon">120dp</dimen>
+    <dimen name="margin_double_block">64dp</dimen>
 </resources>

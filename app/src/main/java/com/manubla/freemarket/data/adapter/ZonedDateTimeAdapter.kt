@@ -1,4 +1,4 @@
-package com.manubla.freemarket.data.helper.adapter
+package com.manubla.freemarket.data.adapter
 
 import com.google.gson.TypeAdapter
 import com.google.gson.stream.JsonReader

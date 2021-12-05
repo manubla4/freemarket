@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#D1242A</color>
-    <color name="colorPrimaryDark">#A32127</color>
-    <color name="colorAccent">#CF0F20</color>
+    <color name="colorPrimary">#E2D900</color>
+    <color name="colorPrimaryDark">#A79E00</color>
+    <color name="colorAccent">#EEE500</color>
     <color name="colorTextPrimary">#121212</color>
-    <color name="colorBackground1">#F3F3F3</color>
-    <color name="colorBackground2">#E2DBDE</color>
+    <color name="colorBackground">#F3F3F3</color>
     <color name="colorSuccess">#4aab33</color>
     <color name="colorFailure">#C40E00</color>
+    <color name="ic_launcher_background">#EAD700</color>
 </resources>

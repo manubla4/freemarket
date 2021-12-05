@@ -5,19 +5,11 @@
     android:gravity="center"
     android:orientation="vertical">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/double_block_margin"
-        android:gravity="center"
-        android:orientation="vertical">
-
-        <ImageView
-            android:layout_width="120dp"
-            android:layout_height="120dp"
-            android:src="@drawable/ic_launcher_splash" />
-
-    </LinearLayout>
+    <ImageView
+        android:layout_width="@dimen/size_splash_icon"
+        android:layout_height="@dimen/size_splash_icon"
+        android:src="@drawable/ic_launcher_splash"
+        android:layout_marginBottom="@dimen/margin_double_block"/>
 
     <ProgressBar
         style="?android:attr/progressBarStyle"

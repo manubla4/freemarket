@@ -1,11 +1,11 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
-apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-parcelize'
 
 android {
     compileSdkVersion 31
-    buildToolsVersion "29.0.3"
+    buildToolsVersion "30.0.3"
     defaultConfig {
         applicationId "com.manubla.freemarket"
         minSdkVersion 21
@@ -13,9 +13,7 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        buildConfigField "String", "DATABASE_NAME", '"freemarketdb"'
-        buildConfigField "String", "BASE_URL", '"http://stg-api.pedidosya.com/public/v1/"'
-        buildConfigField "String", "IMAGES_URL", '"https://img.pystatic.com/restaurants/"'
+        buildConfigField "String", "BASE_URL", '"https://api.mercadolibre.com/sites/MLU/"'
     }
     buildTypes {
         release {
@@ -23,8 +21,8 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
-    androidExtensions {
-        experimental = true
+    buildFeatures {
+        viewBinding true
     }
     dataBinding {
         enabled true
@@ -47,8 +45,8 @@ dependencies {
     implementation 'androidx.core:core-ktx:1.8.0-alpha01'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.2'
 
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$kotlin_version"
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$kotlin_version"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.0-RC"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.0-RC"
 
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
@@ -67,9 +65,10 @@ dependencies {
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     kapt 'androidx.room:room-compiler:2.3.0'
 
-    implementation 'org.koin:koin-android:2.1.6'
-    implementation 'org.koin:koin-androidx-viewmodel:2.1.6'
-    implementation 'org.koin:koin-androidx-ext:2.1.6'
+    implementation 'io.insert-koin:koin-core:3.0.1'
+    implementation 'io.insert-koin:koin-android:3.0.1'
+    implementation 'io.insert-koin:koin-androidx-viewmodel:2.2.2'
+    implementation 'io.insert-koin:koin-androidx-ext:2.2.2'
 
     implementation 'com.facebook.stetho:stetho:1.6.0'
 
