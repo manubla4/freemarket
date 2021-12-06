@@ -4,10 +4,16 @@ import android.content.Context
 import androidx.room.Room
 import com.google.gson.FieldNamingPolicy
 import com.google.gson.GsonBuilder
+import com.manubla.freemarket.BuildConfig
 import com.manubla.freemarket.data.adapter.ZonedDateTimeAdapter
-import com.manubla.freemarket.data.repository.restaurants.RestaurantsDataStoreFactory
-import com.manubla.freemarket.data.repository.restaurants.RestaurantsSourceRepository
-import com.manubla.freemarket.data.repository.restaurants.RestaurantsSourceRepositoryImpl
+import com.manubla.freemarket.data.dao.ProductDao
+import com.manubla.freemarket.data.datastore.products.cloud.ProductsDataStoreCloud
+import com.manubla.freemarket.data.datastore.products.cloud.ProductsDataStoreCloudImpl
+import com.manubla.freemarket.data.datastore.products.database.ProductsDataStoreDatabase
+import com.manubla.freemarket.data.datastore.products.database.ProductsDataStoreDatabaseImpl
+import com.manubla.freemarket.data.repository.products.ProductsSourceRepository
+import com.manubla.freemarket.data.repository.products.ProductsSourceRepositoryImpl
+import com.manubla.freemarket.data.service.ProductService
 import com.manubla.freemarket.data.source.AppDatabase
 import com.readystatesoftware.chuck.ChuckInterceptor
 import okhttp3.OkHttpClient
@@ -61,16 +67,28 @@ val networkModule = module {
         .build()
     }
 
-    single<RestaurantService> {
-        get<Retrofit>().create(RestaurantService::class.java)
+    factory<ProductService> {
+        get<Retrofit>().create(ProductService::class.java)
     }
 }
 
 
-val restaurantsModule = module {
-    single { RestaurantsDataStoreFactory(get(), get(), get()) }
-    single<RestaurantsSourceRepository> {
-        RestaurantsSourceRepositoryImpl(get())
+val productsModule = module {
+    factory<ProductsSourceRepository> {
+        ProductsSourceRepositoryImpl(
+            get<ProductsDataStoreDatabase>(),
+            get<ProductsDataStoreCloud>()
+        )
+    }
+    factory<ProductsDataStoreCloud> {
+        ProductsDataStoreCloudImpl(
+            get<ProductService>()
+        )
+    }
+    factory<ProductsDataStoreDatabase> {
+        ProductsDataStoreDatabaseImpl(
+            get<ProductDao>()
+        )
     }
 }
 

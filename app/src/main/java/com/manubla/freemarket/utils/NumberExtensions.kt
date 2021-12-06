@@ -12,3 +12,7 @@ fun Long?.toNotNullable(): Long {
 fun Int?.toNotNullable(): Int {
     return this ?: Int.zero()
 }
+
+fun Int?.isZero(): Boolean {
+    return this == Int.zero()
+}
