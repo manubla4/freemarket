@@ -1,4 +1,4 @@
-package com.manubla.freemarket.data.dao
+package com.manubla.freemarket.data.source.storage.dao
 
 import androidx.room.Dao
 import androidx.room.Insert
@@ -10,7 +10,7 @@ import com.manubla.freemarket.data.model.User
 @Dao
 interface StateDao {
 
-    @Query("SELECT * FROM ${State.TABLE_NAME} WHERE id=:id")
+    @Query("SELECT * FROM ${State.TABLE_NAME} WHERE ${State.PARAM_ID}=:id")
     suspend fun getById(id: String): User?
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)

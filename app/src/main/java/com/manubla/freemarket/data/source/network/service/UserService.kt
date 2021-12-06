@@ -1,4 +1,4 @@
-package com.manubla.freemarket.data.service
+package com.manubla.freemarket.data.source.network.service
 
 import com.manubla.freemarket.data.model.User
 import retrofit2.http.GET

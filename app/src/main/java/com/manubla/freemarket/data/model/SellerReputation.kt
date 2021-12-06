@@ -11,11 +11,11 @@ data class SellerReputation (
 
     @ColumnInfo(name = PARAM_LEVEL_ID)
     @SerializedName(PARAM_LEVEL_ID)
-    val _levelId: String?,
+    private val _levelId: String?,
 
     @ColumnInfo(name = PARAM_POWER_SELLER_STATUS)
     @SerializedName(PARAM_POWER_SELLER_STATUS)
-    val _powerSellerStatus: String?
+    private val _powerSellerStatus: String?
 
 ): Parcelable {
 

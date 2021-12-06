@@ -18,7 +18,7 @@ class App : Application() {
             modules(listOf(
                 networkModule,
                 storageModule,
-                restaurantsModule,
+                productsModule,
                 viewModelsModule)
             )
         }

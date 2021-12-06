@@ -1,23 +1,23 @@
 package com.manubla.freemarket.data.repository.products
 
-import com.manubla.freemarket.data.datastore.products.cloud.ProductsDataStoreCloud
-import com.manubla.freemarket.data.datastore.products.database.ProductsDataStoreDatabase
 import com.manubla.freemarket.data.model.Product
+import com.manubla.freemarket.data.source.network.datastore.products.ProductsDataStoreNetwork
+import com.manubla.freemarket.data.source.storage.datastore.products.ProductsDataStoreDatabase
 import com.manubla.freemarket.utils.isZero
 import com.manubla.freemarket.utils.zero
 
 class ProductsSourceRepositoryImpl(
     private val database: ProductsDataStoreDatabase,
-    private val cloud: ProductsDataStoreCloud
+    private val network: ProductsDataStoreNetwork
 ) : ProductsSourceRepository {
 
     private var currentOffset: Int = Int.zero()
 
-    override suspend fun getStoredProducts(): List<Product> =
+    override suspend fun fetchLocalProducts(): List<Product> =
         database.getProducts()
 
     override suspend fun fetchProducts(query: String): List<Product> {
-        val page = cloud.fetchProductsPage(
+        val page = network.fetchProductsPage(
             query = query,
             offset = currentOffset
         )
@@ -34,7 +34,7 @@ class ProductsSourceRepositoryImpl(
     }
 
     override suspend fun fetchProduct(id: String): Product? {
-        val product = cloud.fetchProductById(id)
+        val product = network.fetchProductById(id)
         product?.let { safeProduct ->
             database.storeProduct(safeProduct)
             return safeProduct

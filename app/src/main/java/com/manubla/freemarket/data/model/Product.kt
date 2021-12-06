@@ -1,8 +1,10 @@
 package com.manubla.freemarket.data.model
 
 import android.os.Parcelable
+import androidx.annotation.NonNull
 import androidx.room.ColumnInfo
 import androidx.room.Entity
+import androidx.room.Ignore
 import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
 import com.manubla.freemarket.utils.toNotNullable
@@ -13,10 +15,11 @@ import kotlinx.parcelize.Parcelize
 @Entity(tableName = Product.TABLE_NAME)
 data class Product (
 
+    @NonNull
     @PrimaryKey
     @ColumnInfo(name = PARAM_ID)
     @SerializedName(PARAM_ID)
-    private val _id: String?,
+    val id: String,
 
     @ColumnInfo(name = PARAM_TITLE)
     @SerializedName(PARAM_TITLE)
@@ -40,9 +43,6 @@ data class Product (
 
 ): Parcelable, Model() {
 
-    val id: String
-        get() = _id.toNotNullable()
-
     val title: String
         get() = _title.toNotNullable()
 
@@ -58,9 +58,10 @@ data class Product (
     val currencyId: String
         get() = _currencyId.toNotNullable()
 
+    @Ignore
     @IgnoredOnParcel
     override val requiredParams = mapOf(
-        Pair(PARAM_ID, _id),
+        Pair(PARAM_ID, id),
         Pair(PARAM_TITLE, _title),
         Pair(PARAM_PRICE, _price)
     )

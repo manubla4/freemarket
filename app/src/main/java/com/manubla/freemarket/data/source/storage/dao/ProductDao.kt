@@ -1,4 +1,4 @@
-package com.manubla.freemarket.data.dao
+package com.manubla.freemarket.data.source.storage.dao
 
 import androidx.room.Dao
 import androidx.room.Insert
@@ -9,7 +9,7 @@ import com.manubla.freemarket.data.model.Product
 @Dao
 interface ProductDao {
 
-    @Query("SELECT * FROM ${Product.TABLE_NAME} WHERE id=:id")
+    @Query("SELECT * FROM ${Product.TABLE_NAME} WHERE ${Product.PARAM_ID}=:id")
     suspend fun getById(id: String): Product?
 
     @Query("SELECT * FROM ${Product.TABLE_NAME}")

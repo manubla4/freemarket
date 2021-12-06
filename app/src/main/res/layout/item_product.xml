@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools">
     <data>
         <variable
-            name="restaurant"
+            name="product"
             type="com.manubla.freemarket.data.model.Product" />
     </data>
 
@@ -27,7 +27,6 @@
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:scaleType="centerCrop"
-                app:bindRestaurantLogo="@{restaurant.logo}"
                 tools:src="@drawable/logo_test"/>
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -43,7 +42,6 @@
                     android:gravity="center"
                     android:textStyle="bold"
                     android:maxLines="2"
-                    android:text="@{restaurant.name}"
                     tools:text="Paladar Arepas"
                     app:layout_constraintTop_toTopOf="parent"/>
 
@@ -57,7 +55,6 @@
                     android:visibility="invisible"
                     android:textStyle="bold"
                     android:textColor="@color/colorSuccess"
-                    app:bindRestaurantDiscount="@{restaurant.discount}"
                     app:layout_constraintTop_toBottomOf="@id/txtName"
                     tools:visibility="visible"
                     tools:text="15% descuento hoy"/>
@@ -78,7 +75,6 @@
                         android:layout_weight="1"
                         android:layout_height="wrap_content"
                         android:gravity="center"
-                        app:bindRestaurantTime="@{restaurant}"
                         tools:text="15 - 30 min."/>
 
 
@@ -103,7 +99,6 @@
                             android:gravity="center"
                             android:textStyle="bold"
                             android:textColor="@color/colorSuccess"
-                            app:bindRestaurantScore="@{restaurant.generalScore}"
                             tools:text="4.5"/>
 
                     </LinearLayout>
@@ -127,7 +122,6 @@
                         android:layout_weight="1"
                         android:layout_height="wrap_content"
                         android:gravity="center"
-                        app:bindRestaurantDistance="@{restaurant.distance}"
                         tools:text="1.6 km."/>
 
 
@@ -139,8 +133,7 @@
                         android:layout_height="wrap_content"
                         android:gravity="center"
                         android:visibility="invisible"
-                        android:text="@string/txt_online_payment"
-                        app:bindRestaurantOnlinePayment="@{restaurant.hasOnlinePaymentMethods}"
+                        android:text="pago online"
                         tools:visibility="visible" />
 
                 </LinearLayout>

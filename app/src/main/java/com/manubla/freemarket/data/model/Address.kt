@@ -21,8 +21,7 @@ data class Address (
 
     val city: String
         get() = _city.toNotNullable()
-
-    val stateId: String
+    val state: String
         get() = _state.toNotNullable()
 
     companion object {

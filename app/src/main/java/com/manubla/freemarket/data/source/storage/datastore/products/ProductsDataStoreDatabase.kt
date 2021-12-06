@@ -1,4 +1,4 @@
-package com.manubla.freemarket.data.datastore.products.database
+package com.manubla.freemarket.data.source.storage.datastore.products
 
 import com.manubla.freemarket.data.model.Product
 

@@ -1,4 +1,4 @@
-package com.manubla.freemarket.data.service.response
+package com.manubla.freemarket.data.source.network.service.response
 
 import android.os.Parcelable
 import com.manubla.freemarket.data.model.Product

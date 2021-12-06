@@ -1,7 +1,7 @@
-package com.manubla.freemarket.data.datastore.products.database
+package com.manubla.freemarket.data.source.storage.datastore.products
 
 import android.util.Log
-import com.manubla.freemarket.data.dao.ProductDao
+import com.manubla.freemarket.data.source.storage.dao.ProductDao
 import com.manubla.freemarket.data.model.Product
 
 class ProductsDataStoreDatabaseImpl(
