@@ -1,4 +1,4 @@
-package com.manubla.freemarket.presentation.helper
+package com.manubla.freemarket.utils
 
 import android.view.View
 import android.widget.EditText

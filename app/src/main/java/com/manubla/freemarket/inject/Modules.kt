@@ -8,7 +8,6 @@ import com.manubla.freemarket.data.adapter.ZonedDateTimeAdapter
 import com.manubla.freemarket.data.repository.restaurants.RestaurantsDataStoreFactory
 import com.manubla.freemarket.data.repository.restaurants.RestaurantsSourceRepository
 import com.manubla.freemarket.data.repository.restaurants.RestaurantsSourceRepositoryImpl
-import com.manubla.freemarket.data.service.RestaurantService
 import com.manubla.freemarket.data.source.AppDatabase
 import com.readystatesoftware.chuck.ChuckInterceptor
 import okhttp3.OkHttpClient
@@ -25,9 +24,8 @@ val storageModule = module {
             get<Context>().applicationContext,
             AppDatabase::class.java,
             AppDatabase.DATABASE_NAME
-        )
-            .fallbackToDestructiveMigration()
-            .build()
+        ).fallbackToDestructiveMigration()
+        .build()
     }
     single { get<AppDatabase>().productsDao() }
 }

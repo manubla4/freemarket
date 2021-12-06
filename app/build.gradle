@@ -13,7 +13,8 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        buildConfigField "String", "BASE_URL", '"https://api.mercadolibre.com/sites/MLU/"'
+        buildConfigField "String", "BASE_URL", '"https://api.mercadolibre.com/"'
+        buildConfigField "String", "SITE_ID", '"MLU"'
     }
     buildTypes {
         release {
