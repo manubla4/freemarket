@@ -1,12 +1,12 @@
-package com.manubla.freemarket.data.source.storage.datastore.products
+package com.manubla.freemarket.data.source.storage.datastore.product
 
 import android.util.Log
 import com.manubla.freemarket.data.source.storage.dao.ProductDao
 import com.manubla.freemarket.data.model.Product
 
-class ProductsDataStoreDatabaseImpl(
+class ProductDataStoreDatabaseImpl(
     private val productDao: ProductDao
-) : ProductsDataStoreDatabase {
+) : ProductDataStoreDatabase {
 
     override suspend fun getProductById(id: String): Product? {
         return try {

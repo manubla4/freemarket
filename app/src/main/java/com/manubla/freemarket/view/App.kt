@@ -1,8 +1,9 @@
-package com.manubla.freemarket
+package com.manubla.freemarket.view
 
 import android.app.Application
 import com.facebook.stetho.Stetho
 import com.jakewharton.threetenabp.AndroidThreeTen
+import com.manubla.freemarket.BuildConfig
 import com.manubla.freemarket.inject.*
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
@@ -18,7 +19,7 @@ class App : Application() {
             modules(listOf(
                 networkModule,
                 storageModule,
-                productsModule,
+                repositoriesModule,
                 viewModelsModule)
             )
         }

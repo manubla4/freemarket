@@ -1,4 +1,4 @@
-package com.manubla.freemarket.data.source.network.datastore.products
+package com.manubla.freemarket.data.source.network.datastore.product
 
 import android.util.Log
 import com.manubla.freemarket.BuildConfig
@@ -6,9 +6,9 @@ import com.manubla.freemarket.data.model.Product
 import com.manubla.freemarket.data.source.network.service.ProductService
 import com.manubla.freemarket.data.source.network.service.response.ProductsPageResponse
 
-class ProductsDataStoreNetworkImpl(
+class ProductDataStoreNetworkImpl(
     private val productService: ProductService
-): ProductsDataStoreNetwork {
+): ProductDataStoreNetwork {
 
     override suspend fun fetchProductById(id: String): Product? {
         return try {

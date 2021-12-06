@@ -1,15 +1,15 @@
-package com.manubla.freemarket.data.repository.products
+package com.manubla.freemarket.data.repository.product
 
 import com.manubla.freemarket.data.model.Product
-import com.manubla.freemarket.data.source.network.datastore.products.ProductsDataStoreNetwork
-import com.manubla.freemarket.data.source.storage.datastore.products.ProductsDataStoreDatabase
+import com.manubla.freemarket.data.source.network.datastore.product.ProductDataStoreNetwork
+import com.manubla.freemarket.data.source.storage.datastore.product.ProductDataStoreDatabase
 import com.manubla.freemarket.utils.isZero
 import com.manubla.freemarket.utils.zero
 
-class ProductsSourceRepositoryImpl(
-    private val database: ProductsDataStoreDatabase,
-    private val network: ProductsDataStoreNetwork
-) : ProductsSourceRepository {
+class ProductSourceRepositoryImpl(
+    private val database: ProductDataStoreDatabase,
+    private val network: ProductDataStoreNetwork
+) : ProductSourceRepository {
 
     private var currentOffset: Int = Int.zero()
 

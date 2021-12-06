@@ -12,7 +12,7 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
-        android:name="com.manubla.freemarket.App"
+        android:name="com.manubla.freemarket.view.App"
         android:theme="@style/FreeMarketTheme"
         tools:ignore="GoogleAppIndexingWarning">
 
