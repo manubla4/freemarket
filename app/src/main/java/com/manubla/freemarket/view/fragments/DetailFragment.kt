@@ -1,4 +1,4 @@
-package com.manubla.freemarket.view.fragments.home
+package com.manubla.freemarket.view.fragments
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -6,21 +6,18 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.manubla.freemarket.R
+import com.manubla.freemarket.view.viewmodels.DetailViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class HomeFragment : Fragment() {
+class DetailFragment : Fragment() {
 
-    companion object {
-        fun newInstance() = HomeFragment()
-    }
-
-    private val viewModel: HomeViewModel by viewModel()
+    private val viewModel: DetailViewModel by viewModel()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_home, container, false)
+        return inflater.inflate(R.layout.fragment_detail, container, false)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {

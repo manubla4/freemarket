@@ -9,7 +9,7 @@
         android:layout_width="@dimen/size_splash_icon"
         android:layout_height="@dimen/size_splash_icon"
         android:src="@drawable/ic_launcher_splash"
-        android:layout_marginBottom="@dimen/margin_double_block"/>
+        android:layout_marginBottom="@dimen/dimen_64dp"/>
 
     <ProgressBar
         style="?android:attr/progressBarStyle"

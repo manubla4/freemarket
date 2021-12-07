@@ -1,21 +1,39 @@
 <resources>
 
-    <style name="FreeMarketTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
+    <style name="AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:colorBackground">@color/colorBackground</item>
-    </style>
-
-    <style name="CaptionText" parent="TextAppearance.AppCompat.Caption"/>
-    <style name="SmallText" parent="TextAppearance.AppCompat.Small"/>
-
-    <style name="SmallTextBlack" parent="SmallText">
         <item name="android:textColor">@color/colorTextPrimary</item>
     </style>
 
-    <style name="CaptionTextBlack" parent="CaptionText">
+    <style name="TextCaption" parent="TextAppearance.AppCompat.Caption"/>
+    <style name="TextSmall" parent="TextAppearance.AppCompat.Small"/>
+    <style name="TextLarge" parent="TextAppearance.AppCompat.Large"/>
+
+    <style name="TextSmallBlack" parent="TextSmall">
         <item name="android:textColor">@color/colorTextPrimary</item>
+    </style>
+
+    <style name="TextCaptionBlack" parent="TextCaption">
+        <item name="android:textColor">@color/colorTextPrimary</item>
+    </style>
+
+    <style name="TextLargeBlack" parent="TextLarge">
+        <item name="android:textColor">@color/colorTextPrimary</item>
+    </style>
+
+    <style name="ButtonMain" parent="Widget.MaterialComponents.Button">
+        <item name="android:textColor">@color/colorTextPrimary</item>
+    </style>
+
+    <style name="ButtonRounded" parent="Widget.MaterialComponents.TimePicker.ImageButton">
+        <item name="android:textColor">@color/colorTextPrimary</item>
+    </style>
+
+    <style name="ButtonRoundedSmall" parent="ButtonRounded">
+        <item name="android:textSize">@dimen/text_size_small</item>
     </style>
 
 </resources>

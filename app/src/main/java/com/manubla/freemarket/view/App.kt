@@ -16,11 +16,14 @@ class App : Application() {
         startKoin {
             androidLogger()
             androidContext(this@App)
-            modules(listOf(
-                networkModule,
-                storageModule,
-                repositoriesModule,
-                viewModelsModule)
+            modules(
+                listOf(
+                    networkModule,
+                    storageModule,
+                    repositoriesModule,
+                    adaptersModule,
+                    viewModelsModule
+                )
             )
         }
         AndroidThreeTen.init(this)

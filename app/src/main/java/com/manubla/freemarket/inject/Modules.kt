@@ -38,9 +38,14 @@ import com.manubla.freemarket.data.source.storage.datastore.user.UserDataStoreDa
 import com.manubla.freemarket.data.source.storage.datastore.user.UserDataStoreDatabaseImpl
 import com.manubla.freemarket.data.source.storage.manager.DatabaseManager
 import com.manubla.freemarket.data.source.storage.manager.DatabaseManagerImpl
-import com.manubla.freemarket.view.fragments.detail.DetailViewModel
-import com.manubla.freemarket.view.fragments.home.HomeViewModel
-import com.manubla.freemarket.view.fragments.splash.SplashViewModel
+import com.manubla.freemarket.view.alias.DiffUtil
+import com.manubla.freemarket.view.alias.PagingAdapter
+import com.manubla.freemarket.view.fragments.DetailFragment
+import com.manubla.freemarket.view.fragments.HomeFragment
+import com.manubla.freemarket.view.fragments.SplashFragment
+import com.manubla.freemarket.view.viewmodels.DetailViewModel
+import com.manubla.freemarket.view.viewmodels.HomeViewModel
+import com.manubla.freemarket.view.viewmodels.SplashViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 import retrofit2.Retrofit
@@ -149,8 +154,41 @@ val repositoriesModule = module {
     }
 }
 
+val adaptersModule = module {
+    scope<HomeFragment> {
+        factory<DiffUtil> {
+            DiffUtil.diffUtil()
+        }
+        factory {
+            PagingAdapter(
+                get<DiffUtil>()
+            )
+        }
+    }
+}
+
 val viewModelsModule = module {
-    viewModel { SplashViewModel() }
-    viewModel { HomeViewModel() }
-    viewModel { DetailViewModel() }
+    scope<SplashFragment> {
+        viewModel {
+            SplashViewModel(
+                get<CurrencySourceRepository>()
+            )
+        }
+    }
+    scope<HomeFragment> {
+        viewModel {
+            HomeViewModel(
+                get<ProductSourceRepository>()
+            )
+        }
+    }
+    scope<DetailFragment> {
+        viewModel {
+            DetailViewModel(
+                get<ProductSourceRepository>(),
+                get<UserSourceRepository>(),
+                get<StateSourceRepository>()
+            )
+        }
+    }
 }

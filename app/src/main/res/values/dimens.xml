@@ -1,7 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="padding_fragment">15dp</dimen>
-    <dimen name="fading_edge">15dp</dimen>
+    <dimen name="fading_edge">10dp</dimen>
     <dimen name="size_splash_icon">120dp</dimen>
-    <dimen name="margin_double_block">64dp</dimen>
+    <dimen name="text_size_small">12sp</dimen>
+
+    <dimen name="dimen_0dp">0dp</dimen>
+    <dimen name="dimen_8dp">8dp</dimen>
+    <dimen name="dimen_16dp">16dp</dimen>
+    <dimen name="dimen_24dp">24dp</dimen>
+    <dimen name="dimen_64dp">64dp</dimen>
 </resources>

@@ -23,6 +23,10 @@ abstract class Model {
         return true
     }
 
+    fun areContentsTheSame(newItem: Model): Boolean {
+        return this == newItem
+    }
+
     companion object {
         private const val TAG_REQUIRED_PARAMS = "hasRequiredParams"
     }
