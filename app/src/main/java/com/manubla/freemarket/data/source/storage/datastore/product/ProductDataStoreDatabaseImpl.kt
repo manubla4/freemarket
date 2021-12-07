@@ -1,8 +1,8 @@
 package com.manubla.freemarket.data.source.storage.datastore.product
 
 import android.util.Log
-import com.manubla.freemarket.data.source.storage.dao.ProductDao
 import com.manubla.freemarket.data.model.Product
+import com.manubla.freemarket.data.source.storage.dao.ProductDao
 
 class ProductDataStoreDatabaseImpl(
     private val productDao: ProductDao
@@ -17,9 +17,9 @@ class ProductDataStoreDatabaseImpl(
         }
     }
 
-    override suspend fun getProducts(): List<Product> {
+    override suspend fun getProducts(query: String): List<Product> {
         return try {
-            productDao.getAll()
+            productDao.getAll(query)
         } catch (exception: Exception) {
             Log.e(TAG_GET_PRODUCTS, Log.getStackTraceString(exception))
             emptyList()

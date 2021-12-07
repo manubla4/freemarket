@@ -16,7 +16,7 @@ abstract class Model {
         if (nullParams.isNotEmpty()) {
             val nullParamName = nullParams.first()
             val tableAndParam = assembleTableAndParam(nullParamName)
-            val exception = IllegalArgumentException("$tableAndParam is required")
+            val exception = IllegalArgumentException("$tableAndParam is required - object not rendered")
             Log.e(TAG_REQUIRED_PARAMS, Log.getStackTraceString(exception))
             return false
         }

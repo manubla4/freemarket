@@ -9,10 +9,12 @@ class UserSourceRepositoryImpl(
     private val network: UserDataStoreNetwork
 ) : UserSourceRepository {
 
-
     override suspend fun fetchUser(id: Long): User? {
-        TODO("Not yet implemented")
+        val user = network.fetchUserById(id)
+        return user?.let {
+            database.storeUser(it)
+            it
+        } ?: database.getUserById(id)
     }
-
 
 }

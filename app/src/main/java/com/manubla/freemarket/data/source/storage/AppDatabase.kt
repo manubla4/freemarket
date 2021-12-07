@@ -14,10 +14,10 @@ import com.manubla.freemarket.data.source.storage.dao.UserDao
 @Database(entities = [Product::class, User::class, State::class, Currency::class],
     version = 1, exportSchema = false)
 abstract class AppDatabase : RoomDatabase() {
-    abstract fun productsDao(): ProductDao
-    abstract fun usersDao(): UserDao
-    abstract fun statesDao(): StateDao
-    abstract fun currenciesDao(): CurrencyDao
+    abstract fun productDao(): ProductDao
+    abstract fun userDao(): UserDao
+    abstract fun stateDao(): StateDao
+    abstract fun currencyDao(): CurrencyDao
 
     companion object {
         internal const val DATABASE_NAME = "freemarketdb"

@@ -1,5 +1,6 @@
 package com.manubla.freemarket.data.source.storage.datastore.state
 
+import android.util.Log
 import com.manubla.freemarket.data.model.State
 import com.manubla.freemarket.data.source.storage.dao.StateDao
 
@@ -8,26 +9,29 @@ class StateDataStoreDatabaseImpl(
 ) : StateDataStoreDatabase {
 
     override suspend fun getStateById(id: String): State? {
-        TODO("Not yet implemented")
+        return try {
+            stateDao.getById(id)
+        } catch (exception: Exception) {
+            Log.e(TAG_GET_STATE_BY_ID, Log.getStackTraceString(exception))
+            null
+        }
     }
 
     override suspend fun storeState(state: State) {
-        TODO("Not yet implemented")
+        try {
+            stateDao.insert(state)
+        } catch (exception: Exception) {
+            Log.e(TAG_STORE_STATE, Log.getStackTraceString(exception))
+        }
     }
 
     override suspend fun clearStorage() {
-        TODO("Not yet implemented")
+        try {
+            stateDao.deleteAll()
+        } catch (exception: Exception) {
+            Log.e(TAG_CLEAR_STORAGE, Log.getStackTraceString(exception))
+        }
     }
-
-//    override suspend fun getProductById(id: String): Product? {
-//        return try {
-//            productDao.getById(id)
-//        } catch (exception: Exception) {
-//            Log.e(TAG_GET_PRODUCT_BY_ID, Log.getStackTraceString(exception))
-//            null
-//        }
-//    }
-
 
     companion object {
         private const val TAG_GET_STATE_BY_ID = "getStateById"

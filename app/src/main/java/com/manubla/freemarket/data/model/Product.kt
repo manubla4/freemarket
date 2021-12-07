@@ -2,17 +2,20 @@ package com.manubla.freemarket.data.model
 
 import android.os.Parcelable
 import androidx.annotation.NonNull
-import androidx.room.ColumnInfo
-import androidx.room.Entity
-import androidx.room.Ignore
-import androidx.room.PrimaryKey
+import androidx.room.*
+import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 import com.manubla.freemarket.utils.toNotNullable
 import kotlinx.parcelize.IgnoredOnParcel
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
-@Entity(tableName = Product.TABLE_NAME)
+@Entity(tableName = Product.TABLE_NAME,
+    foreignKeys = [ForeignKey(entity = Currency::class,
+        parentColumns = arrayOf(Currency.PARAM_ID),
+        childColumns = arrayOf(Product.PARAM_CURRENCY_ID)
+    )]
+)
 data class Product (
 
     @NonNull
@@ -39,7 +42,10 @@ data class Product (
 
     @ColumnInfo(name = PARAM_CURRENCY_ID)
     @SerializedName(PARAM_CURRENCY_ID)
-    private val _currencyId: String?
+    private val _currencyId: String?,
+
+    @Expose(serialize = false, deserialize = false)
+    private val _currency: String?
 
 ): Parcelable, Model() {
 
@@ -57,6 +63,9 @@ data class Product (
 
     val currencyId: String
         get() = _currencyId.toNotNullable()
+
+    val currency: String
+        get() = _currency ?: DEFAULT_CURRENCY
 
     @Ignore
     @IgnoredOnParcel
@@ -77,5 +86,6 @@ data class Product (
         internal const val PARAM_CONDITION = "condition"
         internal const val PARAM_THUMBNAIL = "thumbnail"
         internal const val PARAM_CURRENCY_ID = "currency_id"
+        internal const val DEFAULT_CURRENCY = "$"
     }
 }

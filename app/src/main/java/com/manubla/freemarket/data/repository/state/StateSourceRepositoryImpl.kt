@@ -10,7 +10,11 @@ class StateSourceRepositoryImpl(
 ) : StateSourceRepository {
 
     override suspend fun fetchState(id: String): State? {
-        TODO("Not yet implemented")
+        val state = network.fetchStateById(id)
+        return state?.let {
+            database.storeState(it)
+            it
+        } ?: database.getStateById(id)
     }
 
 }

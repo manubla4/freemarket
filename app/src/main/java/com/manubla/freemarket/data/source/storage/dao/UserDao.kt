@@ -10,7 +10,7 @@ import com.manubla.freemarket.data.model.User
 interface UserDao {
 
     @Query("SELECT * FROM ${User.TABLE_NAME} WHERE ${User.PARAM_ID}=:id")
-    suspend fun getById(id: String): User?
+    suspend fun getById(id: Long): User?
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(user: User)

@@ -36,6 +36,12 @@ import com.manubla.freemarket.data.source.storage.datastore.state.StateDataStore
 import com.manubla.freemarket.data.source.storage.datastore.state.StateDataStoreDatabaseImpl
 import com.manubla.freemarket.data.source.storage.datastore.user.UserDataStoreDatabase
 import com.manubla.freemarket.data.source.storage.datastore.user.UserDataStoreDatabaseImpl
+import com.manubla.freemarket.data.source.storage.manager.DatabaseManager
+import com.manubla.freemarket.data.source.storage.manager.DatabaseManagerImpl
+import com.manubla.freemarket.view.fragments.detail.DetailViewModel
+import com.manubla.freemarket.view.fragments.home.HomeViewModel
+import com.manubla.freemarket.view.fragments.splash.SplashViewModel
+import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 import retrofit2.Retrofit
 
@@ -43,10 +49,11 @@ val storageModule = module {
     single<AppDatabase> {
         initRoomDatabase(get<Context>())
     }
-    factory<ProductDao> { get<AppDatabase>().productsDao() }
-    factory<UserDao> { get<AppDatabase>().usersDao() }
-    factory<StateDao> { get<AppDatabase>().statesDao() }
-    factory<CurrencyDao> { get<AppDatabase>().currenciesDao() }
+    factory<ProductDao> { get<AppDatabase>().productDao() }
+    factory<UserDao> { get<AppDatabase>().userDao() }
+    factory<StateDao> { get<AppDatabase>().stateDao() }
+    factory<CurrencyDao> { get<AppDatabase>().currencyDao() }
+
     factory<ProductDataStoreDatabase> {
         ProductDataStoreDatabaseImpl(
             get<ProductDao>()
@@ -65,6 +72,13 @@ val storageModule = module {
     factory<StateDataStoreDatabase> {
         StateDataStoreDatabaseImpl(
             get<StateDao>()
+        )
+    }
+    factory<DatabaseManager> {
+        DatabaseManagerImpl(
+            get<ProductDataStoreDatabase>(),
+            get<UserDataStoreDatabase>(),
+            get<StateDataStoreDatabase>()
         )
     }
 }
@@ -110,6 +124,7 @@ val networkModule = module {
 val repositoriesModule = module {
     factory<ProductSourceRepository> {
         ProductSourceRepositoryImpl(
+            get<DatabaseManager>(),
             get<ProductDataStoreDatabase>(),
             get<ProductDataStoreNetwork>()
         )
@@ -135,7 +150,7 @@ val repositoriesModule = module {
 }
 
 val viewModelsModule = module {
-//    viewModel { SplashViewModel(get(), get()) }
-//    viewModel { HomeViewModel(get(), get(), get()) }
-//    viewModel { MapViewModel(get(), get()) }
+    viewModel { SplashViewModel() }
+    viewModel { HomeViewModel() }
+    viewModel { DetailViewModel() }
 }
