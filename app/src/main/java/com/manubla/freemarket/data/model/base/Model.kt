@@ -1,13 +1,13 @@
-package com.manubla.freemarket.data.model
+package com.manubla.freemarket.data.model.base
 
 import android.util.Log
 import com.manubla.freemarket.extension.isNull
 
-abstract class Model {
+interface Model {
 
-    abstract val requiredParams: Map<String, Any?>
+    val requiredParams: Map<String, Any?>
 
-    abstract fun assembleTableAndParam(param: String): String
+    fun assembleTableAndParam(param: String): String
 
     fun hasRequiredParams(): Boolean {
         val nullParams = requiredParams
@@ -23,7 +23,9 @@ abstract class Model {
         return true
     }
 
-    fun areContentsTheSame(newItem: Model): Boolean {
+    fun areContentsTheSame(newItem: Model): Boolean
+
+    fun areItemsTheSame(newItem: Model): Boolean {
         return this == newItem
     }
 

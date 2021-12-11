@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.manubla.freemarket.data.repository.currency.CurrencySourceRepository
+import com.manubla.freemarket.view.event.SplashState
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -16,14 +17,14 @@ class SplashViewModel(
     override val coroutineContext: CoroutineContext
         get() = Dispatchers.Main
 
-    private val _done = MutableLiveData<Boolean>()
-    val done: LiveData<Boolean>
-        get() = _done
+    private val _state = MutableLiveData<SplashState>()
+    val state: LiveData<SplashState>
+        get() = _state
 
     fun fetchInitialData() {
         launch(Dispatchers.IO) {
             currencySourceRepository.fetchCurrencies()
-            _done.postValue(true)
+            _state.postValue(SplashState.Done)
         }
     }
 }

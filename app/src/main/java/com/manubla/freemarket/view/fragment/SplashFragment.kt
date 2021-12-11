@@ -6,6 +6,7 @@ import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import com.manubla.freemarket.R
 import com.manubla.freemarket.databinding.FragmentHomeBinding
+import com.manubla.freemarket.view.event.SplashState
 import com.manubla.freemarket.view.fragment.base.ViewDataBindingFragment
 import com.manubla.freemarket.view.viewmodel.SplashViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -23,8 +24,10 @@ class SplashFragment : ViewDataBindingFragment<FragmentHomeBinding>(R.layout.fra
     }
 
     private fun setObservers() {
-        viewModel.done.observe(viewLifecycleOwner, {
-            navController.navigate(R.id.action_splashFragment_to_homeFragment)
+        viewModel.state.observe(viewLifecycleOwner, {
+            if (it == SplashState.Done) {
+                navController.navigate(R.id.action_splashFragment_to_homeFragment)
+            }
         })
     }
 

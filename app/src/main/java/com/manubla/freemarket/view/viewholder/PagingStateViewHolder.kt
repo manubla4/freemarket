@@ -7,8 +7,9 @@ import androidx.paging.LoadState
 import androidx.recyclerview.widget.RecyclerView
 import com.manubla.freemarket.databinding.PagingErrorItemBinding
 
-class PagingStateViewHolder(private val viewBinding: PagingErrorItemBinding) :
-    RecyclerView.ViewHolder(viewBinding.root) {
+class PagingStateViewHolder(
+    private val viewBinding: PagingErrorItemBinding
+) : RecyclerView.ViewHolder(viewBinding.root) {
 
     fun bind(loadState: LoadState, retry: () -> Unit = {}) {
         viewBinding.progressBar.isVisible = loadState is LoadState.Loading

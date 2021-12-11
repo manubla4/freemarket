@@ -7,6 +7,7 @@ import androidx.room.Entity
 import androidx.room.Ignore
 import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
+import com.manubla.freemarket.data.model.base.Model
 import com.manubla.freemarket.extension.toNotNullable
 import kotlinx.parcelize.IgnoredOnParcel
 import kotlinx.parcelize.Parcelize
@@ -33,7 +34,7 @@ data class Currency (
     @SerializedName(PARAM_DECIMAL_PLACES)
     private val _decimalPlaces: Int?
 
-): Parcelable, Model() {
+): Parcelable, Model {
 
     val symbol: String
         get() = _symbol.toNotNullable()
@@ -50,6 +51,13 @@ data class Currency (
         Pair(PARAM_ID, id),
         Pair(PARAM_SYMBOL, _symbol)
     )
+
+    override fun areContentsTheSame(newItem: Model): Boolean {
+        val newCurrency = newItem as? Currency
+        return newCurrency?.let {
+            this.id == it.id && this.symbol == it.symbol
+        } ?: false
+    }
 
     override fun assembleTableAndParam(param: String): String
         = "$TABLE_NAME - $param"

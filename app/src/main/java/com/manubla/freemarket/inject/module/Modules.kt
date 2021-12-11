@@ -1,4 +1,4 @@
-package com.manubla.freemarket.inject
+package com.manubla.freemarket.inject.module
 
 import android.content.Context
 import com.manubla.freemarket.data.repository.currency.CurrencySourceRepository
@@ -40,6 +40,7 @@ import com.manubla.freemarket.data.source.storage.manager.DatabaseManager
 import com.manubla.freemarket.data.source.storage.manager.DatabaseManagerImpl
 import com.manubla.freemarket.view.alias.DiffUtil
 import com.manubla.freemarket.view.alias.PagingAdapter
+import com.manubla.freemarket.view.alias.ViewHolderProvider
 import com.manubla.freemarket.view.fragment.DetailFragment
 import com.manubla.freemarket.view.fragment.HomeFragment
 import com.manubla.freemarket.view.fragment.SplashFragment
@@ -157,11 +158,15 @@ val repositoriesModule = module {
 val adaptersModule = module {
     scope<HomeFragment> {
         factory<DiffUtil> {
-            DiffUtil.diffUtil()
+            DiffUtil()
+        }
+        factory<ViewHolderProvider> {
+            ViewHolderProvider()
         }
         factory {
             PagingAdapter(
-                get<DiffUtil>()
+                get<DiffUtil>(),
+                get<ViewHolderProvider>()
             )
         }
     }

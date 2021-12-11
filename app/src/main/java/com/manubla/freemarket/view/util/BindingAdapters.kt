@@ -1,4 +1,4 @@
-package com.manubla.freemarket.extension
+package com.manubla.freemarket.view.util
 
 import android.widget.ImageView
 import androidx.databinding.BindingAdapter

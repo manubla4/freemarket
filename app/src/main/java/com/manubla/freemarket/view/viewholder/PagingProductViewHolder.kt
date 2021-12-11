@@ -2,23 +2,32 @@ package com.manubla.freemarket.view.viewholder
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.recyclerview.widget.RecyclerView
 import com.manubla.freemarket.data.model.Product
-import com.manubla.freemarket.databinding.PagingProductItemBinding
+import com.manubla.freemarket.data.model.base.Model
+import com.manubla.freemarket.databinding.ViewPagingProductItemBinding
+import com.manubla.freemarket.view.viewholder.base.BaseModelViewHolder
 
-class PagingProductViewHolder(private val viewBinding: PagingProductItemBinding) :
-    RecyclerView.ViewHolder(viewBinding.root) {
+class PagingProductViewHolder<M: Model>(
+    private val viewBinding: ViewPagingProductItemBinding
+): BaseModelViewHolder<M>(viewBinding) {
 
-    fun bind(product: Product?) {
-        product?.let {
+    override fun bind(model: M) {
+        model.asProduct {
             viewBinding.product = it
         }
     }
 
+    private fun M.asProduct(callback: (product: Product) -> Unit) {
+        val product = this as Product?
+        product?.let {
+            callback(it)
+        }
+    }
+
     companion object {
-        fun from(parent: ViewGroup): PagingProductViewHolder {
+        fun <M: Model> from(parent: ViewGroup): BaseModelViewHolder<M> {
             val inflater = LayoutInflater.from(parent.context)
-            val viewBinding = PagingProductItemBinding.inflate(inflater, parent, false)
+            val viewBinding = ViewPagingProductItemBinding.inflate(inflater, parent, false)
             return PagingProductViewHolder(viewBinding)
         }
     }

@@ -4,6 +4,7 @@ import android.os.Parcelable
 import androidx.annotation.NonNull
 import androidx.room.*
 import com.google.gson.annotations.SerializedName
+import com.manubla.freemarket.data.model.base.Model
 import com.manubla.freemarket.extension.toNotNullable
 import kotlinx.parcelize.IgnoredOnParcel
 import kotlinx.parcelize.Parcelize
@@ -35,7 +36,7 @@ data class User (
     @SerializedName(PARAM_SELLER_REPUTATION)
     val _sellerReputation: SellerReputation
 
-): Parcelable, Model() {
+): Parcelable, Model {
 
     val nickname: String
         get() = _nickname.toNotNullable()
@@ -58,6 +59,13 @@ data class User (
         Pair(PARAM_ID, id),
         Pair(PARAM_NICKNAME, _nickname)
     )
+
+    override fun areContentsTheSame(newItem: Model): Boolean {
+        val newUser = newItem as? User
+        return newUser?.let {
+            this.id == it.id && this.nickname == it.nickname
+        } ?: false
+    }
 
     override fun assembleTableAndParam(param: String): String
         = "$TABLE_NAME - $param"

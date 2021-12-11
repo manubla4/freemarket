@@ -1,9 +1,12 @@
-package com.manubla.freemarket.extension
+package com.manubla.freemarket.view.extension
 
 import android.view.KeyEvent
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.widget.EditText
+import com.manubla.freemarket.extension.space
+
+private const val MIN_LENGTH_QUERY_TEXT = 2
 
 fun View.visible() {
     visibility = View.VISIBLE
@@ -29,10 +32,11 @@ fun EditText.editTextString() = editableText.toString()
 
 fun EditText.setOnSearch(callback: (String) -> Unit) {
     setOnEditorActionListener { _, actionId, event ->
-        return@setOnEditorActionListener if (actionId == EditorInfo.IME_ACTION_SEARCH
-        || event != null && event.keyCode == KeyEvent.KEYCODE_ENTER) {
+        val trimmedText = text.toString().trim { it <= Char.space() }
+        return@setOnEditorActionListener if (isSearchAction(actionId, event)
+        && isAcceptableInput(trimmedText)) {
             clearFocus()
-            setText(text.toString().trim { it <= ' ' })
+            setText(trimmedText)
             callback(text.toString())
             true
         } else {
@@ -40,3 +44,10 @@ fun EditText.setOnSearch(callback: (String) -> Unit) {
         }
     }
 }
+
+private fun isSearchAction(actionId: Int?, event: KeyEvent?) =
+    actionId == EditorInfo.IME_ACTION_SEARCH
+            || event != null && event.keyCode == KeyEvent.KEYCODE_ENTER
+
+private fun isAcceptableInput(text: String) =
+    text.isNotBlank() && text.length >= MIN_LENGTH_QUERY_TEXT

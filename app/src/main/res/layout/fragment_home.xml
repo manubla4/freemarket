@@ -9,7 +9,7 @@
         android:layout_height="match_parent"
         android:padding="@dimen/padding_fragment">
 
-        <include layout="@layout/layout_search_box"
+        <include layout="@layout/view_search_box"
             android:id="@+id/layout_search"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -31,7 +31,7 @@
                 android:layoutAnimation="@anim/layout_animation"
                 android:requiresFadingEdge="vertical"
                 android:fadingEdgeLength="@dimen/fading_edge"
-                tools:listitem="@layout/paging_product_item" />
+                tools:listitem="@layout/view_paging_product_item" />
 
         </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 

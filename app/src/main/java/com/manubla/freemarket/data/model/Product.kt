@@ -5,6 +5,7 @@ import androidx.annotation.NonNull
 import androidx.room.*
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
+import com.manubla.freemarket.data.model.base.Model
 import com.manubla.freemarket.extension.toNotNullable
 import kotlinx.parcelize.IgnoredOnParcel
 import kotlinx.parcelize.Parcelize
@@ -47,7 +48,7 @@ data class Product (
     @Expose(serialize = false, deserialize = false)
     private val _currency: String?
 
-): Parcelable, Model() {
+): Parcelable, Model {
 
     val title: String
         get() = _title.toNotNullable()
@@ -74,6 +75,13 @@ data class Product (
         Pair(PARAM_TITLE, _title),
         Pair(PARAM_PRICE, _price)
     )
+
+    override fun areContentsTheSame(newItem: Model): Boolean {
+        val newProduct = newItem as? Product
+        return newProduct?.let {
+            this.id == it.id && this.title == it.title
+        } ?: false
+    }
 
     override fun assembleTableAndParam(param: String): String
         = "$TABLE_NAME - $param"
