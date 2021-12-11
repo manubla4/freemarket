@@ -4,7 +4,7 @@ import android.os.Parcelable
 import androidx.annotation.NonNull
 import androidx.room.*
 import com.google.gson.annotations.SerializedName
-import com.manubla.freemarket.utils.toNotNullable
+import com.manubla.freemarket.extension.toNotNullable
 import kotlinx.parcelize.IgnoredOnParcel
 import kotlinx.parcelize.Parcelize
 

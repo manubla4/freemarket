@@ -7,7 +7,7 @@ import androidx.room.Entity
 import androidx.room.Ignore
 import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
-import com.manubla.freemarket.utils.toNotNullable
+import com.manubla.freemarket.extension.toNotNullable
 import kotlinx.parcelize.IgnoredOnParcel
 import kotlinx.parcelize.Parcelize
 

@@ -12,12 +12,12 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
-        android:name="com.manubla.freemarket.view.App"
+        android:name="com.manubla.freemarket.view.app.App"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
 
         <activity
-            android:name="com.manubla.freemarket.view.activities.MainActivity"
+            android:name="com.manubla.freemarket.view.activity.MainActivity"
             android:screenOrientation="fullSensor"
             android:exported="false">
             <intent-filter>

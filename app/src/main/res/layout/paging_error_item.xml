@@ -18,7 +18,7 @@
     <TextView
         android:id="@+id/text_message_error_paging"
         style="@style/TextSmallBlack"
-        android:layout_width="@dimen/dimen_0dp"
+        android:layout_width="@dimen/match_constraint"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/dimen_8dp"
         android:layout_marginStart="@dimen/dimen_16dp"

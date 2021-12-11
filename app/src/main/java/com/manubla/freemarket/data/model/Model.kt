@@ -1,7 +1,7 @@
 package com.manubla.freemarket.data.model
 
 import android.util.Log
-import com.manubla.freemarket.utils.isNull
+import com.manubla.freemarket.extension.isNull
 
 abstract class Model {
 

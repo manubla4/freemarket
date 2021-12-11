@@ -4,8 +4,8 @@ import com.manubla.freemarket.data.model.Product
 import com.manubla.freemarket.data.source.network.datastore.product.ProductDataStoreNetwork
 import com.manubla.freemarket.data.source.storage.datastore.product.ProductDataStoreDatabase
 import com.manubla.freemarket.data.source.storage.manager.DatabaseManager
-import com.manubla.freemarket.utils.empty
-import com.manubla.freemarket.utils.zero
+import com.manubla.freemarket.extension.empty
+import com.manubla.freemarket.extension.zero
 
 class ProductSourceRepositoryImpl(
     private val databaseManager: DatabaseManager,

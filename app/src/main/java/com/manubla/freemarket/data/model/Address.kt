@@ -3,7 +3,7 @@ package com.manubla.freemarket.data.model
 import android.os.Parcelable
 import androidx.room.ColumnInfo
 import com.google.gson.annotations.SerializedName
-import com.manubla.freemarket.utils.toNotNullable
+import com.manubla.freemarket.extension.toNotNullable
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
