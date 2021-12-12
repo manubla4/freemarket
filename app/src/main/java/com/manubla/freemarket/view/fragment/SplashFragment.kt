@@ -1,24 +1,19 @@
 package com.manubla.freemarket.view.fragment
 
 import android.os.Bundle
-import android.view.View
-import androidx.navigation.NavController
-import androidx.navigation.Navigation
 import com.manubla.freemarket.R
-import com.manubla.freemarket.databinding.FragmentHomeBinding
+import com.manubla.freemarket.databinding.FragmentSplashBinding
 import com.manubla.freemarket.view.event.SplashState
 import com.manubla.freemarket.view.fragment.base.ViewDataBindingFragment
 import com.manubla.freemarket.view.viewmodel.SplashViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class SplashFragment : ViewDataBindingFragment<FragmentHomeBinding>(R.layout.fragment_splash) {
+class SplashFragment : ViewDataBindingFragment<FragmentSplashBinding>(R.layout.fragment_splash) {
 
     private val viewModel: SplashViewModel by viewModel()
-    private lateinit var navController: NavController
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        navController = Navigation.findNavController(view)
+    override fun onViewCreated(viewDataBinding: FragmentSplashBinding, savedInstanceState: Bundle?) {
+        super.onViewCreated(viewDataBinding, savedInstanceState)
         setObservers()
         viewModel.fetchInitialData()
     }

@@ -6,6 +6,7 @@ import com.manubla.freemarket.data.model.business.Product
 import com.manubla.freemarket.data.model.business.State
 import com.manubla.freemarket.data.model.business.User
 import com.manubla.freemarket.data.model.result.SearchResult
+import com.manubla.freemarket.view.adapter.NavigateCallback
 import com.manubla.freemarket.view.viewholder.ErrorViewHolder
 import com.manubla.freemarket.view.viewholder.PagingProductViewHolder
 import com.manubla.freemarket.view.viewholder.UnknownViewHolder
@@ -21,8 +22,8 @@ class ViewHolderModelProvider<M : Model> {
         }
     }
 
-    fun bind(holder: BaseModelViewHolder<M>, item: M?) {
-        holder.bind(item)
+    fun bind(holder: BaseModelViewHolder<M>, item: M?, navigateCallback: NavigateCallback?) {
+        holder.bind(item, navigateCallback)
     }
 
     fun getViewType(item: M?): Int {

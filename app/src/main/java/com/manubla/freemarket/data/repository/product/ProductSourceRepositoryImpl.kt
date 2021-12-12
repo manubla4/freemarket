@@ -40,7 +40,6 @@ class ProductSourceRepositoryImpl(
         val product = network.fetchProductById(id)
         product?.let { safeProduct ->
             database.storeProduct(safeProduct)
-            return safeProduct
         }
         return database.getProductById(id)
     }

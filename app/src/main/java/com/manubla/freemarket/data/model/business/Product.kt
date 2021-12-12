@@ -41,10 +41,27 @@ data class Product (
     @SerializedName(PARAM_THUMBNAIL)
     private val _thumbnail: String?,
 
+    @Embedded
+    @SerializedName(PARAM_SHIPPING)
+    private val _shipping: Shipping,
+
+    @ColumnInfo(name = PARAM_PICTURES)
+    @SerializedName(PARAM_PICTURES)
+    private val _pictures: List<Picture>?,
+
     @ColumnInfo(name = PARAM_CURRENCY_ID)
     @SerializedName(PARAM_CURRENCY_ID)
     private val _currencyId: String?,
 
+    @ColumnInfo(name = PARAM_SELLER_ID)
+    @SerializedName(PARAM_SELLER_ID)
+    private val _sellerId: Long?,
+
+    @ColumnInfo(name = PARAM_WARRANTY)
+    @SerializedName(PARAM_WARRANTY)
+    private val _warranty: String?,
+
+    @Ignore
     @Expose(serialize = false, deserialize = false)
     private val _currency: String?
 
@@ -65,8 +82,20 @@ data class Product (
     val currencyId: String
         get() = _currencyId.toNotNullable()
 
+    val sellerId: Long
+        get() = _sellerId.toNotNullable()
+
     val currency: String
         get() = _currency ?: DEFAULT_CURRENCY
+
+    val freeShipping: Boolean
+        get() = _shipping.freeShipping
+
+    val pictures: List<Picture>
+        get() = _pictures ?: emptyList()
+
+    val warranty: String
+        get() = _warranty.toNotNullable()
 
     @Ignore
     @IgnoredOnParcel
@@ -91,9 +120,15 @@ data class Product (
         internal const val PARAM_ID = "id"
         internal const val PARAM_TITLE = "title"
         internal const val PARAM_PRICE = "price"
+        internal const val PARAM_SELLER_ID = "seller_id"
         internal const val PARAM_CONDITION = "condition"
         internal const val PARAM_THUMBNAIL = "thumbnail"
+        internal const val PARAM_SHIPPING = "shipping"
         internal const val PARAM_CURRENCY_ID = "currency_id"
+        internal const val PARAM_PICTURES = "pictures"
+        internal const val PARAM_WARRANTY = "warranty"
+
         internal const val DEFAULT_CURRENCY = "$"
+        internal const val CONDITION_TYPE_NEW = "new"
     }
 }

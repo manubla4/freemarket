@@ -41,6 +41,12 @@
         android:id="@+id/detailFragment"
         android:name="com.manubla.freemarket.view.fragment.DetailFragment"
         android:label="fragment_detail"
-        tools:layout="@layout/fragment_detail"/>
+        tools:layout="@layout/fragment_detail">
+
+        <argument android:name="data"
+            android:defaultValue="None"
+            app:argType="String"/>
+
+    </fragment>
 
 </navigation>

@@ -5,13 +5,14 @@ import android.view.ViewGroup
 import com.manubla.freemarket.BuildConfig
 import com.manubla.freemarket.data.model.base.Model
 import com.manubla.freemarket.databinding.ViewUnknownItemBinding
+import com.manubla.freemarket.view.adapter.NavigateCallback
 import com.manubla.freemarket.view.viewholder.base.BaseModelViewHolder
 
 class UnknownViewHolder<M: Model>(
     private val viewBinding: ViewUnknownItemBinding
 ): BaseModelViewHolder<M>(viewBinding) {
 
-    override fun bind(model: M?) {
+    override fun bind(model: M?, navigateCallback: NavigateCallback?) {
         viewBinding.isDebug = BuildConfig.DEBUG
     }
 

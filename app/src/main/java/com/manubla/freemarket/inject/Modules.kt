@@ -22,7 +22,7 @@ import com.manubla.freemarket.data.source.network.service.CurrencyService
 import com.manubla.freemarket.data.source.network.service.ProductService
 import com.manubla.freemarket.data.source.network.service.StateService
 import com.manubla.freemarket.data.source.network.service.UserService
-import com.manubla.freemarket.data.source.storage.AppDatabase
+import com.manubla.freemarket.data.source.storage.database.AppDatabase
 import com.manubla.freemarket.data.source.storage.builder.initRoomDatabase
 import com.manubla.freemarket.data.source.storage.dao.CurrencyDao
 import com.manubla.freemarket.data.source.storage.dao.ProductDao

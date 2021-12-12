@@ -11,6 +11,8 @@ class PagingModelAdapter<M : Model>(
     private val viewHolderProvider: ViewHolderModelProvider<M>
 ) : PagingDataAdapter<M, BaseModelViewHolder<M>>(diffCallback) {
 
+    var navigateCallback: NavigateCallback? = null
+
     override fun getItemViewType(position: Int): Int {
         return viewHolderProvider.getViewType(getItem(position))
     }
@@ -20,6 +22,7 @@ class PagingModelAdapter<M : Model>(
     }
 
     override fun onBindViewHolder(holder: BaseModelViewHolder<M>, position: Int) {
-        viewHolderProvider.bind(holder, getItem(position))
+        viewHolderProvider.bind(holder, getItem(position), navigateCallback)
     }
+
 }

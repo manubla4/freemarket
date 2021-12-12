@@ -1,22 +1,23 @@
-<layout  xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
     <data>
+        <import type="android.view.View" />
         <variable
-            name="product"
-            type="com.manubla.freemarket.data.model.business.Product" />
+            name="uiProduct"
+            type="com.manubla.freemarket.view.model.UiProduct" />
     </data>
 
     <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:clipToPadding="true"
-        app:cardCornerRadius="15dp"
+        app:cardCornerRadius="@dimen/dimen_10dp"
         app:cardUseCompatPadding="true"
-        app:cardElevation="2dp">
+        app:cardElevation="@dimen/dimen_2dp">
 
         <LinearLayout
-            android:id="@+id/cardRestaurant"
+            android:id="@+id/layout_product_container"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:clickable="true"
@@ -24,119 +25,53 @@
             android:orientation="horizontal">
 
             <ImageView
-                android:layout_width="100dp"
-                android:layout_height="100dp"
+                android:layout_width="@dimen/dimen_100dp"
+                android:layout_height="@dimen/dimen_100dp"
                 android:scaleType="centerCrop"
-                tools:src="@drawable/logo_test"/>
+                app:bindImageUrl="@{uiProduct.thumbnail}"
+                tools:src="@drawable/thumbnail_test"/>
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:padding="@dimen/dimen_6dp">
 
                 <TextView
                     style="@style/TextSmallBlack"
-                    android:id="@+id/txtName"
+                    android:id="@+id/txt_title"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:padding="6dp"
-                    android:gravity="center"
-                    android:textStyle="bold"
-                    android:maxLines="2"
-                    tools:text="Paladar Arepas"
+                    android:gravity="start|center"
+                    android:minLines="@integer/two"
+                    android:maxLines="@integer/two"
+                    android:text="@{uiProduct.title}"
+                    tools:text="Apple iPhone 11 (64 GB) - Blanco Apple Apple iPhone 11 (64 GB) - Blanco Apple"
                     app:layout_constraintTop_toTopOf="parent"/>
 
 
                 <TextView
-                    style="@style/TextCaptionBlack"
-                    android:id="@+id/txtDiscount"
+                    style="@style/TextMediumBlackBold"
+                    android:id="@+id/txt_price"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:visibility="invisible"
-                    android:textStyle="bold"
-                    android:textColor="@color/colorSuccess"
-                    app:layout_constraintTop_toBottomOf="@id/txtName"
-                    tools:visibility="visible"
-                    tools:text="15% descuento hoy"/>
+                    android:layout_marginTop="@dimen/dimen_2dp"
+                    android:gravity="start"
+                    android:maxLines="@integer/single"
+                    android:text="@{uiProduct.displayPrice}"
+                    app:layout_constraintTop_toBottomOf="@id/txt_title"
+                    tools:text="U$S 1400"/>
 
-                <LinearLayout
-                    android:id="@+id/layoutTimeScore"
+                <TextView
+                    style="@style/TextCaptionGreen"
+                    android:id="@+id/txt_free_shipping"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:gravity="center"
-                    android:weightSum="2"
-                    app:layout_constraintTop_toBottomOf="@id/txtDiscount">
-
-                    <TextView
-                        style="@style/TextCaption"
-                        android:id="@+id/txtTime"
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
-                        tools:text="15 - 30 min."/>
-
-
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:orientation="horizontal">
-
-                        <ImageView
-                            android:layout_width="20dp"
-                            android:layout_height="20dp"
-                            android:layout_marginEnd="2dp"
-                            android:src="@drawable/ic_star_yellow"/>
-
-                        <TextView
-                            style="@style/TextCaption"
-                            android:id="@+id/txtScore"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:gravity="center"
-                            android:textStyle="bold"
-                            android:textColor="@color/colorSuccess"
-                            tools:text="4.5"/>
-
-                    </LinearLayout>
-
-                </LinearLayout>
-
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:gravity="center"
-                    android:weightSum="2"
-                    app:layout_constraintTop_toBottomOf="@id/layoutTimeScore"
-                    app:layout_constraintBottom_toBottomOf="parent">
-
-                    <TextView
-                        style="@style/TextCaption"
-                        android:id="@+id/txtDistance"
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
-                        tools:text="1.6 km."/>
-
-
-                    <TextView
-                        style="@style/TextCaption"
-                        android:id="@+id/txtOnlinePayments"
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:visibility="invisible"
-                        android:text="pago online"
-                        tools:visibility="visible" />
-
-                </LinearLayout>
+                    android:gravity="start"
+                    android:maxLines="@integer/single"
+                    android:text="@{uiProduct.freeShipping}"
+                    app:layout_constraintTop_toBottomOf="@id/txt_price"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    tools:text="@string/txt_free_shipping"/>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -11,10 +11,10 @@ class UserSourceRepositoryImpl(
 
     override suspend fun fetchUser(id: Long): User? {
         val user = network.fetchUserById(id)
-        return user?.let {
+        user?.let {
             database.storeUser(it)
-            it
-        } ?: database.getUserById(id)
+        }
+        return database.getUserById(id)
     }
 
 }

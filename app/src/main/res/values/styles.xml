@@ -8,18 +8,35 @@
         <item name="android:textColor">@color/colorTextPrimary</item>
     </style>
 
-    <style name="TextCaption" parent="TextAppearance.AppCompat.Caption"/>
-    <style name="TextSmall" parent="TextAppearance.AppCompat.Small"/>
-    <style name="TextLarge" parent="TextAppearance.AppCompat.Large"/>
+    <style name="TextCaption" parent="TextAppearance.AppCompat.Caption">
+        <item name="android:ellipsize">end</item>
+    </style>
+    <style name="TextSmall" parent="TextAppearance.AppCompat.Small">
+        <item name="android:ellipsize">end</item>
+    </style>
+    <style name="TextLarge" parent="TextAppearance.AppCompat.Large">
+        <item name="android:ellipsize">end</item>
+    </style>
+    <style name="TextMedium" parent="TextAppearance.AppCompat.Small">
+        <item name="android:textSize">18sp</item>
+        <item name="android:ellipsize">end</item>
+    </style>
 
     <style name="TextSmallBlack" parent="TextSmall">
         <item name="android:textColor">@color/colorTextPrimary</item>
     </style>
-
+    <style name="TextMediumBlack" parent="TextMedium">
+        <item name="android:textColor">@color/colorTextPrimary</item>
+    </style>
+    <style name="TextMediumBlackBold" parent="TextMediumBlack">
+        <item name="android:textStyle">bold</item>
+    </style>
     <style name="TextCaptionBlack" parent="TextCaption">
         <item name="android:textColor">@color/colorTextPrimary</item>
     </style>
-
+    <style name="TextCaptionGreen" parent="TextCaption">
+        <item name="android:textColor">@color/colorSuccess</item>
+    </style>
     <style name="TextLargeBlack" parent="TextLarge">
         <item name="android:textColor">@color/colorTextPrimary</item>
     </style>
@@ -27,11 +44,9 @@
     <style name="ButtonMain" parent="Widget.MaterialComponents.Button">
         <item name="android:textColor">@color/colorTextPrimary</item>
     </style>
-
     <style name="ButtonRounded" parent="Widget.MaterialComponents.TimePicker.ImageButton">
         <item name="android:textColor">@color/colorTextPrimary</item>
     </style>
-
     <style name="ButtonRoundedSmall" parent="ButtonRounded">
         <item name="android:textSize">@dimen/text_size_small</item>
     </style>

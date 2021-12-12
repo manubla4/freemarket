@@ -1,8 +1,6 @@
 package com.manubla.freemarket.view.fragment
 
 import android.os.Bundle
-import androidx.navigation.NavController
-import androidx.navigation.Navigation
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -11,7 +9,9 @@ import com.manubla.freemarket.R
 import com.manubla.freemarket.databinding.FragmentHomeBinding
 import com.manubla.freemarket.view.adapter.PagingStateAdapter
 import com.manubla.freemarket.view.alias.PagingAdapter
+import com.manubla.freemarket.view.event.HomeState
 import com.manubla.freemarket.view.extension.invisibleIf
+import com.manubla.freemarket.view.extension.setOnSearch
 import com.manubla.freemarket.view.extension.visibleIf
 import com.manubla.freemarket.view.fragment.base.ViewDataBindingFragment
 import com.manubla.freemarket.view.viewmodel.HomeViewModel
@@ -27,15 +27,17 @@ class HomeFragment: ViewDataBindingFragment<FragmentHomeBinding>(R.layout.fragme
             adapter.retry()
         }
     }
-    private lateinit var navController: NavController
 
     override fun onViewCreated(viewDataBinding: FragmentHomeBinding, savedInstanceState: Bundle?) {
-        navController = Navigation.findNavController(viewDataBinding.root)
+        super.onViewCreated(viewDataBinding, savedInstanceState)
         setupViews(viewDataBinding)
-        viewModel.fetchPagingData()
+        setObservers()
     }
 
     private fun setupViews(viewDataBinding: FragmentHomeBinding) {
+        viewDataBinding.layoutSearch.inputTxtSearch.setOnSearch {
+            viewModel.fetchPagingData(it)
+        }
         viewDataBinding.swipeRefreshLayout.setup()
         viewDataBinding.recyclerView.setup()
         adapter.setup()
@@ -49,9 +51,8 @@ class HomeFragment: ViewDataBindingFragment<FragmentHomeBinding>(R.layout.fragme
     }
 
     private fun RecyclerView.setup() {
-        val linearLayoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
         this.adapter = this@HomeFragment.adapter.withLoadStateFooter(loadingAdapter)
-        this.layoutManager = linearLayoutManager
+        this.layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
         this.setItemViewCacheSize(ITEM_CACHED)
     }
 
@@ -63,11 +64,21 @@ class HomeFragment: ViewDataBindingFragment<FragmentHomeBinding>(R.layout.fragme
         }
     }
 
-    private fun showProgress(show: Boolean) {
+    private fun setObservers() {
+        viewModel.state.observe(viewLifecycleOwner, {
+            when (it) {
+                is HomeState.Loading -> showProgress(it.loading)
+                is HomeState.Data -> adapter.submitData(lifecycle, it.pagingData)
+            }
+        })
+    }
+
+    private fun showProgress(show: Boolean = true) {
         viewDataBinding.progressBar.visibleIf(show)
     }
 
     companion object {
         private const val ITEM_CACHED = 10
     }
+
 }

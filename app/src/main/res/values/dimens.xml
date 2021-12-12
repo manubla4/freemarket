@@ -7,9 +7,12 @@
 
     <dimen name="match_constraint">@dimen/dimen_0dp</dimen>
     <dimen name="dimen_0dp">0dp</dimen>
+    <dimen name="dimen_2dp">2dp</dimen>
     <dimen name="dimen_4dp">4dp</dimen>
+    <dimen name="dimen_6dp">6dp</dimen>
     <dimen name="dimen_8dp">8dp</dimen>
     <dimen name="dimen_10dp">10dp</dimen>
+    <dimen name="dimen_12dp">12dp</dimen>
     <dimen name="dimen_16dp">16dp</dimen>
     <dimen name="dimen_20dp">20dp</dimen>
     <dimen name="dimen_24dp">24dp</dimen>
@@ -17,4 +20,5 @@
     <dimen name="dimen_48dp">48dp</dimen>
     <dimen name="dimen_64dp">64dp</dimen>
     <dimen name="dimen_80dp">80dp</dimen>
+    <dimen name="dimen_100dp">100dp</dimen>
 </resources>

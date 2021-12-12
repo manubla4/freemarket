@@ -3,6 +3,7 @@ package com.manubla.freemarket.data.model.business
 import android.os.Parcelable
 import androidx.annotation.NonNull
 import androidx.room.*
+import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 import com.manubla.freemarket.data.model.base.Model
 import com.manubla.freemarket.extension.toNotNullable
@@ -34,7 +35,11 @@ data class User (
 
     @Embedded
     @SerializedName(PARAM_SELLER_REPUTATION)
-    val _sellerReputation: SellerReputation
+    val _sellerReputation: SellerReputation,
+
+    @Ignore
+    @Expose(serialize = false, deserialize = false)
+    private val _state: String?
 
 ): Parcelable, Model {
 
@@ -52,6 +57,9 @@ data class User (
 
     val powerSellerStatus: String
         get() = _sellerReputation.powerSellerStatus
+
+    val state: String
+        get() = _state.toNotNullable()
 
     @Ignore
     @IgnoredOnParcel

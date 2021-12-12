@@ -30,7 +30,7 @@ class HomeViewModel(
         get() = _state
 
     fun fetchPagingData(query: String) {
-        _state.postValue(HomeState.Loading)
+        _state.postValue(HomeState.Loading(true))
         launch(Dispatchers.IO) {
             Pager(
                 config = PagingConfig(
@@ -50,7 +50,6 @@ class HomeViewModel(
                 _state.postValue(HomeState.Data(pagingData))
             }
         }
-
     }
 
     companion object {
