@@ -1,6 +1,6 @@
 package com.manubla.freemarket.data.source.storage.datastore.products
 
-import com.manubla.freemarket.data.model.Product
+import com.manubla.freemarket.data.model.business.Product
 
 interface ProductsDataStoreDatabase {
     suspend fun getProductById(id: String): Product?

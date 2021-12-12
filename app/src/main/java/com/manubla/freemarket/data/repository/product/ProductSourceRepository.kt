@@ -1,8 +1,8 @@
 package com.manubla.freemarket.data.repository.product
 
-import com.manubla.freemarket.data.model.Product
+import com.manubla.freemarket.data.model.business.Product
+import com.manubla.freemarket.data.repository.base.SourceRepository
 
-interface ProductSourceRepository {
-    suspend fun fetchProducts(query: String): List<Product>?
+interface ProductSourceRepository: SourceRepository {
     suspend fun fetchProduct(id: String): Product?
 }

@@ -1,6 +1,6 @@
 package com.manubla.freemarket.data.source.storage.datastore.state
 
-import com.manubla.freemarket.data.model.State
+import com.manubla.freemarket.data.model.business.State
 
 interface StateDataStoreDatabase {
     suspend fun getStateById(id: String): State?

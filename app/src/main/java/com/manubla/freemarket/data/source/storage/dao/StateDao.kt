@@ -4,7 +4,7 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.manubla.freemarket.data.model.State
+import com.manubla.freemarket.data.model.business.State
 
 @Dao
 interface StateDao {

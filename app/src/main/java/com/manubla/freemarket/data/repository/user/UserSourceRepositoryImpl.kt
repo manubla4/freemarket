@@ -1,6 +1,6 @@
 package com.manubla.freemarket.data.repository.user
 
-import com.manubla.freemarket.data.model.User
+import com.manubla.freemarket.data.model.business.User
 import com.manubla.freemarket.data.source.network.datastore.user.UserDataStoreNetwork
 import com.manubla.freemarket.data.source.storage.datastore.user.UserDataStoreDatabase
 

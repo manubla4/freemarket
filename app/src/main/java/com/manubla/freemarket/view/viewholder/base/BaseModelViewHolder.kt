@@ -7,5 +7,5 @@ import com.manubla.freemarket.data.model.base.Model
 abstract class BaseModelViewHolder<M: Model>(
     viewBinding: ViewDataBinding
 ): RecyclerView.ViewHolder(viewBinding.root) {
-    abstract fun bind(model: M)
+    abstract fun bind(model: M?)
 }

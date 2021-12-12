@@ -3,4 +3,5 @@
     <string name="text_message_error_paging_data">Ha ocurrido un error, por favor reintente</string>
     <string name="text_retry_paging_action">Reintentar</string>
     <string name="txt_search">Buscar</string>
+    <string name="txt_unknown_item">Unknown item</string>
 </resources>

@@ -1,10 +1,10 @@
 package com.manubla.freemarket.data.repository.products
 
-import com.manubla.freemarket.data.model.Product
+import com.manubla.freemarket.data.model.business.Product
 import com.manubla.freemarket.data.source.network.datastore.products.ProductsDataStoreNetwork
 import com.manubla.freemarket.data.source.storage.datastore.products.ProductsDataStoreDatabase
-import com.manubla.freemarket.extension.isZero
-import com.manubla.freemarket.extension.zero
+import com.manubla.freemarket.utils.isZero
+import com.manubla.freemarket.utils.zero
 
 class ProductsSourceRepositoryImpl(
     private val database: ProductsDataStoreDatabase,

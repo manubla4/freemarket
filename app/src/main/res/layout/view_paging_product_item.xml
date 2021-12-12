@@ -4,7 +4,7 @@
     <data>
         <variable
             name="product"
-            type="com.manubla.freemarket.data.model.Product" />
+            type="com.manubla.freemarket.data.model.business.Product" />
     </data>
 
     <com.google.android.material.card.MaterialCardView

@@ -1,6 +1,6 @@
 package com.manubla.freemarket.data.source.network.service
 
-import com.manubla.freemarket.data.model.User
+import com.manubla.freemarket.data.model.business.User
 import retrofit2.http.GET
 import retrofit2.http.Path
 

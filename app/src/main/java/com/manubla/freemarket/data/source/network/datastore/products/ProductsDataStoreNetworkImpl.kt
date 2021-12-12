@@ -2,7 +2,7 @@ package com.manubla.freemarket.data.source.network.datastore.products
 
 import android.util.Log
 import com.manubla.freemarket.BuildConfig
-import com.manubla.freemarket.data.model.Product
+import com.manubla.freemarket.data.model.business.Product
 import com.manubla.freemarket.data.source.network.service.ProductService
 import com.manubla.freemarket.data.source.network.service.response.ProductsPageResponse
 

@@ -1,11 +1,12 @@
 package com.manubla.freemarket.data.repository.product
 
-import com.manubla.freemarket.data.model.Product
+import com.manubla.freemarket.data.model.base.Model
+import com.manubla.freemarket.data.model.business.Product
 import com.manubla.freemarket.data.source.network.datastore.product.ProductDataStoreNetwork
+import com.manubla.freemarket.data.source.network.service.ProductService.Companion.PAGE_LIMIT
 import com.manubla.freemarket.data.source.storage.datastore.product.ProductDataStoreDatabase
 import com.manubla.freemarket.data.source.storage.manager.DatabaseManager
 import com.manubla.freemarket.extension.empty
-import com.manubla.freemarket.extension.zero
 
 class ProductSourceRepositoryImpl(
     private val databaseManager: DatabaseManager,
@@ -13,15 +14,13 @@ class ProductSourceRepositoryImpl(
     private val network: ProductDataStoreNetwork
 ) : ProductSourceRepository {
 
-    private var currentOffset: Int = Int.zero()
     private var currentQuery: String = String.empty()
 
-    override suspend fun fetchProducts(query: String): List<Product>? {
+    override suspend fun fetchData(query: String, page: Int): List<Model>? {
         val isNewSearch = isNewSearch(query)
-        fetchNetworkPage()?.let { page ->
-            val result = page.results.filter { it.hasRequiredParams() }
-            val pageSize = page.results.size
-            storeResult(result, isNewSearch, pageSize)
+        fetchNetworkPage(page)?.let { pageResult ->
+            val result = pageResult.results.filter { it.hasRequiredParams() }
+            storeResult(result, isNewSearch)
             return database.getProducts()
         }
         return if (isNewSearch) {
@@ -29,11 +28,13 @@ class ProductSourceRepositoryImpl(
         } else null
     }
 
-    private suspend fun fetchNetworkPage() =
+    private suspend fun fetchNetworkPage(page: Int) =
         network.fetchProductsPage(
             query = currentQuery,
-            offset = currentOffset
+            offset = getCurrentOffset(page)
         )
+
+    private fun getCurrentOffset(page: Int) = page * PAGE_LIMIT
 
     override suspend fun fetchProduct(id: String): Product? {
         val product = network.fetchProductById(id)
@@ -46,7 +47,6 @@ class ProductSourceRepositoryImpl(
 
     private fun isNewSearch(query: String): Boolean {
         if (currentQuery != query) {
-            currentOffset = Int.zero()
             currentQuery = query
             return true
         }
@@ -55,8 +55,7 @@ class ProductSourceRepositoryImpl(
 
     private suspend fun storeResult(
         result: List<Product>,
-        isNewSearch: Boolean,
-        pageSize: Int
+        isNewSearch: Boolean
     ) {
         if (isNewSearch) {
             databaseManager.clearAllTables()
@@ -64,7 +63,6 @@ class ProductSourceRepositoryImpl(
             database.clearStorage()
         }
         database.storeProducts(result)
-        currentOffset += pageSize
     }
 
 }

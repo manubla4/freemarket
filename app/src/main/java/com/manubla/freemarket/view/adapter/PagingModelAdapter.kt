@@ -12,21 +12,14 @@ class PagingModelAdapter<M : Model>(
 ) : PagingDataAdapter<M, BaseModelViewHolder<M>>(diffCallback) {
 
     override fun getItemViewType(position: Int): Int {
-        return viewHolderProvider.getViewType(
-            item = getItem(position)
-        )
+        return viewHolderProvider.getViewType(getItem(position))
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseModelViewHolder<M> {
         return viewHolderProvider.create(parent, viewType)
-    //        return PagingProductViewHolder.from(parent)
     }
 
     override fun onBindViewHolder(holder: BaseModelViewHolder<M>, position: Int) {
         viewHolderProvider.bind(holder, getItem(position))
-//        val product = getItem(position) as Product?
-//        product?.let {
-//            holder.bind(it)
-//        }
     }
 }

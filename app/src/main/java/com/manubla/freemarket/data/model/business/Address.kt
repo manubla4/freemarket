@@ -1,4 +1,4 @@
-package com.manubla.freemarket.data.model
+package com.manubla.freemarket.data.model.business
 
 import android.os.Parcelable
 import androidx.room.ColumnInfo

@@ -2,10 +2,10 @@ package com.manubla.freemarket.data.source.storage
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
-import com.manubla.freemarket.data.model.Currency
-import com.manubla.freemarket.data.model.Product
-import com.manubla.freemarket.data.model.State
-import com.manubla.freemarket.data.model.User
+import com.manubla.freemarket.data.model.business.Currency
+import com.manubla.freemarket.data.model.business.Product
+import com.manubla.freemarket.data.model.business.State
+import com.manubla.freemarket.data.model.business.User
 import com.manubla.freemarket.data.source.storage.dao.CurrencyDao
 import com.manubla.freemarket.data.source.storage.dao.ProductDao
 import com.manubla.freemarket.data.source.storage.dao.StateDao

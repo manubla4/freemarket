@@ -1,7 +1,7 @@
 package com.manubla.freemarket.data.source.storage.datastore.state
 
 import android.util.Log
-import com.manubla.freemarket.data.model.State
+import com.manubla.freemarket.data.model.business.State
 import com.manubla.freemarket.data.source.storage.dao.StateDao
 
 class StateDataStoreDatabaseImpl(

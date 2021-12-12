@@ -1,7 +1,7 @@
 package com.manubla.freemarket.data.source.network.service.response
 
 import android.os.Parcelable
-import com.manubla.freemarket.data.model.Product
+import com.manubla.freemarket.data.model.business.Product
 import kotlinx.parcelize.Parcelize
 
 @Parcelize

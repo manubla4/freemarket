@@ -1,7 +1,7 @@
 package com.manubla.freemarket.data.source.storage.datastore.currency
 
 import android.util.Log
-import com.manubla.freemarket.data.model.Currency
+import com.manubla.freemarket.data.model.business.Currency
 import com.manubla.freemarket.data.source.storage.dao.CurrencyDao
 
 class CurrencyDataStoreDatabaseImpl(

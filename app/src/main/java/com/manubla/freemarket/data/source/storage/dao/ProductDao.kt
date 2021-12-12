@@ -4,8 +4,8 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.manubla.freemarket.data.model.Currency
-import com.manubla.freemarket.data.model.Product
+import com.manubla.freemarket.data.model.business.Currency
+import com.manubla.freemarket.data.model.business.Product
 
 @Dao
 interface ProductDao {

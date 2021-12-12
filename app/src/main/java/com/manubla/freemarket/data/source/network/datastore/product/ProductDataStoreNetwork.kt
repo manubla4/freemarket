@@ -1,6 +1,6 @@
 package com.manubla.freemarket.data.source.network.datastore.product
 
-import com.manubla.freemarket.data.model.Product
+import com.manubla.freemarket.data.model.business.Product
 import com.manubla.freemarket.data.source.network.service.response.ProductsPageResponse
 
 interface ProductDataStoreNetwork {
