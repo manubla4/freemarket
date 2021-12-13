@@ -6,7 +6,7 @@ import com.google.gson.reflect.TypeToken
 import com.manubla.freemarket.data.model.business.Picture
 import java.lang.reflect.Type
 
-object Converters {
+class Converters {
 
     @TypeConverter
     fun fromString(value: String?): List<Picture> {

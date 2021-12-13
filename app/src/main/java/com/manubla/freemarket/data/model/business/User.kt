@@ -6,6 +6,7 @@ import androidx.room.*
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 import com.manubla.freemarket.data.model.base.Model
+import com.manubla.freemarket.extension.empty
 import com.manubla.freemarket.extension.toNotNullable
 import kotlinx.parcelize.IgnoredOnParcel
 import kotlinx.parcelize.Parcelize
@@ -35,11 +36,7 @@ data class User (
 
     @Embedded
     @SerializedName(PARAM_SELLER_REPUTATION)
-    val _sellerReputation: SellerReputation,
-
-    @Ignore
-    @Expose(serialize = false, deserialize = false)
-    private val _state: String?
+    val _sellerReputation: SellerReputation
 
 ): Parcelable, Model {
 
@@ -58,11 +55,17 @@ data class User (
     val powerSellerStatus: String
         get() = _sellerReputation.powerSellerStatus
 
-    val state: String
-        get() = _state.toNotNullable()
+    @Ignore
+    @IgnoredOnParcel
+    @Expose(serialize = false, deserialize = false)
+    var state: String = String.empty()
+        set(value) {
+            field = if (value.isBlank()) String.empty() else value
+        }
 
     @Ignore
     @IgnoredOnParcel
+    @Expose(serialize = false, deserialize = false)
     override val requiredParams = mapOf(
         Pair(PARAM_ID, id),
         Pair(PARAM_NICKNAME, _nickname)

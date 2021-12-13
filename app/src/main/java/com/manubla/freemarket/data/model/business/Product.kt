@@ -43,7 +43,7 @@ data class Product (
 
     @Embedded
     @SerializedName(PARAM_SHIPPING)
-    private val _shipping: Shipping,
+    val _shipping: Shipping,
 
     @ColumnInfo(name = PARAM_PICTURES)
     @SerializedName(PARAM_PICTURES)
@@ -59,11 +59,7 @@ data class Product (
 
     @ColumnInfo(name = PARAM_WARRANTY)
     @SerializedName(PARAM_WARRANTY)
-    private val _warranty: String?,
-
-    @Ignore
-    @Expose(serialize = false, deserialize = false)
-    private val _currency: String?
+    private val _warranty: String?
 
 ): Parcelable, Model {
 
@@ -85,9 +81,6 @@ data class Product (
     val sellerId: Long
         get() = _sellerId.toNotNullable()
 
-    val currency: String
-        get() = _currency ?: DEFAULT_CURRENCY
-
     val freeShipping: Boolean
         get() = _shipping.freeShipping
 
@@ -99,6 +92,15 @@ data class Product (
 
     @Ignore
     @IgnoredOnParcel
+    @Expose(serialize = false, deserialize = false)
+    var currency: String = DEFAULT_CURRENCY
+        set(value) {
+            field = if (value.isBlank()) DEFAULT_CURRENCY else value
+        }
+
+    @Ignore
+    @IgnoredOnParcel
+    @Expose(serialize = false, deserialize = false)
     override val requiredParams = mapOf(
         Pair(PARAM_ID, id),
         Pair(PARAM_TITLE, _title),

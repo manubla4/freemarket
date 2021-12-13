@@ -8,6 +8,11 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.RequestOptions
 import com.manubla.freemarket.view.adapter.image.ImageAdapter
 
+@BindingAdapter("bindImageResource")
+fun bindImageResource(imageView: ImageView, resource: Int) {
+    imageView.setImageResource(resource)
+}
+
 @BindingAdapter("bindImage")
 fun bindImage(imageView: ImageView, url: String) {
     val requestOptions = RequestOptions().diskCacheStrategy(DiskCacheStrategy.ALL)

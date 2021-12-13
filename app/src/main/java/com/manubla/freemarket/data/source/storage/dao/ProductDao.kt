@@ -10,19 +10,19 @@ import com.manubla.freemarket.data.model.business.Product
 @Dao
 interface ProductDao {
 
-    @Query("SELECT * FROM ${Product.TABLE_NAME} LEFT JOIN ${Currency.TABLE_NAME} ON ${Product.TABLE_NAME}.${Product.PARAM_CURRENCY_ID}=${Currency.TABLE_NAME}.${Currency.PARAM_ID} WHERE ${Product.TABLE_NAME}.${Product.PARAM_ID}=:id")
-    suspend fun getById(id: String): Product?
+    @Query("SELECT t1.*, t2.symbol as currency FROM ${Product.TABLE_NAME} t1 LEFT JOIN ${Currency.TABLE_NAME} t2 ON t1.${Product.PARAM_CURRENCY_ID}=t2.${Currency.PARAM_ID} WHERE t1.${Product.PARAM_ID}=:id")
+    fun getById(id: String): Product?
 
-    @Query("SELECT * FROM ${Product.TABLE_NAME} LEFT JOIN ${Currency.TABLE_NAME} ON ${Product.TABLE_NAME}.${Product.PARAM_CURRENCY_ID}=${Currency.TABLE_NAME}.${Currency.PARAM_ID} WHERE ${Product.TABLE_NAME}.${Product.PARAM_TITLE} LIKE '%' || :query || '%'")
-    suspend fun getAll(query: String): List<Product>
-
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insert(product: Product)
+    @Query("SELECT t1.*, t2.symbol FROM ${Product.TABLE_NAME} t1 LEFT JOIN ${Currency.TABLE_NAME} t2 ON t1.${Product.PARAM_CURRENCY_ID}=t2.${Currency.PARAM_ID} WHERE t1.${Product.PARAM_TITLE} LIKE '%' || :query || '%'")
+    fun getAll(query: String): List<Product>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertAll(products: List<Product>)
+    fun insert(product: Product)
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insertAll(products: List<Product>)
 
     @Query("DELETE FROM ${Product.TABLE_NAME}")
-    suspend fun deleteAll()
+    fun deleteAll()
 
 }
