@@ -4,8 +4,10 @@
     <color name="colorPrimaryDark">#A79E00</color>
     <color name="colorAccent">#EEE500</color>
     <color name="colorTextPrimary">#121212</color>
+    <color name="colorLightGreen">#55F5A3</color>
     <color name="colorTextSecondary">#1D1D1D</color>
     <color name="colorBackground">#F3F3F3</color>
+    <color name="colorGray">#BDBDBD</color>
     <color name="colorSuccess">#4aab33</color>
     <color name="colorFailure">#C40E00</color>
     <color name="ic_launcher_background">#EAD700</color>

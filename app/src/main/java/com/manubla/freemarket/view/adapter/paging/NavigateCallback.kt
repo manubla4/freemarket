@@ -1,4 +1,4 @@
-package com.manubla.freemarket.view.adapter
+package com.manubla.freemarket.view.adapter.paging
 
 interface NavigateCallback {
     fun onNavigate(destination: String, data: String)

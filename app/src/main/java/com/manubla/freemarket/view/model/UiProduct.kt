@@ -18,7 +18,7 @@ import com.manubla.freemarket.extension.toNotNullable
 class UiProduct(product: Product,
                 user: User? = null,
                 state: State? = null,
-                context: Context? = null
+                var context: Context? = null
 ) {
     val title: String = product.title
 
@@ -28,16 +28,13 @@ class UiProduct(product: Product,
 
     val warranty: String = product.warranty
 
-    val userName: String = user?.nickname.toNotNullable()
+    val userName: String = user?.nickname.toNotNullable().uppercase()
 
     val userAddress: String = "${user?.city}, ${state?.name}"
 
-    val userStatus: String =
-        if (user?.powerSellerStatus == SellerReputation.STATUS_TYPE_PLATINIUM) {
-            context?.getString(R.string.txt_platinum_user).toNotNullable()
-        } else {
-            String.empty()
-        }
+    val pictures: List<String> = product.pictures.map { it.url }
+
+    val isPlatinumUser: Boolean = user?.powerSellerStatus == SellerReputation.STATUS_TYPE_PLATINIUM
 
     val userLevel: Int = when {
         user?.levelId?.startsWith(LEVEL_TYPE_1.toString()).toNotNullable() -> LEVEL_TYPE_1
@@ -48,12 +45,7 @@ class UiProduct(product: Product,
         else -> LEVEL_TYPE_0
     }
 
-    val freeShipping: String =
-            if (product.freeShipping) {
-                context?.getString(R.string.txt_free_shipping).toNotNullable()
-            } else {
-                String.empty()
-            }
+    val isFreeShipping: Boolean = product.freeShipping
 
     val condition = context?.getString(
             if (product.condition == Product.CONDITION_TYPE_NEW) {

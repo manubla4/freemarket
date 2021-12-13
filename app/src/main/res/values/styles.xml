@@ -8,6 +8,7 @@
         <item name="android:textColor">@color/colorTextPrimary</item>
     </style>
 
+
     <style name="TextCaption" parent="TextAppearance.AppCompat.Caption">
         <item name="android:ellipsize">end</item>
     </style>
@@ -17,16 +18,40 @@
     <style name="TextLarge" parent="TextAppearance.AppCompat.Large">
         <item name="android:ellipsize">end</item>
     </style>
+    <style name="TextSemiMedium" parent="TextAppearance.AppCompat.Small">
+        <item name="android:textSize">16sp</item>
+        <item name="android:ellipsize">end</item>
+    </style>
     <style name="TextMedium" parent="TextAppearance.AppCompat.Small">
         <item name="android:textSize">18sp</item>
         <item name="android:ellipsize">end</item>
     </style>
+    <style name="TextExtraLarge" parent="TextAppearance.AppCompat.Small">
+        <item name="android:textSize">28sp</item>
+        <item name="android:ellipsize">end</item>
+    </style>
+
 
     <style name="TextSmallBlack" parent="TextSmall">
         <item name="android:textColor">@color/colorTextPrimary</item>
     </style>
+    <style name="TextSmallGreen" parent="TextSmall">
+        <item name="android:textColor">@color/colorSuccess</item>
+    </style>
+    <style name="TextSmallGreenBold" parent="TextSmallGreen">
+        <item name="android:textStyle">bold</item>
+    </style>
     <style name="TextMediumBlack" parent="TextMedium">
         <item name="android:textColor">@color/colorTextPrimary</item>
+    </style>
+    <style name="TextSemiMediumBlack" parent="TextSemiMedium">
+        <item name="android:textColor">@color/colorTextPrimary</item>
+    </style>
+    <style name="TextSemiMediumLightGreen" parent="TextSemiMedium">
+        <item name="android:textColor">@color/colorLightGreen</item>
+    </style>
+    <style name="TextSemiMediumLightGreenBold" parent="TextSemiMediumLightGreen">
+        <item name="android:textStyle">bold</item>
     </style>
     <style name="TextMediumBlackBold" parent="TextMediumBlack">
         <item name="android:textStyle">bold</item>
@@ -40,6 +65,13 @@
     <style name="TextLargeBlack" parent="TextLarge">
         <item name="android:textColor">@color/colorTextPrimary</item>
     </style>
+    <style name="TextExtraLargeBlack" parent="TextExtraLarge">
+        <item name="android:textColor">@color/colorTextPrimary</item>
+    </style>
+    <style name="TextExtraLargeBlackBold" parent="TextExtraLargeBlack">
+        <item name="android:textStyle">bold</item>
+    </style>
+
 
     <style name="ButtonMain" parent="Widget.MaterialComponents.Button">
         <item name="android:textColor">@color/colorTextPrimary</item>

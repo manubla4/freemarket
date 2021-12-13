@@ -38,6 +38,7 @@ import com.manubla.freemarket.data.source.storage.datastore.user.UserDataStoreDa
 import com.manubla.freemarket.data.source.storage.datastore.user.UserDataStoreDatabaseImpl
 import com.manubla.freemarket.data.source.storage.manager.DatabaseManager
 import com.manubla.freemarket.data.source.storage.manager.DatabaseManagerImpl
+import com.manubla.freemarket.view.adapter.image.ImageAdapter
 import com.manubla.freemarket.view.alias.DiffUtil
 import com.manubla.freemarket.view.alias.PagingAdapter
 import com.manubla.freemarket.view.alias.ViewHolderProvider
@@ -168,6 +169,11 @@ val adaptersModule = module {
                 get<DiffUtil>(),
                 get<ViewHolderProvider>()
             )
+        }
+    }
+    scope<DetailFragment> {
+        factory<ImageAdapter> {
+            ImageAdapter()
         }
     }
 }

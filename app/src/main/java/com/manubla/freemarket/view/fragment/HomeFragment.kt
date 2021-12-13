@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.manubla.freemarket.R
 import com.manubla.freemarket.databinding.FragmentHomeBinding
-import com.manubla.freemarket.view.adapter.PagingStateAdapter
+import com.manubla.freemarket.view.adapter.paging.PagingStateAdapter
 import com.manubla.freemarket.view.alias.PagingAdapter
 import com.manubla.freemarket.view.event.HomeState
 import com.manubla.freemarket.view.extension.invisibleIf

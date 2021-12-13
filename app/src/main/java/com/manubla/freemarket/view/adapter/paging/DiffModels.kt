@@ -1,4 +1,4 @@
-package com.manubla.freemarket.view.adapter
+package com.manubla.freemarket.view.adapter.paging
 
 import androidx.recyclerview.widget.DiffUtil
 import com.manubla.freemarket.data.model.base.Model

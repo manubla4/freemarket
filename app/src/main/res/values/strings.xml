@@ -7,7 +7,8 @@
     <string name="txt_used">Usado</string>
     <string name="txt_unknown_item">Unknown item</string>
     <string name="txt_free_shipping">Envío Gratis</string>
+    <string name="txt_seller_info">Información sobre el vendedor</string>
     <string name="txt_platinum_user">MercadoLíder Platinum</string>
     <string name="txt_empty_search">Lo sentimos, pero no encontramos resultados para tu búsqueda</string>
-    <string name="txt_error_search">Lo sentimos, pero ha ocurrido un problema</string>
+    <string name="txt_error">Lo sentimos, pero ha ocurrido un problema!</string>
 </resources>

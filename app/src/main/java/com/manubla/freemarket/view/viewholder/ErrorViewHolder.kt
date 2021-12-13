@@ -6,7 +6,7 @@ import com.manubla.freemarket.R
 import com.manubla.freemarket.data.model.base.Model
 import com.manubla.freemarket.data.model.result.SearchResult
 import com.manubla.freemarket.databinding.ViewEmptyErrorItemBinding
-import com.manubla.freemarket.view.adapter.NavigateCallback
+import com.manubla.freemarket.view.adapter.paging.NavigateCallback
 import com.manubla.freemarket.view.viewholder.base.BaseModelViewHolder
 
 class ErrorViewHolder<M: Model>(
@@ -17,12 +17,15 @@ class ErrorViewHolder<M: Model>(
         model.asSearchResult {
             when(it.type) {
                 SearchResult.STATE_EMPTY -> {
+                    viewBinding.drawable = R.drawable.ic_search
                     viewBinding.message = viewBinding.root.context.getString(R.string.txt_empty_search)
                 }
                 SearchResult.STATE_ERROR -> {
-                    viewBinding.message = viewBinding.root.context.getString(R.string.txt_error_search)
+                    viewBinding.drawable = R.drawable.ic_error
+                    viewBinding.message = viewBinding.root.context.getString(R.string.txt_error)
                 }
             }
+            viewBinding.executePendingBindings()
         }
     }
 

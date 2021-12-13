@@ -1,4 +1,4 @@
-package com.manubla.freemarket.view.adapter
+package com.manubla.freemarket.view.adapter.paging
 
 import android.view.ViewGroup
 import androidx.paging.LoadState

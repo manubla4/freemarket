@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import com.manubla.freemarket.data.model.base.Model
 import com.manubla.freemarket.data.model.business.Product
 import com.manubla.freemarket.databinding.ViewPagingProductItemBinding
-import com.manubla.freemarket.view.adapter.NavigateCallback
+import com.manubla.freemarket.view.adapter.paging.NavigateCallback
 import com.manubla.freemarket.view.model.UiProduct
 import com.manubla.freemarket.view.viewholder.base.BaseModelViewHolder
 
@@ -22,6 +22,7 @@ class PagingProductViewHolder<M: Model>(
             viewBinding.layoutProductContainer.setOnClickListener {
                 navigateCallback?.onNavigate(NavigateCallback.DESTINATION_DETAIL, product.id)
             }
+            viewBinding.executePendingBindings()
         }
     }
 

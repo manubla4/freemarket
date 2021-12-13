@@ -6,6 +6,10 @@
         <variable
             name="message"
             type="String" />
+
+        <variable
+            name="drawable"
+            type="Integer" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -21,7 +25,8 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:srcCompat="@drawable/ic_search" />
+            app:srcCompat="@{drawable}"
+            tools:src="@drawable/ic_search"/>
 
         <TextView
             android:id="@+id/txt_message"

@@ -28,7 +28,7 @@
                 android:layout_width="@dimen/dimen_100dp"
                 android:layout_height="@dimen/dimen_100dp"
                 android:scaleType="centerCrop"
-                app:bindImageUrl="@{uiProduct.thumbnail}"
+                app:bindImage="@{uiProduct.thumbnail}"
                 tools:src="@drawable/thumbnail_test"/>
 
             <androidx.constraintlayout.widget.ConstraintLayout

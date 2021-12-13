@@ -1,8 +1,8 @@
 package com.manubla.freemarket.view.alias
 
 import com.manubla.freemarket.data.model.base.Model
-import com.manubla.freemarket.view.adapter.DiffModels
-import com.manubla.freemarket.view.adapter.PagingModelAdapter
+import com.manubla.freemarket.view.adapter.paging.DiffModels
+import com.manubla.freemarket.view.adapter.paging.PagingModelAdapter
 import com.manubla.freemarket.view.provider.ViewHolderModelProvider
 
 internal typealias ViewHolderProvider = ViewHolderModelProvider<Model>
