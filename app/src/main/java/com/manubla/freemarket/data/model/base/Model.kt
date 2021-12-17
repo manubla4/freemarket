@@ -3,14 +3,14 @@ package com.manubla.freemarket.data.model.base
 import android.util.Log
 import com.manubla.freemarket.extension.isNull
 
-interface Model {
+abstract class Model {
 
-    val requiredParams: Map<String, Any?>
+    abstract fun requiredParams(): Map<String, Any?>
 
-    fun assembleTableAndParam(param: String): String
+    abstract fun assembleTableAndParam(param: String): String
 
     fun hasRequiredParams(): Boolean {
-        val nullParams = requiredParams
+        val nullParams = requiredParams()
             .filter { it.value.isNull() }
             .map { it.key }
         if (nullParams.isNotEmpty()) {
@@ -23,7 +23,7 @@ interface Model {
         return true
     }
 
-    fun areContentsTheSame(newItem: Model): Boolean
+    abstract fun areContentsTheSame(newItem: Model): Boolean
 
     fun areItemsTheSame(newItem: Model): Boolean {
         return this == newItem

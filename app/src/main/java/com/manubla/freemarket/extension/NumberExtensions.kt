@@ -5,6 +5,10 @@ fun Double.Companion.zero() = 0.0
 fun Int.Companion.zero() = 0
 
 
+fun Double?.toNotNullable(): Double {
+    return this ?: Double.zero()
+}
+
 fun Long?.toNotNullable(): Long {
     return this ?: Long.zero()
 }

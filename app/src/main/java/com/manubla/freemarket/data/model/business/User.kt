@@ -38,7 +38,7 @@ data class User (
     @SerializedName(PARAM_SELLER_REPUTATION)
     val _sellerReputation: SellerReputation
 
-): Parcelable, Model {
+): Parcelable, Model() {
 
     val nickname: String
         get() = _nickname.toNotNullable()
@@ -63,10 +63,7 @@ data class User (
             field = if (value.isBlank()) String.empty() else value
         }
 
-    @Ignore
-    @IgnoredOnParcel
-    @Expose(serialize = false, deserialize = false)
-    override val requiredParams = mapOf(
+    override fun requiredParams() = mapOf(
         Pair(PARAM_ID, id),
         Pair(PARAM_NICKNAME, _nickname)
     )

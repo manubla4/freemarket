@@ -31,7 +31,7 @@ data class Product (
 
     @ColumnInfo(name = PARAM_PRICE)
     @SerializedName(PARAM_PRICE)
-    private val _price: Long?,
+    private val _price: Double?,
 
     @ColumnInfo(name = PARAM_CONDITION)
     @SerializedName(PARAM_CONDITION)
@@ -61,12 +61,12 @@ data class Product (
     @SerializedName(PARAM_WARRANTY)
     private val _warranty: String?
 
-): Parcelable, Model {
+): Parcelable, Model() {
 
     val title: String
         get() = _title.toNotNullable()
 
-    val price: Long
+    val price: Double
         get() = _price.toNotNullable()
 
     val condition: String
@@ -98,10 +98,7 @@ data class Product (
             field = if (value.isBlank()) DEFAULT_CURRENCY else value
         }
 
-    @Ignore
-    @IgnoredOnParcel
-    @Expose(serialize = false, deserialize = false)
-    override val requiredParams = mapOf(
+    override fun requiredParams() = mapOf(
         Pair(PARAM_ID, id),
         Pair(PARAM_TITLE, _title),
         Pair(PARAM_PRICE, _price)

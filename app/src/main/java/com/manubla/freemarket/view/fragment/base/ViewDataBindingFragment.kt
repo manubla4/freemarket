@@ -49,6 +49,11 @@ open class ViewDataBindingFragment<V : ViewDataBinding>(
         return viewDataBinding
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        viewDataBinding.unbind()
+    }
+
     override fun onNavigate(destination: String, data: String) {
         val bundle = bundleOf(ARG_DATA to data)
         when (destination) {

@@ -5,5 +5,5 @@ import com.manubla.freemarket.data.source.network.service.response.ProductsPageR
 
 interface ProductDataStoreNetwork {
     suspend fun fetchProductById(id: String): Product?
-    suspend fun fetchProductsPage(query: String, offset: Int): ProductsPageResponse?
+    suspend fun fetchProductsPage(query: String, offset: Int, pageSize: Int): ProductsPageResponse?
 }

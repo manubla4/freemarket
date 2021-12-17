@@ -1,4 +1,4 @@
-package com.manubla.freemarket.inject.module
+package com.manubla.freemarket.inject
 
 import android.content.Context
 import com.manubla.freemarket.data.repository.currency.CurrencySourceRepository
@@ -22,12 +22,12 @@ import com.manubla.freemarket.data.source.network.service.CurrencyService
 import com.manubla.freemarket.data.source.network.service.ProductService
 import com.manubla.freemarket.data.source.network.service.StateService
 import com.manubla.freemarket.data.source.network.service.UserService
-import com.manubla.freemarket.data.source.storage.database.AppDatabase
 import com.manubla.freemarket.data.source.storage.builder.initRoomDatabase
 import com.manubla.freemarket.data.source.storage.dao.CurrencyDao
 import com.manubla.freemarket.data.source.storage.dao.ProductDao
 import com.manubla.freemarket.data.source.storage.dao.StateDao
 import com.manubla.freemarket.data.source.storage.dao.UserDao
+import com.manubla.freemarket.data.source.storage.database.AppDatabase
 import com.manubla.freemarket.data.source.storage.datastore.currency.CurrencyDataStoreDatabase
 import com.manubla.freemarket.data.source.storage.datastore.currency.CurrencyDataStoreDatabaseImpl
 import com.manubla.freemarket.data.source.storage.datastore.product.ProductDataStoreDatabase
@@ -42,9 +42,6 @@ import com.manubla.freemarket.view.adapter.image.ImageAdapter
 import com.manubla.freemarket.view.alias.DiffUtil
 import com.manubla.freemarket.view.alias.PagingAdapter
 import com.manubla.freemarket.view.alias.ViewHolderProvider
-import com.manubla.freemarket.view.fragment.DetailFragment
-import com.manubla.freemarket.view.fragment.HomeFragment
-import com.manubla.freemarket.view.fragment.SplashFragment
 import com.manubla.freemarket.view.viewmodel.DetailViewModel
 import com.manubla.freemarket.view.viewmodel.HomeViewModel
 import com.manubla.freemarket.view.viewmodel.SplashViewModel
@@ -157,49 +154,39 @@ val repositoriesModule = module {
 }
 
 val adaptersModule = module {
-    scope<HomeFragment> {
-        factory<DiffUtil> {
-            DiffUtil()
-        }
-        factory<ViewHolderProvider> {
-            ViewHolderProvider()
-        }
-        factory {
-            PagingAdapter(
-                get<DiffUtil>(),
-                get<ViewHolderProvider>()
-            )
-        }
+    factory<DiffUtil> {
+        DiffUtil()
     }
-    scope<DetailFragment> {
-        factory<ImageAdapter> {
-            ImageAdapter()
-        }
+    factory<ViewHolderProvider> {
+        ViewHolderProvider()
+    }
+    factory<PagingAdapter> {
+        PagingAdapter(
+            get<DiffUtil>(),
+            get<ViewHolderProvider>()
+        )
+    }
+    factory<ImageAdapter> {
+        ImageAdapter()
     }
 }
 
 val viewModelsModule = module {
-    scope<SplashFragment> {
-        viewModel {
-            SplashViewModel(
-                get<CurrencySourceRepository>()
-            )
-        }
+    viewModel {
+        SplashViewModel(
+            get<CurrencySourceRepository>()
+        )
     }
-    scope<HomeFragment> {
-        viewModel {
-            HomeViewModel(
-                get<ProductSourceRepository>()
-            )
-        }
+    viewModel {
+        HomeViewModel(
+            get<ProductSourceRepository>()
+        )
     }
-    scope<DetailFragment> {
-        viewModel {
-            DetailViewModel(
-                get<ProductSourceRepository>(),
-                get<UserSourceRepository>(),
-                get<StateSourceRepository>()
-            )
-        }
+    viewModel {
+        DetailViewModel(
+            get<ProductSourceRepository>(),
+            get<UserSourceRepository>(),
+            get<StateSourceRepository>()
+        )
     }
 }

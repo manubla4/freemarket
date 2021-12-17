@@ -27,15 +27,12 @@ data class State (
     @SerializedName(PARAM_NAME)
     private val _name: String?
 
-): Parcelable, Model {
+): Parcelable, Model() {
 
     val name: String
         get() = _name.toNotNullable()
 
-    @Ignore
-    @IgnoredOnParcel
-    @Expose(serialize = false, deserialize = false)
-    override val requiredParams = mapOf(
+    override fun requiredParams() = mapOf(
         Pair(PARAM_ID, id),
         Pair(PARAM_NAME, _name)
     )

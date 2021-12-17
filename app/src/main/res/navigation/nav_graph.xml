@@ -44,8 +44,7 @@
         tools:layout="@layout/fragment_detail">
 
         <argument android:name="data"
-            android:defaultValue="None"
-            app:argType="String"/>
+            android:defaultValue="None"/>
 
     </fragment>
 

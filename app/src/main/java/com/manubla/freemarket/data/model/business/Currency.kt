@@ -4,13 +4,10 @@ import android.os.Parcelable
 import androidx.annotation.NonNull
 import androidx.room.ColumnInfo
 import androidx.room.Entity
-import androidx.room.Ignore
 import androidx.room.PrimaryKey
-import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 import com.manubla.freemarket.data.model.base.Model
 import com.manubla.freemarket.extension.toNotNullable
-import kotlinx.parcelize.IgnoredOnParcel
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
@@ -35,7 +32,7 @@ data class Currency (
     @SerializedName(PARAM_DECIMAL_PLACES)
     private val _decimalPlaces: Int?
 
-): Parcelable, Model {
+): Parcelable, Model() {
 
     val symbol: String
         get() = _symbol.toNotNullable()
@@ -46,10 +43,7 @@ data class Currency (
     val decimalPlaces: Int
         get() = _decimalPlaces.toNotNullable()
 
-    @Ignore
-    @IgnoredOnParcel
-    @Expose(serialize = false, deserialize = false)
-    override val requiredParams = mapOf(
+    override fun requiredParams() = mapOf(
         Pair(PARAM_ID, id),
         Pair(PARAM_SYMBOL, _symbol)
     )

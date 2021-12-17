@@ -36,7 +36,7 @@ class HomeViewModel(
                 config = PagingConfig(
                     initialLoadSize = INITIAL_PAGE_SIZE,
                     enablePlaceholders = false,
-                    pageSize = PAGE_LIMIT,
+                    pageSize = PAGE_SIZE,
                     prefetchDistance = PREFETCH_DISTANCE
                 )
             ) {
@@ -54,6 +54,7 @@ class HomeViewModel(
 
     companion object {
         private const val INITIAL_PAGE_SIZE = 60
+        private const val PAGE_SIZE = 50
         private const val PREFETCH_DISTANCE = 4
     }
 

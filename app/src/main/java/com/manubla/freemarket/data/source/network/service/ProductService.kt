@@ -12,12 +12,9 @@ interface ProductService {
     suspend fun fetchProductsPage(@Path("siteId") siteId: String,
                                   @Query("q") query: String,
                                   @Query("offset") offset: Int,
-                                  @Query("limit") limit: Int = PAGE_LIMIT): ProductsPageResponse
+                                  @Query("limit") limit: Int): ProductsPageResponse
 
     @GET("items/{itemId}")
     suspend fun fetchProduct(@Path("itemId") itemId: String): Product
 
-    companion object {
-        const val PAGE_LIMIT = 50
-    }
 }

@@ -17,12 +17,12 @@ class ProductDataStoreDatabaseImpl(
         }
     }
 
-    override suspend fun getProducts(query: String): List<Product> {
+    override suspend fun getProducts(query: String): List<Product>? {
         return try {
             productDao.getAll(query)
         } catch (exception: Exception) {
             Log.e(TAG_GET_PRODUCTS, Log.getStackTraceString(exception))
-            emptyList()
+            null
         }
     }
 

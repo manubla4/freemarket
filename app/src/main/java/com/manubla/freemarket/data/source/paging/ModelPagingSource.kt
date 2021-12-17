@@ -14,22 +14,21 @@ internal class ModelPagingSource(
     private val pagerRequest: PagerRequest
 ) : PagingSource<Int, Model>() {
 
-    var currentPage = Int.zero()
-
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Model> {
-        return try {
-            currentPage = params.key ?: Int.zero()
-            val result = dataSource.fetchData(
+         return try {
+            val currentPage = params.key ?: Int.zero()
+             val result = dataSource.fetchData(
                 query = pagerRequest.query,
-                page = currentPage
+                page = currentPage,
+                pageSize = params.loadSize
             )
             result?.let { safeResult ->
                 if (params.isFirstPage() && safeResult.isEmpty()) {
                     emptyItem()
                 } else {
-                    pageResult(safeResult)
+                    pageResult(safeResult, currentPage)
                 }
-            } ?: emptyItem()
+            } ?: throw Exception(TAG_LOAD_PRODUCT_PAGE)
         } catch (exception: Exception) {
             Log.e(TAG_LOAD_PRODUCT_PAGE, Log.getStackTraceString(exception))
             if (params.isFirstPage()) {
@@ -46,32 +45,45 @@ internal class ModelPagingSource(
 
     private fun emptyItem(): LoadResult.Page<Int, Model> {
         val empty = SearchResult(SearchResult.STATE_EMPTY)
-        return pageResult(listOf(empty))
+        return LoadResult.Page(
+            data = listOf(empty),
+            prevKey = null,
+            nextKey = null
+        )
     }
 
     private fun errorItem(): LoadResult.Page<Int, Model> {
         val error = SearchResult(SearchResult.STATE_ERROR)
-        return pageResult(listOf(error))
-    }
-
-    private fun pageResult(
-        result: List<Model>
-    ): LoadResult.Page<Int, Model> {
         return LoadResult.Page(
-            data = result,
-            prevKey = getPrevKey(),
-            nextKey = getNextKey()
+            data = listOf(error),
+            prevKey = null,
+            nextKey = null
         )
     }
 
-    private fun getPrevKey(): Int? {
+    private fun pageResult(
+        result: List<Model>,
+        currentPage: Int
+    ): LoadResult.Page<Int, Model> {
+        return LoadResult.Page(
+            data = result,
+            prevKey = getPrevKey(currentPage),
+            nextKey = getNextKey(currentPage, result)
+        )
+    }
+
+    private fun getPrevKey(currentPage: Int): Int? {
         return if (currentPage.isZero()) {
             null
         } else currentPage - 1
     }
 
-    private fun getNextKey(): Int = currentPage + 1
-
+    private fun getNextKey(currentPage: Int, result: List<Model>): Int?
+        = if (result.isEmpty()) {
+            null
+        } else {
+            currentPage + 1
+        }
 
     companion object {
         private const val TAG_LOAD_PRODUCT_PAGE = "LOAD_PRODUCT_PAGE"

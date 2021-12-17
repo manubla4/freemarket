@@ -19,12 +19,13 @@ class ProductDataStoreNetworkImpl(
         }
     }
 
-    override suspend fun fetchProductsPage(query: String, offset: Int): ProductsPageResponse? {
+    override suspend fun fetchProductsPage(query: String, offset: Int, pageSize: Int): ProductsPageResponse? {
         return try {
             productService.fetchProductsPage(
                 siteId = BuildConfig.SITE_ID,
                 query = query,
                 offset = offset,
+                limit = pageSize
             )
         } catch (exception: Exception) {
             Log.e(TAG_FETCH_PRODUCTS_PAGE, Log.getStackTraceString(exception))

@@ -12,7 +12,6 @@ import com.manubla.freemarket.data.model.business.SellerReputation.Companion.LEV
 import com.manubla.freemarket.data.model.business.SellerReputation.Companion.LEVEL_TYPE_5
 import com.manubla.freemarket.data.model.business.State
 import com.manubla.freemarket.data.model.business.User
-import com.manubla.freemarket.extension.empty
 import com.manubla.freemarket.extension.toNotNullable
 
 class UiProduct(product: Product,
@@ -24,7 +23,7 @@ class UiProduct(product: Product,
 
     val thumbnail: String = product.thumbnail
 
-    val displayPrice = "${product.currency} ${product.price}"
+    val displayPrice = "${product.currency} ${product.price.toInt()}"
 
     val warranty: String = product.warranty
 
