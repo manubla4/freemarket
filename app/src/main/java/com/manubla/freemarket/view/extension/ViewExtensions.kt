@@ -28,8 +28,6 @@ fun View.visibleIf(condition: Boolean) {
     if (condition) visible() else invisible()
 }
 
-fun EditText.editTextString() = editableText.toString()
-
 fun EditText.setOnSearch(callback: (String) -> Unit) {
     setOnEditorActionListener { _, actionId, event ->
         val trimmedText = text.toString().trim { it <= Char.space() }

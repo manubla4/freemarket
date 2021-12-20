@@ -1,4 +1,4 @@
-package com.manubla.freemarket.data.source.storage.database
+package com.manubla.freemarket.data.source.storage.converter
 
 import androidx.room.TypeConverter
 import com.google.gson.Gson

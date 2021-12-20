@@ -3,9 +3,9 @@ package com.manubla.freemarket.view.viewholder
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.manubla.freemarket.data.model.base.Model
-import com.manubla.freemarket.data.model.business.Product
+import com.manubla.freemarket.data.source.storage.query.ProductCurrencyQuery
 import com.manubla.freemarket.databinding.ViewPagingProductItemBinding
-import com.manubla.freemarket.view.adapter.paging.NavigateCallback
+import com.manubla.freemarket.view.callback.NavigateCallback
 import com.manubla.freemarket.view.model.UiProduct
 import com.manubla.freemarket.view.viewholder.base.BaseModelViewHolder
 
@@ -14,20 +14,22 @@ class PagingProductViewHolder<M: Model>(
 ): BaseModelViewHolder<M>(viewBinding) {
 
     override fun bind(model: M?, navigateCallback: NavigateCallback?) {
-        model.asProduct { product ->
+        model.asProductQuery { product ->
             viewBinding.uiProduct = UiProduct(
                 product = product,
                 context = viewBinding.root.context
             )
-            viewBinding.layoutProductContainer.setOnClickListener {
+            viewBinding.clickableFrame.setOnClickListener {
                 navigateCallback?.onNavigate(NavigateCallback.DESTINATION_DETAIL, product.id)
             }
             viewBinding.executePendingBindings()
         }
     }
 
-    private fun M?.asProduct(callback: (product: Product) -> Unit) {
-        val product = this as Product?
+    private fun M?.asProductQuery(
+        callback: (product: ProductCurrencyQuery) -> Unit
+    ) {
+        val product = this as ProductCurrencyQuery?
         product?.let {
             callback(it)
         }

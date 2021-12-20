@@ -1,6 +1,7 @@
 package com.manubla.freemarket.view.fragment
 
 import android.os.Bundle
+import androidx.paging.ExperimentalPagingApi
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -10,14 +11,14 @@ import com.manubla.freemarket.databinding.FragmentHomeBinding
 import com.manubla.freemarket.view.adapter.paging.PagingStateAdapter
 import com.manubla.freemarket.view.alias.PagingAdapter
 import com.manubla.freemarket.view.event.HomeState
-import com.manubla.freemarket.view.extension.invisibleIf
-import com.manubla.freemarket.view.extension.setOnSearch
-import com.manubla.freemarket.view.extension.visibleIf
+import com.manubla.freemarket.view.extension.*
 import com.manubla.freemarket.view.fragment.base.ViewDataBindingFragment
+import com.manubla.freemarket.view.util.hideKeyboard
 import com.manubla.freemarket.view.viewmodel.HomeViewModel
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
+@ExperimentalPagingApi
 class HomeFragment: ViewDataBindingFragment<FragmentHomeBinding>(R.layout.fragment_home) {
 
     private val viewModel: HomeViewModel by viewModel()
@@ -35,12 +36,17 @@ class HomeFragment: ViewDataBindingFragment<FragmentHomeBinding>(R.layout.fragme
     }
 
     private fun setupViews(viewDataBinding: FragmentHomeBinding) {
-        viewDataBinding.layoutSearch.inputTxtSearch.setOnSearch {
-            viewModel.fetchPagingData(it)
-        }
+        viewDataBinding.layoutSearch.inputTxtSearch.setOnSearch { onSearch(it) }
         viewDataBinding.swipeRefreshLayout.setup()
         viewDataBinding.recyclerView.setup()
         adapter.setup()
+    }
+
+    private fun onSearch(query: String) {
+        hideKeyboard(context, viewDataBinding.rootContainer)
+        viewDataBinding.layoutErrorContainer.gone()
+        viewDataBinding.swipeRefreshLayout.visible()
+        viewModel.fetchPagingData(query)
     }
 
     private fun SwipeRefreshLayout.setup() {
@@ -53,13 +59,13 @@ class HomeFragment: ViewDataBindingFragment<FragmentHomeBinding>(R.layout.fragme
     private fun RecyclerView.setup() {
         this.adapter = this@HomeFragment.adapter.withLoadStateFooter(loadingAdapter)
         this.layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
-        this.setItemViewCacheSize(ITEM_CACHED)
     }
 
     private fun PagingAdapter.setup() {
+        navigateCallback = this@HomeFragment
         addLoadStateListener {
-            val isRefreshing = it.refresh is LoadState.Loading
-            viewDataBinding.recyclerView.invisibleIf(isRefreshing)
+            val isRefreshing = it.mediator?.refresh is LoadState.Loading
+            viewDataBinding.swipeRefreshLayout.invisibleIf(isRefreshing)
             showProgress(isRefreshing)
         }
     }
@@ -69,16 +75,36 @@ class HomeFragment: ViewDataBindingFragment<FragmentHomeBinding>(R.layout.fragme
             when (it) {
                 is HomeState.Loading -> showProgress(it.loading)
                 is HomeState.Data -> adapter.submitData(lifecycle, it.pagingData)
+                is HomeState.Empty -> showEmpty()
+                is HomeState.Error -> showError()
             }
         })
     }
 
-    private fun showProgress(show: Boolean = true) {
-        viewDataBinding.progressBar.visibleIf(show)
+    private fun showError() {
+        showProgress(false)
+        with(viewDataBinding) {
+            swipeRefreshLayout.gone()
+            layoutError.drawable = R.drawable.ic_error
+            layoutError.message = context?.getString(R.string.txt_error)
+            layoutError.executePendingBindings()
+            layoutErrorContainer.visible()
+        }
     }
 
-    companion object {
-        private const val ITEM_CACHED = 10
+    private fun showEmpty() {
+        showProgress(false)
+        with(viewDataBinding) {
+            swipeRefreshLayout.gone()
+            layoutError.drawable = R.drawable.ic_search
+            layoutError.message = context?.getString(R.string.txt_empty_search)
+            layoutError.executePendingBindings()
+            layoutErrorContainer.visible()
+        }
+    }
+
+    private fun showProgress(show: Boolean) {
+        viewDataBinding.progressBar.visibleIf(show)
     }
 
 }

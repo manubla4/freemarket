@@ -6,11 +6,14 @@ import com.manubla.freemarket.view.model.UiProduct
 
 sealed class SplashState {
     object Done: SplashState()
+    object Navigated: SplashState()
 }
 
 sealed class HomeState {
     data class Loading(val loading: Boolean): HomeState()
     data class Data(val pagingData: PagingData<Model>): HomeState()
+    object Error: HomeState()
+    object Empty: HomeState()
 }
 
 sealed class DetailState {

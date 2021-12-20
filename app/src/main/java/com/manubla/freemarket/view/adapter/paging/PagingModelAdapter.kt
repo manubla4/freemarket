@@ -3,6 +3,7 @@ package com.manubla.freemarket.view.adapter.paging
 import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
 import com.manubla.freemarket.data.model.base.Model
+import com.manubla.freemarket.view.callback.NavigateCallback
 import com.manubla.freemarket.view.provider.ViewHolderModelProvider
 import com.manubla.freemarket.view.viewholder.base.BaseModelViewHolder
 

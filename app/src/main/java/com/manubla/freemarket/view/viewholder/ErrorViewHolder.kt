@@ -6,7 +6,7 @@ import com.manubla.freemarket.R
 import com.manubla.freemarket.data.model.base.Model
 import com.manubla.freemarket.data.model.result.SearchResult
 import com.manubla.freemarket.databinding.ViewEmptyErrorItemBinding
-import com.manubla.freemarket.view.adapter.paging.NavigateCallback
+import com.manubla.freemarket.view.callback.NavigateCallback
 import com.manubla.freemarket.view.viewholder.base.BaseModelViewHolder
 
 class ErrorViewHolder<M: Model>(

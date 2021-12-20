@@ -12,7 +12,7 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import com.manubla.freemarket.R
-import com.manubla.freemarket.view.adapter.paging.NavigateCallback
+import com.manubla.freemarket.view.callback.NavigateCallback
 
 
 open class ViewDataBindingFragment<V : ViewDataBinding>(

@@ -10,9 +10,9 @@ import com.manubla.freemarket.data.model.business.Currency
 interface CurrencyDao {
 
     @Query("SELECT * FROM ${Currency.TABLE_NAME} WHERE ${Currency.PARAM_ID}=:id")
-    fun getById(id: String): Currency?
+    suspend fun getById(id: String): Currency?
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertAll(currencies: List<Currency>)
+    suspend fun insertAll(currencies: List<Currency>)
 
 }

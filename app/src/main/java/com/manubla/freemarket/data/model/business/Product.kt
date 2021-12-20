@@ -3,11 +3,9 @@ package com.manubla.freemarket.data.model.business
 import android.os.Parcelable
 import androidx.annotation.NonNull
 import androidx.room.*
-import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 import com.manubla.freemarket.data.model.base.Model
 import com.manubla.freemarket.extension.toNotNullable
-import kotlinx.parcelize.IgnoredOnParcel
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
@@ -73,7 +71,11 @@ data class Product (
         get() = _condition.toNotNullable()
 
     val thumbnail: String
-        get() = _thumbnail.toNotNullable()
+        get() = _thumbnail
+            .toNotNullable()
+            .replaceFirst(oldValue = HTTP,
+                newValue = HTTPS,
+                ignoreCase = false)
 
     val currencyId: String
         get() = _currencyId.toNotNullable()
@@ -90,14 +92,6 @@ data class Product (
     val warranty: String
         get() = _warranty.toNotNullable()
 
-    @Ignore
-    @IgnoredOnParcel
-    @Expose(serialize = false, deserialize = false)
-    var currency: String = DEFAULT_CURRENCY
-        set(value) {
-            field = if (value.isBlank()) DEFAULT_CURRENCY else value
-        }
-
     override fun requiredParams() = mapOf(
         Pair(PARAM_ID, id),
         Pair(PARAM_TITLE, _title),
@@ -111,7 +105,7 @@ data class Product (
         } ?: false
     }
 
-    override fun assembleTableAndParam(param: String): String
+    override fun assembleEntityAndParam(param: String): String
         = "$TABLE_NAME - $param"
 
     companion object {
@@ -126,8 +120,8 @@ data class Product (
         internal const val PARAM_CURRENCY_ID = "currency_id"
         internal const val PARAM_PICTURES = "pictures"
         internal const val PARAM_WARRANTY = "warranty"
-
-        internal const val DEFAULT_CURRENCY = "$"
         internal const val CONDITION_TYPE_NEW = "new"
+        private const val HTTP = "http://"
+        private const val HTTPS = "https://"
     }
 }

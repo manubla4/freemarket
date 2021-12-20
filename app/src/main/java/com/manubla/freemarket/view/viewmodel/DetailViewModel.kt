@@ -32,7 +32,7 @@ class DetailViewModel(
         launch(Dispatchers.IO) {
             val product = productSourceRepository.fetchProduct(id)
             product?.let { safeProduct ->
-                val user = userSourceRepository.fetchUser(safeProduct.sellerId)
+                val user = userSourceRepository.fetchUser(safeProduct.sellerId.toNotNullable())
                 val state = stateSourceRepository.fetchState(user?.stateId.toNotNullable())
                 val uiProduct = UiProduct(
                     product = product,

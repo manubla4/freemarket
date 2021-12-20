@@ -2,19 +2,19 @@ package com.manubla.freemarket.view.viewholder
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.core.view.isVisible
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.RecyclerView
 import com.manubla.freemarket.databinding.PagingErrorItemBinding
+import com.manubla.freemarket.view.extension.invisibleIf
 
 class PagingStateViewHolder(
     private val viewBinding: PagingErrorItemBinding
 ) : RecyclerView.ViewHolder(viewBinding.root) {
 
     fun bind(loadState: LoadState, retry: () -> Unit = {}) {
-        viewBinding.progressBar.isVisible = loadState is LoadState.Loading
-        viewBinding.textMessageErrorPaging.isVisible = loadState is LoadState.Error
-        viewBinding.buttonActionRetryPaging.isVisible = loadState is LoadState.Error
+        viewBinding.progressBar.invisibleIf(loadState !is LoadState.Loading)
+        viewBinding.textMessageErrorPaging.invisibleIf(loadState !is LoadState.Error)
+        viewBinding.buttonActionRetryPaging.invisibleIf(loadState !is LoadState.Error)
         viewBinding.buttonActionRetryPaging.setOnClickListener {
             retry.invoke()
         }

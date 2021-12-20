@@ -7,7 +7,7 @@ abstract class Model {
 
     abstract fun requiredParams(): Map<String, Any?>
 
-    abstract fun assembleTableAndParam(param: String): String
+    abstract fun assembleEntityAndParam(param: String): String
 
     fun hasRequiredParams(): Boolean {
         val nullParams = requiredParams()
@@ -15,7 +15,7 @@ abstract class Model {
             .map { it.key }
         if (nullParams.isNotEmpty()) {
             val nullParamName = nullParams.first()
-            val tableAndParam = assembleTableAndParam(nullParamName)
+            val tableAndParam = assembleEntityAndParam(nullParamName)
             val exception = IllegalArgumentException("$tableAndParam is required - object not rendered")
             Log.e(TAG_REQUIRED_PARAMS, Log.getStackTraceString(exception))
             return false

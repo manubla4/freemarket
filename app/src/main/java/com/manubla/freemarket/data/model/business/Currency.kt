@@ -55,7 +55,7 @@ data class Currency (
         } ?: false
     }
 
-    override fun assembleTableAndParam(param: String): String
+    override fun assembleEntityAndParam(param: String): String
         = "$TABLE_NAME - $param"
 
     companion object {

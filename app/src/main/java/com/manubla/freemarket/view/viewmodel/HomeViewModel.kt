@@ -4,13 +4,15 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.paging.Pager
-import androidx.paging.PagingConfig
-import androidx.paging.cachedIn
-import com.manubla.freemarket.data.repository.product.ProductSourceRepository
-import com.manubla.freemarket.data.source.network.service.ProductService.Companion.PAGE_LIMIT
-import com.manubla.freemarket.data.source.paging.ModelPagingSource
+import androidx.paging.*
+import com.manubla.freemarket.data.model.base.Model
+import com.manubla.freemarket.data.source.network.datastore.product.ProductDataStoreNetwork
 import com.manubla.freemarket.data.source.paging.PagerRequest
+import com.manubla.freemarket.data.source.paging.ProductRemoteMediator
+import com.manubla.freemarket.data.source.storage.datastore.product.ProductDataStoreDatabase
+import com.manubla.freemarket.data.source.storage.datastore.remotekey.RemoteKeyDataStoreDatabase
+import com.manubla.freemarket.data.source.storage.manager.DatabaseManager
+import com.manubla.freemarket.view.callback.RemoteMediatorCallback
 import com.manubla.freemarket.view.event.HomeState
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -18,9 +20,13 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import kotlin.coroutines.CoroutineContext
 
+@ExperimentalPagingApi
 class HomeViewModel(
-    private val productSourceRepository: ProductSourceRepository
-) : ViewModel(), CoroutineScope {
+    private val productDataStoreDatabase: ProductDataStoreDatabase,
+    private val productDataStoreNetwork: ProductDataStoreNetwork,
+    private val remoteKeyDataStoreDatabase: RemoteKeyDataStoreDatabase,
+    private val databaseManager: DatabaseManager
+) : ViewModel(), CoroutineScope, RemoteMediatorCallback {
 
     override val coroutineContext: CoroutineContext
         get() = Dispatchers.Main
@@ -32,30 +38,44 @@ class HomeViewModel(
     fun fetchPagingData(query: String) {
         _state.postValue(HomeState.Loading(true))
         launch(Dispatchers.IO) {
+            databaseManager.clearAllTables()
             Pager(
                 config = PagingConfig(
-                    initialLoadSize = INITIAL_PAGE_SIZE,
                     enablePlaceholders = false,
                     pageSize = PAGE_SIZE,
-                    prefetchDistance = PREFETCH_DISTANCE
-                )
-            ) {
-                ModelPagingSource(
-                    dataSource = productSourceRepository,
-                    pagerRequest = PagerRequest(query)
-                )
-            }.flow
+                    maxSize = PAGE_SIZE * MAX_SIZE_MULTIPLIER
+                ),
+                remoteMediator = ProductRemoteMediator(
+                    productDataStoreDatabase = productDataStoreDatabase,
+                    productDataStoreNetwork = productDataStoreNetwork,
+                    remoteKeyDataStoreDatabase = remoteKeyDataStoreDatabase,
+                    databaseManager = databaseManager,
+                    pagerRequest = PagerRequest(query),
+                    callback = this@HomeViewModel
+                ),
+                pagingSourceFactory = {
+                    productDataStoreDatabase.getProducts()
+                }
+            ).flow
             .cachedIn(viewModelScope)
             .collectLatest { pagingData ->
-                _state.postValue(HomeState.Data(pagingData))
+                val modelPagingData = pagingData as PagingData<Model>
+                _state.postValue(HomeState.Data(modelPagingData))
             }
         }
     }
 
+    override fun onEmptyResult() {
+        _state.postValue(HomeState.Empty)
+    }
+
+    override fun onErrorResult() {
+        _state.postValue(HomeState.Error)
+    }
+
     companion object {
-        private const val INITIAL_PAGE_SIZE = 60
-        private const val PAGE_SIZE = 50
-        private const val PREFETCH_DISTANCE = 4
+        private const val PAGE_SIZE = 20
+        private const val MAX_SIZE_MULTIPLIER = 3
     }
 
 }

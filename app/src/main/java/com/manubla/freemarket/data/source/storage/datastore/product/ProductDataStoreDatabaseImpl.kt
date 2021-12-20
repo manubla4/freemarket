@@ -1,14 +1,16 @@
 package com.manubla.freemarket.data.source.storage.datastore.product
 
 import android.util.Log
+import androidx.paging.PagingSource
 import com.manubla.freemarket.data.model.business.Product
 import com.manubla.freemarket.data.source.storage.dao.ProductDao
+import com.manubla.freemarket.data.source.storage.query.ProductCurrencyQuery
 
 class ProductDataStoreDatabaseImpl(
     private val productDao: ProductDao
 ) : ProductDataStoreDatabase {
 
-    override suspend fun getProductById(id: String): Product? {
+    override suspend fun getProductById(id: String): ProductCurrencyQuery? {
         return try {
             productDao.getById(id)
         } catch (exception: Exception) {
@@ -17,13 +19,8 @@ class ProductDataStoreDatabaseImpl(
         }
     }
 
-    override suspend fun getProducts(query: String): List<Product>? {
-        return try {
-            productDao.getAll(query)
-        } catch (exception: Exception) {
-            Log.e(TAG_GET_PRODUCTS, Log.getStackTraceString(exception))
-            null
-        }
+    override fun getProducts(): PagingSource<Int, ProductCurrencyQuery> {
+        return productDao.getAll()
     }
 
     override suspend fun storeProduct(product: Product) {
@@ -52,7 +49,6 @@ class ProductDataStoreDatabaseImpl(
 
     companion object {
         private const val TAG_GET_PRODUCT_BY_ID = "getProductById"
-        private const val TAG_GET_PRODUCTS = "getProducts"
         private const val TAG_STORE_PRODUCT = "storeProduct"
         private const val TAG_STORE_PRODUCTS = "storeProducts"
         private const val TAG_CLEAR_STORAGE = "clearStorage"

@@ -22,9 +22,9 @@ class SplashFragment : ViewDataBindingFragment<FragmentSplashBinding>(R.layout.f
         viewModel.state.observe(viewLifecycleOwner, {
             if (it == SplashState.Done) {
                 navController.navigate(R.id.action_splashFragment_to_homeFragment)
+                viewModel.onNavigationComplete()
             }
         })
     }
-
 
 }

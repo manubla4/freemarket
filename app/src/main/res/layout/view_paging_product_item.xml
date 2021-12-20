@@ -12,21 +12,20 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:clipToPadding="true"
+        android:layout_margin="@dimen/dimen_4dp"
         app:cardCornerRadius="@dimen/dimen_10dp"
-        app:cardUseCompatPadding="true"
         app:cardElevation="@dimen/dimen_2dp">
 
         <LinearLayout
             android:id="@+id/layout_product_container"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:clickable="true"
-            android:focusable="true"
             android:orientation="horizontal">
 
             <ImageView
                 android:layout_width="@dimen/dimen_100dp"
                 android:layout_height="@dimen/dimen_100dp"
+                android:layout_margin="@dimen/dimen_6dp"
                 android:scaleType="centerCrop"
                 app:bindImage="@{uiProduct.thumbnail}"
                 tools:src="@drawable/thumbnail_test"/>
@@ -77,6 +76,14 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </LinearLayout>
+
+        <FrameLayout
+            android:id="@+id/clickable_frame"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="?android:attr/selectableItemBackground"
+            android:clickable="true"
+            android:focusable="true"/>
 
     </com.google.android.material.card.MaterialCardView>
 

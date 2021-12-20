@@ -10,12 +10,12 @@ import com.manubla.freemarket.data.model.business.State
 interface StateDao {
 
     @Query("SELECT * FROM ${State.TABLE_NAME} WHERE ${State.PARAM_ID}=:id")
-    fun getById(id: String): State?
+    suspend fun getById(id: String): State?
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insert(state: State)
+    suspend fun insert(state: State)
 
     @Query("DELETE FROM ${State.TABLE_NAME}")
-    fun deleteAll()
+    suspend fun deleteAll()
 
 }

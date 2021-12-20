@@ -14,7 +14,7 @@ data class SearchResult (
 
     override fun areContentsTheSame(newItem: Model) = false
 
-    override fun assembleTableAndParam(param: String): String
+    override fun assembleEntityAndParam(param: String): String
         = String.empty()
 
     companion object {

@@ -1,6 +1,7 @@
 package com.manubla.freemarket.inject
 
 import android.content.Context
+import androidx.paging.ExperimentalPagingApi
 import com.manubla.freemarket.data.repository.currency.CurrencySourceRepository
 import com.manubla.freemarket.data.repository.currency.CurrencySourceRepositoryImpl
 import com.manubla.freemarket.data.repository.product.ProductSourceRepository
@@ -23,15 +24,14 @@ import com.manubla.freemarket.data.source.network.service.ProductService
 import com.manubla.freemarket.data.source.network.service.StateService
 import com.manubla.freemarket.data.source.network.service.UserService
 import com.manubla.freemarket.data.source.storage.builder.initRoomDatabase
-import com.manubla.freemarket.data.source.storage.dao.CurrencyDao
-import com.manubla.freemarket.data.source.storage.dao.ProductDao
-import com.manubla.freemarket.data.source.storage.dao.StateDao
-import com.manubla.freemarket.data.source.storage.dao.UserDao
+import com.manubla.freemarket.data.source.storage.dao.*
 import com.manubla.freemarket.data.source.storage.database.AppDatabase
 import com.manubla.freemarket.data.source.storage.datastore.currency.CurrencyDataStoreDatabase
 import com.manubla.freemarket.data.source.storage.datastore.currency.CurrencyDataStoreDatabaseImpl
 import com.manubla.freemarket.data.source.storage.datastore.product.ProductDataStoreDatabase
 import com.manubla.freemarket.data.source.storage.datastore.product.ProductDataStoreDatabaseImpl
+import com.manubla.freemarket.data.source.storage.datastore.remotekey.RemoteKeyDataStoreDatabase
+import com.manubla.freemarket.data.source.storage.datastore.remotekey.RemoteKeyDataStoreDatabaseImpl
 import com.manubla.freemarket.data.source.storage.datastore.state.StateDataStoreDatabase
 import com.manubla.freemarket.data.source.storage.datastore.state.StateDataStoreDatabaseImpl
 import com.manubla.freemarket.data.source.storage.datastore.user.UserDataStoreDatabase
@@ -53,6 +53,7 @@ val storageModule = module {
     single<AppDatabase> {
         initRoomDatabase(get<Context>())
     }
+    factory<RemoteKeyDao> { get<AppDatabase>().remoteKeyDao() }
     factory<ProductDao> { get<AppDatabase>().productDao() }
     factory<UserDao> { get<AppDatabase>().userDao() }
     factory<StateDao> { get<AppDatabase>().stateDao() }
@@ -78,8 +79,14 @@ val storageModule = module {
             get<StateDao>()
         )
     }
+    factory<RemoteKeyDataStoreDatabase> {
+        RemoteKeyDataStoreDatabaseImpl(
+            get<RemoteKeyDao>()
+        )
+    }
     factory<DatabaseManager> {
         DatabaseManagerImpl(
+            get<RemoteKeyDataStoreDatabase>(),
             get<ProductDataStoreDatabase>(),
             get<UserDataStoreDatabase>(),
             get<StateDataStoreDatabase>()
@@ -128,7 +135,6 @@ val networkModule = module {
 val repositoriesModule = module {
     factory<ProductSourceRepository> {
         ProductSourceRepositoryImpl(
-            get<DatabaseManager>(),
             get<ProductDataStoreDatabase>(),
             get<ProductDataStoreNetwork>()
         )
@@ -171,6 +177,7 @@ val adaptersModule = module {
     }
 }
 
+@ExperimentalPagingApi
 val viewModelsModule = module {
     viewModel {
         SplashViewModel(
@@ -179,7 +186,10 @@ val viewModelsModule = module {
     }
     viewModel {
         HomeViewModel(
-            get<ProductSourceRepository>()
+            get<ProductDataStoreDatabase>(),
+            get<ProductDataStoreNetwork>(),
+            get<RemoteKeyDataStoreDatabase>(),
+            get<DatabaseManager>()
         )
     }
     viewModel {

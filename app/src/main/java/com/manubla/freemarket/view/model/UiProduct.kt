@@ -12,26 +12,28 @@ import com.manubla.freemarket.data.model.business.SellerReputation.Companion.LEV
 import com.manubla.freemarket.data.model.business.SellerReputation.Companion.LEVEL_TYPE_5
 import com.manubla.freemarket.data.model.business.State
 import com.manubla.freemarket.data.model.business.User
+import com.manubla.freemarket.data.source.storage.query.ProductCurrencyQuery
 import com.manubla.freemarket.extension.toNotNullable
+import java.util.*
 
-class UiProduct(product: Product,
+class UiProduct(product: ProductCurrencyQuery,
                 user: User? = null,
                 state: State? = null,
                 var context: Context? = null
 ) {
-    val title: String = product.title
+    val title: String = product.title.toNotNullable()
 
-    val thumbnail: String = product.thumbnail
+    val thumbnail: String = product.thumbnail.toNotNullable()
 
-    val displayPrice = "${product.currency} ${product.price.toInt()}"
+    val displayPrice = "${product.currency ?: DEFAULT_CURRENCY} ${product.price.toNotNullable().toInt()}"
 
-    val warranty: String = product.warranty
+    val warranty: String = product.warranty.toNotNullable()
 
-    val userName: String = user?.nickname.toNotNullable().uppercase()
+    val userName: String = user?.nickname.toNotNullable().toUpperCase(Locale.getDefault())
 
     val userAddress: String = "${user?.city}, ${state?.name}"
 
-    val pictures: List<String> = product.pictures.map { it.url }
+    val pictures: List<String> = product.pictures?.map { it.url } ?: emptyList()
 
     val isPlatinumUser: Boolean = user?.powerSellerStatus == SellerReputation.STATUS_TYPE_PLATINIUM
 
@@ -44,7 +46,7 @@ class UiProduct(product: Product,
         else -> LEVEL_TYPE_0
     }
 
-    val isFreeShipping: Boolean = product.freeShipping
+    val isFreeShipping: Boolean = product.freeShipping.toNotNullable()
 
     val condition = context?.getString(
             if (product.condition == Product.CONDITION_TYPE_NEW) {
@@ -53,4 +55,8 @@ class UiProduct(product: Product,
                 R.string.txt_used
             }
         ).toNotNullable()
+
+    companion object {
+        internal const val DEFAULT_CURRENCY = "$"
+    }
 }
