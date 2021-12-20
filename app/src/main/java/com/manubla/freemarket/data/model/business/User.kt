@@ -12,12 +12,7 @@ import kotlinx.parcelize.IgnoredOnParcel
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
-@Entity(tableName = User.TABLE_NAME,
-    foreignKeys = [ForeignKey(entity = State::class,
-        parentColumns = arrayOf(State.PARAM_ID),
-        childColumns = arrayOf(Address.PARAM_STATE)
-    )]
-)
+@Entity(tableName = User.TABLE_NAME)
 data class User (
 
     @NonNull

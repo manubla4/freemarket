@@ -31,8 +31,10 @@ fun bindImage(imageView: ImageView, url: String) {
 }
 
 @BindingAdapter("bindImages")
-fun bindImages(recyclerView: RecyclerView, urls: List<String>) {
-    recyclerView.adapter?.let {
-        (it as? ImageAdapter)?.urls = urls
+fun bindImages(recyclerView: RecyclerView, urls: List<String>?) {
+    recyclerView.adapter?.let { adapter ->
+        urls?.let {
+            (adapter as? ImageAdapter)?.urls = it
+        }
     }
 }
