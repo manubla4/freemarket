@@ -41,7 +41,6 @@ class DetailViewModel(
                 )
                 _state.postValue(DetailState.Data(uiProduct))
             } ?: _state.postValue(DetailState.Error)
-            _state.postValue(DetailState.Loading(false))
         }
     }
 

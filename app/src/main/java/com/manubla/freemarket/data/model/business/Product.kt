@@ -9,12 +9,7 @@ import com.manubla.freemarket.extension.toNotNullable
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
-@Entity(tableName = Product.TABLE_NAME,
-    foreignKeys = [ForeignKey(entity = Currency::class,
-        parentColumns = arrayOf(Currency.PARAM_ID),
-        childColumns = arrayOf(Product.PARAM_CURRENCY_ID)
-    )]
-)
+@Entity(tableName = Product.TABLE_NAME)
 data class Product (
 
     @NonNull

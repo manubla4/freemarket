@@ -33,18 +33,26 @@ class DetailFragment : ViewDataBindingFragment<FragmentDetailBinding>(R.layout.f
     private fun setObservers() {
         viewModel.state.observe(viewLifecycleOwner, {
             when (it) {
-                is DetailState.Loading -> viewDataBinding.layoutLoading.visibleIf(it.loading)
-                is DetailState.Error -> viewDataBinding.layoutError.visible()
+                is DetailState.Loading -> showProgress(it.loading)
+                is DetailState.Error -> showError()
                 is DetailState.Data -> onDataReceived(it.uiProduct)
             }
         })
     }
 
+    private fun showProgress(show: Boolean) {
+        viewDataBinding.layoutLoading.visibleIf(show)
+    }
+
+    private fun showError() {
+        viewDataBinding.layoutError.visible()
+        showProgress(false)
+    }
+
     private fun onDataReceived(uiProduct: UiProduct) {
-        viewDataBinding.uiProduct = uiProduct.apply {
-            context = this@DetailFragment.context
-        }
+        viewDataBinding.uiProduct = uiProduct
         viewDataBinding.executePendingBindings()
+        showProgress(false)
     }
 
     private fun RecyclerView.setup() {

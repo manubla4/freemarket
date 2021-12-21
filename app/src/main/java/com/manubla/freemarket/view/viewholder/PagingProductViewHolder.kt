@@ -15,10 +15,7 @@ class PagingProductViewHolder<M: Model>(
 
     override fun bind(model: M?, navigateCallback: NavigateCallback?) {
         model.asProductQuery { product ->
-            viewBinding.uiProduct = UiProduct(
-                product = product,
-                context = viewBinding.root.context
-            )
+            viewBinding.uiProduct = UiProduct(product)
             viewBinding.clickableFrame.setOnClickListener {
                 navigateCallback?.onNavigate(NavigateCallback.DESTINATION_DETAIL, product.id)
             }

@@ -1,6 +1,7 @@
 package com.manubla.freemarket.view.fragment
 
 import android.os.Bundle
+import androidx.lifecycle.lifecycleScope
 import androidx.paging.ExperimentalPagingApi
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -15,6 +16,10 @@ import com.manubla.freemarket.view.extension.*
 import com.manubla.freemarket.view.fragment.base.ViewDataBindingFragment
 import com.manubla.freemarket.view.util.hideKeyboard
 import com.manubla.freemarket.view.viewmodel.HomeViewModel
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.distinctUntilChangedBy
+import kotlinx.coroutines.flow.filter
+import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -67,6 +72,16 @@ class HomeFragment: ViewDataBindingFragment<FragmentHomeBinding>(R.layout.fragme
             val isRefreshing = it.mediator?.refresh is LoadState.Loading
             viewDataBinding.swipeRefreshLayout.invisibleIf(isRefreshing)
             showProgress(isRefreshing)
+        }
+        setupAdapterLoadStateListening()
+    }
+
+    private fun setupAdapterLoadStateListening() {
+        viewLifecycleOwner.lifecycleScope.launch {
+            adapter.loadStateFlow
+                .distinctUntilChangedBy { it.refresh }
+                .filter { it.refresh is LoadState.NotLoading }
+                .collect { viewDataBinding.recyclerView.scrollToPosition(0) }
         }
     }
 

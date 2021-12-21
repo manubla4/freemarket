@@ -2,13 +2,17 @@
     <string name="app_name">Free Market</string>
     <string name="text_message_error_paging_data">Ha ocurrido un error, por favor reintente</string>
     <string name="text_retry_paging_action">Reintentar</string>
-    <string name="txt_search">Buscar</string>
-    <string name="txt_new">Nuevo</string>
-    <string name="txt_used">Usado</string>
+    <string name="txt_search">Buscar productos</string>
     <string name="txt_unknown_item">Unknown item</string>
     <string name="txt_free_shipping">Envío Gratis</string>
     <string name="txt_seller_info">Información sobre el vendedor</string>
     <string name="txt_platinum_user">MercadoLíder Platinum</string>
     <string name="txt_empty_search">Lo sentimos, pero no encontramos resultados para tu búsqueda</string>
     <string name="txt_error">Lo sentimos, pero ha ocurrido un problema!</string>
+    <string name="txt_user_level_0">Sin reputación</string>
+    <string name="txt_user_level_1">Reputación baja</string>
+    <string name="txt_user_level_2">Reputación media-baja</string>
+    <string name="txt_user_level_3">Reputación media</string>
+    <string name="txt_user_level_4">Reputación media-alta</string>
+    <string name="txt_user_level_5">Reputación alta</string>
 </resources>

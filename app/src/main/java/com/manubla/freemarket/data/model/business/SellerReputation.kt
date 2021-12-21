@@ -29,11 +29,5 @@ data class SellerReputation (
         internal const val PARAM_LEVEL_ID = "level_id"
         internal const val PARAM_POWER_SELLER_STATUS = "power_seller_status"
         internal const val STATUS_TYPE_PLATINIUM = "platinum"
-        internal const val LEVEL_TYPE_0 = 0
-        internal const val LEVEL_TYPE_1 = 1
-        internal const val LEVEL_TYPE_2 = 2
-        internal const val LEVEL_TYPE_3 = 3
-        internal const val LEVEL_TYPE_4 = 4
-        internal const val LEVEL_TYPE_5 = 5
     }
 }
