@@ -6,7 +6,6 @@ import com.manubla.freemarket.view.model.UiProduct
 
 sealed class SplashState {
     object Done: SplashState()
-    object Navigated: SplashState()
 }
 
 sealed class HomeState {

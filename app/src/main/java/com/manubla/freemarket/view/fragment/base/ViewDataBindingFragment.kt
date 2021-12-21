@@ -13,6 +13,7 @@ import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import com.manubla.freemarket.R
 import com.manubla.freemarket.view.callback.NavigateCallback
+import com.manubla.freemarket.view.enum.Destination
 
 
 open class ViewDataBindingFragment<V : ViewDataBinding>(
@@ -54,17 +55,21 @@ open class ViewDataBindingFragment<V : ViewDataBinding>(
         viewDataBinding.unbind()
     }
 
-    override fun onNavigate(destination: String, data: String) {
+    override fun onNavigate(destination: Destination, data: String) {
         val bundle = bundleOf(ARG_DATA to data)
         when (destination) {
-            NavigateCallback.DESTINATION_DETAIL -> {
+            Destination.DESTINATION_DETAIL -> {
                 navController.navigate(R.id.action_homeFragment_to_detailFragment, bundle)
+            }
+            Destination.DESTINATION_HOME -> {
+                navController.navigate(R.id.action_splashFragment_to_homeFragment, bundle)
             }
         }
     }
 
     companion object {
         const val ARG_DATA = "data"
+        const val ARG_QUERY = "query"
     }
 
 }

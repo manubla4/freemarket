@@ -27,8 +27,4 @@ class SplashViewModel(
             _state.postValue(SplashState.Done)
         }
     }
-
-    fun onNavigationComplete() {
-        _state.postValue(SplashState.Navigated)
-    }
 }

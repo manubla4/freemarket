@@ -1,16 +1,22 @@
 package com.manubla.freemarket.view.fragment
 
 import android.os.Bundle
+import androidx.core.os.bundleOf
+import androidx.fragment.app.setFragmentResultListener
 import androidx.lifecycle.lifecycleScope
 import androidx.paging.ExperimentalPagingApi
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import com.google.android.material.textfield.TextInputEditText
 import com.manubla.freemarket.R
 import com.manubla.freemarket.databinding.FragmentHomeBinding
+import com.manubla.freemarket.extension.isNull
+import com.manubla.freemarket.extension.zero
 import com.manubla.freemarket.view.adapter.paging.PagingStateAdapter
 import com.manubla.freemarket.view.alias.PagingAdapter
+import com.manubla.freemarket.view.enum.Destination
 import com.manubla.freemarket.view.event.HomeState
 import com.manubla.freemarket.view.extension.*
 import com.manubla.freemarket.view.fragment.base.ViewDataBindingFragment
@@ -23,11 +29,14 @@ import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
+
 @ExperimentalPagingApi
 class HomeFragment: ViewDataBindingFragment<FragmentHomeBinding>(R.layout.fragment_home) {
 
     private val viewModel: HomeViewModel by viewModel()
     private val adapter: PagingAdapter by inject()
+    private var restoreQuery: String? = null
+    private var currentQuery: String? = null
     private val loadingAdapter: PagingStateAdapter by lazy {
         PagingStateAdapter {
             adapter.retry()
@@ -36,12 +45,20 @@ class HomeFragment: ViewDataBindingFragment<FragmentHomeBinding>(R.layout.fragme
 
     override fun onViewCreated(viewDataBinding: FragmentHomeBinding, savedInstanceState: Bundle?) {
         super.onViewCreated(viewDataBinding, savedInstanceState)
+        setFragmentResultListener(DetailFragment.DETAIL_FRAGMENT_REQUEST) { key, bundle ->
+            restoreQuery = bundle.getString(ARG_QUERY)
+            currentQuery = restoreQuery
+        }
+        savedInstanceState?.let {
+            restoreQuery = it.getString(ARG_QUERY)
+            currentQuery = restoreQuery
+        }
         setupViews(viewDataBinding)
         setObservers()
     }
 
     private fun setupViews(viewDataBinding: FragmentHomeBinding) {
-        viewDataBinding.layoutSearch.inputTxtSearch.setOnSearch { onSearch(it) }
+        viewDataBinding.layoutSearch.inputTxtSearch.setup()
         viewDataBinding.swipeRefreshLayout.setup()
         viewDataBinding.recyclerView.setup()
         adapter.setup()
@@ -52,6 +69,16 @@ class HomeFragment: ViewDataBindingFragment<FragmentHomeBinding>(R.layout.fragme
         viewDataBinding.layoutErrorContainer.gone()
         viewDataBinding.swipeRefreshLayout.visible()
         viewModel.fetchPagingData(query)
+    }
+
+    private fun TextInputEditText.setup() {
+        setOnFocusChangeListener { _, _ ->
+            viewDataBinding.imgLogo.gone()
+        }
+        setOnSearch {
+            currentQuery = it
+            onSearch(it)
+        }
     }
 
     private fun SwipeRefreshLayout.setup() {
@@ -81,19 +108,30 @@ class HomeFragment: ViewDataBindingFragment<FragmentHomeBinding>(R.layout.fragme
             adapter.loadStateFlow
                 .distinctUntilChangedBy { it.refresh }
                 .filter { it.refresh is LoadState.NotLoading }
-                .collect { viewDataBinding.recyclerView.scrollToPosition(0) }
+                .collect {
+                    viewDataBinding.recyclerView.scrollToPosition(Int.zero())
+                }
         }
     }
 
     private fun setObservers() {
-        viewModel.state.observe(viewLifecycleOwner, {
-            when (it) {
-                is HomeState.Loading -> showProgress(it.loading)
-                is HomeState.Data -> adapter.submitData(lifecycle, it.pagingData)
-                is HomeState.Empty -> showEmpty()
-                is HomeState.Error -> showError()
+        viewModel.state.observe(viewLifecycleOwner, { state ->
+            if (restoreQuery.isNull()) {
+                when (state) {
+                    is HomeState.Loading -> showProgress(state.loading)
+                    is HomeState.Data -> adapter.submitData(lifecycle, state.pagingData)
+                    is HomeState.Empty -> showEmpty()
+                    is HomeState.Error -> showError()
+                }
             }
+            restoreQuery?.let { restoreFragment(it) }
         })
+    }
+
+    private fun restoreFragment(query: String) {
+        viewDataBinding.imgLogo.gone()
+        onSearch(query)
+        this.restoreQuery = null
     }
 
     private fun showError() {
@@ -122,4 +160,23 @@ class HomeFragment: ViewDataBindingFragment<FragmentHomeBinding>(R.layout.fragme
         viewDataBinding.progressBar.visibleIf(show)
     }
 
+    override fun onNavigate(destination: Destination, data: String) {
+        val bundle = bundleOf(
+            ARG_DATA to data,
+            ARG_QUERY to currentQuery
+        )
+        if (destination == Destination.DESTINATION_DETAIL) {
+            navController.navigate(R.id.action_homeFragment_to_detailFragment, bundle)
+        }
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putString(ARG_QUERY, currentQuery)
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        viewModel.onDestroy()
+    }
 }

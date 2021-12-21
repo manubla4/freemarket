@@ -20,7 +20,7 @@ class ProductRemoteMediator(
     private val remoteKeyDataStoreDatabase: RemoteKeyDataStoreDatabase,
     private val databaseManager: DatabaseManager,
     private val pagerRequest: PagerRequest,
-    private val callback: RemoteMediatorCallback
+    private val callback: RemoteMediatorCallback?
 ) : RemoteMediator<Int, ProductCurrencyQuery>() {
 
     override suspend fun initialize(): InitializeAction {
@@ -63,7 +63,7 @@ class ProductRemoteMediator(
             processResponse(state, response, loadType, currentPage)
         } catch (exception: Exception) {
             if (isFirstPage(loadType, currentPage, state)) {
-                callback.onErrorResult()
+                callback?.onErrorResult()
             }
             MediatorResult.Error(exception)
         }
@@ -79,7 +79,7 @@ class ProductRemoteMediator(
             val result = safeResponse.results.filter { it.hasRequiredParams() }
             val isEndOfList = result.isEmpty()
             if (result.isEmpty() && isFirstPage(loadType, currentPage, state)) {
-                callback.onEmptyResult()
+                callback?.onEmptyResult()
             }
             if (loadType == LoadType.REFRESH) {
                 databaseManager.clearAllTables()

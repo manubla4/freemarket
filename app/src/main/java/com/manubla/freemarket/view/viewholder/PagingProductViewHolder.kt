@@ -2,10 +2,13 @@ package com.manubla.freemarket.view.viewholder
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import com.manubla.freemarket.data.model.base.Model
 import com.manubla.freemarket.data.source.storage.query.ProductCurrencyQuery
 import com.manubla.freemarket.databinding.ViewPagingProductItemBinding
 import com.manubla.freemarket.view.callback.NavigateCallback
+import com.manubla.freemarket.view.enum.Destination
+import com.manubla.freemarket.view.fragment.base.ViewDataBindingFragment.Companion.ARG_DATA
 import com.manubla.freemarket.view.model.UiProduct
 import com.manubla.freemarket.view.viewholder.base.BaseModelViewHolder
 
@@ -17,7 +20,7 @@ class PagingProductViewHolder<M: Model>(
         model.asProductQuery { product ->
             viewBinding.uiProduct = UiProduct(product)
             viewBinding.clickableFrame.setOnClickListener {
-                navigateCallback?.onNavigate(NavigateCallback.DESTINATION_DETAIL, product.id)
+                navigateCallback?.onNavigate(Destination.DESTINATION_DETAIL, product.id)
             }
             viewBinding.executePendingBindings()
         }

@@ -35,10 +35,13 @@ class HomeViewModel(
     val state: LiveData<HomeState>
         get() = _state
 
+    private var callback: RemoteMediatorCallback? = null
+
     fun fetchPagingData(query: String) {
         _state.postValue(HomeState.Loading(true))
         launch(Dispatchers.IO) {
             databaseManager.clearAllTables()
+            callback = this@HomeViewModel
             Pager(
                 config = PagingConfig(
                     enablePlaceholders = false,
@@ -51,7 +54,7 @@ class HomeViewModel(
                     remoteKeyDataStoreDatabase = remoteKeyDataStoreDatabase,
                     databaseManager = databaseManager,
                     pagerRequest = PagerRequest(query),
-                    callback = this@HomeViewModel
+                    callback = callback
                 ),
                 pagingSourceFactory = {
                     productDataStoreDatabase.getProducts()
@@ -65,6 +68,10 @@ class HomeViewModel(
         }
     }
 
+    fun onDestroy() {
+        callback = null
+    }
+
     override fun onEmptyResult() {
         _state.postValue(HomeState.Empty)
     }
@@ -74,7 +81,7 @@ class HomeViewModel(
     }
 
     companion object {
-        private const val PAGE_SIZE = 20
+        private const val PAGE_SIZE = 10
         private const val MAX_SIZE_MULTIPLIER = 3
     }
 

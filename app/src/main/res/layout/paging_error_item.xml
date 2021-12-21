@@ -2,7 +2,8 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <TextView
         android:id="@+id/text_message_error_paging"
@@ -14,9 +15,11 @@
         android:layout_marginEnd="@dimen/dimen_16dp"
         android:gravity="center"
         android:text="@string/text_message_error_paging_data"
+        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent"
+        tools:visibility="visible"/>
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/button_action_retry_paging"
@@ -26,10 +29,12 @@
         android:layout_marginTop="@dimen/dimen_8dp"
         android:layout_marginBottom="@dimen/dimen_24dp"
         android:text="@string/text_retry_paging_action"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/text_message_error_paging"
         app:layout_constraintStart_toStartOf="@+id/text_message_error_paging"
-        app:layout_constraintTop_toBottomOf="@+id/text_message_error_paging" />
+        app:layout_constraintTop_toBottomOf="@+id/text_message_error_paging"
+        tools:visibility="visible"/>
 
     <ProgressBar
         android:id="@+id/progressBar"

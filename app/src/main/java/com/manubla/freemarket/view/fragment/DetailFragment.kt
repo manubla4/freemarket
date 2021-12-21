@@ -1,6 +1,8 @@
 package com.manubla.freemarket.view.fragment
 
 import android.os.Bundle
+import androidx.core.os.bundleOf
+import androidx.fragment.app.setFragmentResult
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.PagerSnapHelper
 import androidx.recyclerview.widget.RecyclerView
@@ -25,9 +27,21 @@ class DetailFragment : ViewDataBindingFragment<FragmentDetailBinding>(R.layout.f
     override fun onViewCreated(viewDataBinding: FragmentDetailBinding, savedInstanceState: Bundle?) {
         super.onViewCreated(viewDataBinding, savedInstanceState)
         val data = arguments?.getString(ARG_DATA).toNotNullable()
+        setFragmentResult(data)
         viewDataBinding.recyclerView.setup()
         setObservers()
         viewModel.fetchProduct(data)
+    }
+
+    private fun setFragmentResult(data: String) {
+        val query = arguments?.getString(ARG_QUERY).toNotNullable()
+        setFragmentResult(
+            requestKey = DETAIL_FRAGMENT_REQUEST,
+            result = bundleOf(
+                ARG_DATA to data,
+                ARG_QUERY to query,
+            )
+        )
     }
 
     private fun setObservers() {
@@ -62,4 +76,7 @@ class DetailFragment : ViewDataBindingFragment<FragmentDetailBinding>(R.layout.f
         PagerSnapHelper().attachToRecyclerView(this)
     }
 
+    companion object {
+        const val DETAIL_FRAGMENT_REQUEST = "DETAIL_FRAGMENT_REQUEST"
+    }
 }
