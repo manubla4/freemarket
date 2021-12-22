@@ -4,7 +4,7 @@ Free Market - Android application for searching products on sale featuring:
 - Kotlin Coroutines
 - View DataBinding
 - Koin dependency injection
-- Unit testing with Mockito
+- Unit testing with Mockito and Robolectric
 - Retrofit and Gson for networking
 - Room for caching
 - Navigation component

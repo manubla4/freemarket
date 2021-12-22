@@ -6,13 +6,20 @@ import com.manubla.freemarket.data.source.network.service.UserService
 import com.manubla.freemarket.mock.getMockUser
 import kotlinx.coroutines.runBlocking
 import org.junit.Assert.assertEquals
+import org.junit.Before
 import org.junit.Test
+import org.koin.core.context.stopKoin
 import org.mockito.Mockito.*
 
 class UserDataStoreNetworkTest {
 
     private val service = mock(UserService::class.java)
     private val datastore: UserDataStoreNetwork = UserDataStoreNetworkImpl(service)
+
+    @Before
+    fun setUp() {
+        stopKoin()
+    }
 
     @Test
     fun `validate fetch user with network`() {

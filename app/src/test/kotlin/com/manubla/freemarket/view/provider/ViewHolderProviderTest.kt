@@ -23,6 +23,7 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.koin.core.context.stopKoin
 
 
 @RunWith(AndroidJUnit4::class)
@@ -36,6 +37,7 @@ class ViewHolderProviderTest {
 
     @Before
     fun setUp() {
+        stopKoin()
         val context = ApplicationProvider.getApplicationContext<Context>().apply { setTheme(R.style.AppTheme) }
         viewGroup = LayoutInflater.from(context).inflate(R.layout.view_unknown_item, null) as ViewGroup
         viewHolderModelProvider = ViewHolderModelProvider()

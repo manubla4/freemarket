@@ -6,13 +6,20 @@ import com.manubla.freemarket.data.source.storage.datastore.state.StateDataStore
 import com.manubla.freemarket.mock.getMockState
 import kotlinx.coroutines.runBlocking
 import org.junit.Assert.assertEquals
+import org.junit.Before
 import org.junit.Test
+import org.koin.core.context.stopKoin
 import org.mockito.Mockito.*
 
 class StateDataStoreDatabaseTest {
 
     private val dao = mock(StateDao::class.java)
     private val datastore: StateDataStoreDatabase = StateDataStoreDatabaseImpl(dao)
+
+    @Before
+    fun setUp() {
+        stopKoin()
+    }
 
     @Test
     fun `validate fetch state`() {

@@ -11,6 +11,7 @@ import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.koin.core.context.stopKoin
 
 
 @RunWith(AndroidJUnit4::class)
@@ -19,6 +20,7 @@ class ViewExtensionTest {
 
     @Before
     fun setUp() {
+        stopKoin()
         val context = ApplicationProvider.getApplicationContext<Context>()
         view = LayoutInflater.from(context).inflate(R.layout.view_unknown_item, null)
     }

@@ -6,13 +6,20 @@ import com.manubla.freemarket.data.source.network.service.StateService
 import com.manubla.freemarket.mock.getMockState
 import kotlinx.coroutines.runBlocking
 import org.junit.Assert.assertEquals
+import org.junit.Before
 import org.junit.Test
+import org.koin.core.context.stopKoin
 import org.mockito.Mockito.*
 
 class StateDataStoreNetworkTest {
 
     private val service = mock(StateService::class.java)
     private val datastore: StateDataStoreNetwork = StateDataStoreNetworkImpl(service)
+
+    @Before
+    fun setUp() {
+        stopKoin()
+    }
 
     @Test
     fun `validate fetch state with network`() {

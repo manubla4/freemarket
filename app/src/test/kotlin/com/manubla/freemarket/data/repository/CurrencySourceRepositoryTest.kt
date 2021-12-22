@@ -8,6 +8,7 @@ import com.manubla.freemarket.mock.getMockCurrencies
 import kotlinx.coroutines.runBlocking
 import org.junit.Before
 import org.junit.Test
+import org.koin.core.context.stopKoin
 import org.mockito.Mockito
 import org.mockito.Mockito.mock
 import org.mockito.Mockito.verify
@@ -20,6 +21,7 @@ class CurrencySourceRepositoryTest {
 
     @Before
     fun setup() {
+        stopKoin()
         runBlocking {
             Mockito.`when`(
                 network.fetchCurrencies()

@@ -8,13 +8,20 @@ import com.manubla.freemarket.mock.getMockProduct
 import com.manubla.freemarket.mock.getMockProductPage
 import kotlinx.coroutines.runBlocking
 import org.junit.Assert.assertEquals
+import org.junit.Before
 import org.junit.Test
+import org.koin.core.context.stopKoin
 import org.mockito.Mockito.*
 
 class ProductDataStoreNetworkTest {
 
     private val service = mock(ProductService::class.java)
     private val datastore: ProductDataStoreNetwork = ProductDataStoreNetworkImpl(service)
+
+    @Before
+    fun setUp() {
+        stopKoin()
+    }
 
     @Test
     fun `validate fetch product with network`() {

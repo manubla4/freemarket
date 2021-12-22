@@ -6,13 +6,20 @@ import com.manubla.freemarket.data.source.storage.datastore.remotekey.RemoteKeyD
 import com.manubla.freemarket.mock.getMockRemoteKey
 import kotlinx.coroutines.runBlocking
 import org.junit.Assert.assertEquals
+import org.junit.Before
 import org.junit.Test
+import org.koin.core.context.stopKoin
 import org.mockito.Mockito.*
 
 class RemoteKeyDataStoreDatabaseTest {
 
     private val dao = mock(RemoteKeyDao::class.java)
     private val datastore: RemoteKeyDataStoreDatabase = RemoteKeyDataStoreDatabaseImpl(dao)
+
+    @Before
+    fun setUp() {
+        stopKoin()
+    }
 
     @Test
     fun `validate fetch remote key`() {

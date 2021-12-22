@@ -7,7 +7,9 @@ import com.manubla.freemarket.data.source.storage.datastore.user.UserDataStoreDa
 import com.manubla.freemarket.mock.getMockUser
 import kotlinx.coroutines.runBlocking
 import org.junit.Assert.assertEquals
+import org.junit.Before
 import org.junit.Test
+import org.koin.core.context.stopKoin
 import org.mockito.Mockito.*
 
 class UserSourceRepositoryTest {
@@ -15,6 +17,11 @@ class UserSourceRepositoryTest {
     private val database = mock(UserDataStoreDatabase::class.java)
     private val network = mock(UserDataStoreNetwork::class.java)
     private val repository: UserSourceRepository = UserSourceRepositoryImpl(database, network)
+
+    @Before
+    fun setUp() {
+        stopKoin()
+    }
 
     @Test
     fun `validate fetch user with network and database`() {

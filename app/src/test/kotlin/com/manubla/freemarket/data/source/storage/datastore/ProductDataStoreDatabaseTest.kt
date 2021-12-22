@@ -8,13 +8,20 @@ import com.manubla.freemarket.mock.getMockProduct
 import com.manubla.freemarket.mock.getMockProductQuery
 import kotlinx.coroutines.runBlocking
 import org.junit.Assert.assertEquals
+import org.junit.Before
 import org.junit.Test
+import org.koin.core.context.stopKoin
 import org.mockito.Mockito.*
 
 class ProductDataStoreDatabaseTest {
 
     private val dao = mock(ProductDao::class.java)
     private val datastore: ProductDataStoreDatabase = ProductDataStoreDatabaseImpl(dao)
+
+    @Before
+    fun setUp() {
+        stopKoin()
+    }
 
     @Test
     fun `validate fetch product`() {

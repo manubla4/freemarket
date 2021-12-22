@@ -7,13 +7,20 @@ import com.manubla.freemarket.data.source.network.service.CurrencyService
 import com.manubla.freemarket.mock.getMockCurrencies
 import kotlinx.coroutines.runBlocking
 import org.junit.Assert.assertEquals
+import org.junit.Before
 import org.junit.Test
+import org.koin.core.context.stopKoin
 import org.mockito.Mockito.*
 
 class CurrencyDataStoreNetworkTest {
 
     private val service = mock(CurrencyService::class.java)
     private val datastore: CurrencyDataStoreNetwork = CurrencyDataStoreNetworkImpl(service)
+
+    @Before
+    fun setUp() {
+        stopKoin()
+    }
 
     @Test
     fun `validate fetch currency with network`() {

@@ -7,7 +7,9 @@ import com.manubla.freemarket.data.source.storage.datastore.state.StateDataStore
 import com.manubla.freemarket.mock.getMockState
 import kotlinx.coroutines.runBlocking
 import org.junit.Assert.assertEquals
+import org.junit.Before
 import org.junit.Test
+import org.koin.core.context.stopKoin
 import org.mockito.ArgumentMatchers
 import org.mockito.Mockito
 import org.mockito.Mockito.mock
@@ -19,6 +21,10 @@ class StateSourceRepositoryTest {
     private val network = mock(StateDataStoreNetwork::class.java)
     private val repository: StateSourceRepository = StateSourceRepositoryImpl(database, network)
 
+    @Before
+    fun setUp() {
+        stopKoin()
+    }
 
     @Test
     fun `validate fetch state with network and database`() {
