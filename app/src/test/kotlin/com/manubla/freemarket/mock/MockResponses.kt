@@ -3,6 +3,7 @@ package com.manubla.freemarket.mock
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.manubla.freemarket.data.model.business.*
+import com.manubla.freemarket.data.model.result.SearchResult
 import com.manubla.freemarket.data.source.network.service.response.PagingData
 import com.manubla.freemarket.data.source.network.service.response.ProductsPageResponse
 import com.manubla.freemarket.data.source.storage.entity.RemoteKey
@@ -21,6 +22,8 @@ fun getMockCurrencies(): List<Currency> = listOf(
 fun getMockUser() = User(1, "user",
     Address("Centro","1"),
     SellerReputation("1","status"))
+
+fun getMockSearchResult() = SearchResult(SearchResult.STATE_ERROR)
 
 fun getMockState() = State("1", "Montevideo")
 
