@@ -2,8 +2,9 @@
 Free Market - Android application for searching products on sale featuring:
 - MVMV architecture 
 - Kotlin Coroutines
-- ViewDataBinding
+- View DataBinding
 - Koin dependency injection
+- Unit testing with Mockito
 - Retrofit and Gson for networking
 - Room for caching
 - Navigation component

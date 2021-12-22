@@ -16,7 +16,10 @@ interface ProductDao {
     suspend fun getById(id: String): ProductCurrencyQuery?
 
     @Query("SELECT t1.*, t2.symbol as currency FROM ${Product.TABLE_NAME} t1 LEFT JOIN ${Currency.TABLE_NAME} t2 ON t1.${Product.PARAM_CURRENCY_ID}=t2.${Currency.PARAM_ID}")
-    fun getAll(): PagingSource<Int, ProductCurrencyQuery>
+    fun getPagingSource(): PagingSource<Int, ProductCurrencyQuery>
+
+    @Query("SELECT t1.*, t2.symbol as currency FROM ${Product.TABLE_NAME} t1 LEFT JOIN ${Currency.TABLE_NAME} t2 ON t1.${Product.PARAM_CURRENCY_ID}=t2.${Currency.PARAM_ID}")
+    suspend fun getAll(): List<ProductCurrencyQuery>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(product: Product)

@@ -1,4 +1,4 @@
-package com.manubla.freemarket.data.source.network
+package com.manubla.freemarket.data.source.network.datastore
 
 import com.manubla.freemarket.data.source.network.datastore.user.UserDataStoreNetwork
 import com.manubla.freemarket.data.source.network.datastore.user.UserDataStoreNetworkImpl

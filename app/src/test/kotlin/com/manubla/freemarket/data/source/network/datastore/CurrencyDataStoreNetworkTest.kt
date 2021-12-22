@@ -1,6 +1,5 @@
-package com.manubla.freemarket.data.source.network
+package com.manubla.freemarket.data.source.network.datastore
 
-import android.util.Log
 import com.manubla.freemarket.data.model.business.Currency
 import com.manubla.freemarket.data.source.network.datastore.currency.CurrencyDataStoreNetwork
 import com.manubla.freemarket.data.source.network.datastore.currency.CurrencyDataStoreNetworkImpl

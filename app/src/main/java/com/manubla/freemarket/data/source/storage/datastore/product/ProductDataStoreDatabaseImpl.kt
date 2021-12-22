@@ -20,7 +20,7 @@ class ProductDataStoreDatabaseImpl(
     }
 
     override fun getProducts(): PagingSource<Int, ProductCurrencyQuery> {
-        return productDao.getAll()
+        return productDao.getPagingSource()
     }
 
     override suspend fun storeProduct(product: Product) {
