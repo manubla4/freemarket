@@ -16,6 +16,7 @@ import com.manubla.freemarket.extension.isNull
 import com.manubla.freemarket.extension.zero
 import com.manubla.freemarket.view.adapter.paging.PagingStateAdapter
 import com.manubla.freemarket.view.alias.PagingAdapter
+import com.manubla.freemarket.view.callback.NavigateCallback
 import com.manubla.freemarket.view.enum.Destination
 import com.manubla.freemarket.view.event.HomeState
 import com.manubla.freemarket.view.extension.*
@@ -37,6 +38,7 @@ class HomeFragment: ViewDataBindingFragment<FragmentHomeBinding>(R.layout.fragme
     private val adapter: PagingAdapter by inject()
     private var restoreQuery: String? = null
     private var currentQuery: String? = null
+    private var callback: NavigateCallback? = null
     private val loadingAdapter: PagingStateAdapter by lazy {
         PagingStateAdapter {
             adapter.retry()
@@ -94,7 +96,8 @@ class HomeFragment: ViewDataBindingFragment<FragmentHomeBinding>(R.layout.fragme
     }
 
     private fun PagingAdapter.setup() {
-        navigateCallback = this@HomeFragment
+        callback = this@HomeFragment
+        navigateCallback = callback
         addLoadStateListener {
             val isRefreshing = it.mediator?.refresh is LoadState.Loading
             viewDataBinding.swipeRefreshLayout.invisibleIf(isRefreshing)
@@ -178,5 +181,6 @@ class HomeFragment: ViewDataBindingFragment<FragmentHomeBinding>(R.layout.fragme
     override fun onDestroyView() {
         super.onDestroyView()
         viewModel.onDestroy()
+        callback = null
     }
 }
