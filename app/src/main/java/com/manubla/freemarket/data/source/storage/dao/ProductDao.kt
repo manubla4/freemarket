@@ -6,6 +6,7 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.manubla.freemarket.data.model.business.Currency
+import com.manubla.freemarket.data.model.business.Picture
 import com.manubla.freemarket.data.model.business.Product
 import com.manubla.freemarket.data.source.storage.query.ProductCurrencyQuery
 
@@ -20,6 +21,9 @@ interface ProductDao {
 
     @Query("SELECT t1.*, t2.symbol as currency FROM ${Product.TABLE_NAME} t1 LEFT JOIN ${Currency.TABLE_NAME} t2 ON t1.${Product.PARAM_CURRENCY_ID}=t2.${Currency.PARAM_ID}")
     suspend fun getAll(): List<ProductCurrencyQuery>
+
+    @Query("UPDATE ${Product.TABLE_NAME} SET ${Product.PARAM_PICTURES} = :pictures, ${Product.PARAM_WARRANTY} = :warranty, ${Product.PARAM_SELLER_ID} = :sellerId WHERE ${Product.PARAM_ID} = :id")
+    suspend fun update(id: String, pictures: List<Picture>, warranty: String, sellerId: Long)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(product: Product)

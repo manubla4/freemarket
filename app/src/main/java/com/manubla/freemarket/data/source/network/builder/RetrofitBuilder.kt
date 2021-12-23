@@ -1,20 +1,20 @@
 package com.manubla.freemarket.data.source.network.builder
 
-import android.content.Context
 import com.google.gson.FieldNamingPolicy
 import com.google.gson.GsonBuilder
 import com.manubla.freemarket.BuildConfig
 import com.manubla.freemarket.data.source.network.adapter.ZonedDateTimeAdapter
-import com.readystatesoftware.chuck.ChuckInterceptor
 import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import org.threeten.bp.ZonedDateTime
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
+
 private const val CONTENT_TYPE = "Content-Type"
 private const val APPLICATION_JSON = "application/json"
 
-fun initRetrofit(context: Context): Retrofit {
+fun initRetrofit(): Retrofit {
 
     val converter = GsonConverterFactory.create(
         GsonBuilder()
@@ -23,8 +23,10 @@ fun initRetrofit(context: Context): Retrofit {
             .create()
     )
 
+    val interceptor = HttpLoggingInterceptor()
+    interceptor.setLevel(HttpLoggingInterceptor.Level.BASIC)
     val okHttpClient = OkHttpClient.Builder()
-        .addInterceptor(ChuckInterceptor(context))
+        .addInterceptor(interceptor)
         .addInterceptor { chain ->
             val request = chain.request()
                 .newBuilder()

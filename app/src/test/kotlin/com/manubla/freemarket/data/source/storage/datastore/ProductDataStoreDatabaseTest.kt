@@ -84,6 +84,19 @@ class ProductDataStoreDatabaseTest {
         }
     }
 
+    @Test
+    fun `validate update product`() {
+        runBlocking {
+            val product = getMockProduct()
+            datastore.updateProduct(getMockProduct())
+            verify(dao).update(
+                product.id,
+                product.pictures,
+                product.warranty,
+                product.sellerId
+            )
+        }
+    }
 
     @Test
     fun `validate clear storage`() {

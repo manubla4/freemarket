@@ -9,9 +9,11 @@ class ExtensionsTest {
     fun `validate any extensions`() {
         val nullAny: Any? = null
         assertEquals(nullAny.isNull(), true)
+        assertEquals(nullAny.notNull(), false)
 
         val nonNullAny: Any = 0
         assertEquals(nonNullAny.isNull(), false)
+        assertEquals(nonNullAny.notNull(), true)
     }
 
     @Test

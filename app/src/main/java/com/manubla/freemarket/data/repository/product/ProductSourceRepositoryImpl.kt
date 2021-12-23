@@ -12,7 +12,7 @@ class ProductSourceRepositoryImpl(
     override suspend fun fetchProduct(id: String): ProductCurrencyQuery? {
         val product = network.fetchProductById(id)
         product?.let { safeProduct ->
-            database.storeProduct(safeProduct)
+            database.updateProduct(safeProduct)
         }
         return database.getProductById(id)
     }

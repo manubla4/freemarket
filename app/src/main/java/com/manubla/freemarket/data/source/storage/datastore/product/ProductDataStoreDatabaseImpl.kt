@@ -31,6 +31,18 @@ class ProductDataStoreDatabaseImpl(
         }
     }
 
+    override suspend fun updateProduct(product: Product) {
+        try {
+            productDao.update(product.id,
+                product.pictures,
+                product.warranty,
+                product.sellerId
+            )
+        } catch (exception: Exception) {
+            Log.e(TAG_STORE_PRODUCT, Log.getStackTraceString(exception))
+        }
+    }
+
     override suspend fun storeProducts(products: List<Product>) {
         try {
             productDao.insertAll(products)

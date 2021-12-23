@@ -96,7 +96,7 @@ val storageModule = module {
 
 val networkModule = module {
     single<Retrofit> {
-        initRetrofit(get<Context>())
+        initRetrofit()
     }
     factory<ProductService> {
         get<Retrofit>().create(ProductService::class.java)

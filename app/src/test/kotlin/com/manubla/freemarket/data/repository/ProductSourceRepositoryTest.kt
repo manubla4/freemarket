@@ -39,7 +39,7 @@ class ProductSourceRepositoryTest {
             )
             val actual = repository.fetchProduct(anyString())
             verify(network).fetchProductById(anyString())
-            verify(database).storeProduct(getMockProduct())
+            verify(database).updateProduct(getMockProduct())
             verify(database).getProductById(anyString())
             assertEquals(getMockProductQuery(), actual)
         }
@@ -60,7 +60,7 @@ class ProductSourceRepositoryTest {
             )
             val actual = repository.fetchProduct(anyString())
             verify(network).fetchProductById(anyString())
-            verify(database, times(0)).storeProduct(getMockProduct())
+            verify(database, times(0)).updateProduct(getMockProduct())
             verify(database).getProductById(anyString())
             assertEquals(getMockProductQuery(), actual)
         }

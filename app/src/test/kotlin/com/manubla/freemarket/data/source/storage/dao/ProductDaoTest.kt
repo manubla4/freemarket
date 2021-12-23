@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.manubla.freemarket.data.model.business.Picture
 import com.manubla.freemarket.data.source.storage.database.AppDatabase
 import com.manubla.freemarket.data.source.storage.query.ProductCurrencyQuery
 import com.manubla.freemarket.mock.getMockCurrencies
@@ -49,7 +50,7 @@ class ProductDaoTest {
 
     @Test
     @Throws(Exception::class)
-    fun `validate insert and fetch product`() {
+    fun `validate insert update and fetch product`() {
         runBlocking {
             val product = getMockProduct()
             val currency = mockCurrencies.firstOrNull { it.id == product.currencyId }
@@ -61,6 +62,20 @@ class ProductDaoTest {
                 product.warranty, currency?.symbol, product.pictures,
                 product.freeShipping, product.sellerId)
             assertThat(actual, equalTo(expected))
+
+            val mockPictures = listOf(Picture(null), Picture(null))
+            val mockWarranty = "warranty"
+            val mockSellerId = 1234L
+            productDao.update(
+                id = product.id,
+                pictures = mockPictures,
+                warranty = mockWarranty,
+                sellerId = mockSellerId
+            )
+            val actualUpdated = productDao.getById(product.id)
+            assertThat(actualUpdated?.pictures, equalTo(mockPictures))
+            assertThat(actualUpdated?.warranty, equalTo(mockWarranty))
+            assertThat(actualUpdated?.sellerId, equalTo(mockSellerId))
 
             val actualTotal = productDao.getAll()
             assertThat(actualTotal.size, equalTo(1))
